@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{messages.ViewQuestionTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{messages.ViewQuestionLabel_id}"/>
+                    <h:outputText value="#{questionController.selected.id}" title="#{messages.ViewQuestionTitle_id}"/>
+                    <h:outputText value="#{messages.ViewQuestionLabel_wording}"/>
+                    <h:outputText value="#{questionController.selected.wording}" title="#{messages.ViewQuestionTitle_wording}"/>
+                    <h:outputText value="#{messages.ViewQuestionLabel_answer}"/>
+                    <h:outputText value="#{questionController.selected.answer}" title="#{messages.ViewQuestionTitle_answer}"/>
+                    <h:outputText value="#{messages.ViewQuestionLabel_objectStatus}"/>
+                    <h:outputText value="#{questionController.selected.objectStatus}" title="#{messages.ViewQuestionTitle_objectStatus}"/>
+                    <h:outputText value="#{messages.ViewQuestionLabel_questionCategory}"/>
+                    <h:outputText value="#{questionController.selected.questionCategory}" title="#{messages.ViewQuestionTitle_questionCategory}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{questionController.destroyAndView}" value="#{messages.ViewQuestionDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{messages.ViewQuestionEditLink}"/>
+                <br />
+                <h:commandLink action="#{questionController.prepareCreate}" value="#{messages.ViewQuestionCreateLink}" />
+                <br />
+                <h:commandLink action="#{questionController.prepareList}" value="#{messages.ViewQuestionShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{messages.ViewQuestionIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

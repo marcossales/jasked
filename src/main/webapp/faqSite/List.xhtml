@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{messages.ListFaqSiteTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{messages.ListFaqSiteEmpty}" rendered="#{faqSiteController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{faqSiteController.items.rowCount > 0}">
+                    <h:outputText value="#{faqSiteController.pagination.pageFirstItem + 1}..#{faqSiteController.pagination.pageLastItem + 1}/#{faqSiteController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{faqSiteController.previous}" value="#{messages.Previous} #{faqSiteController.pagination.pageSize}" rendered="#{faqSiteController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{faqSiteController.next}" value="#{messages.Next} #{faqSiteController.pagination.pageSize}" rendered="#{faqSiteController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{faqSiteController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{messages.ListFaqSiteTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{messages.ListFaqSiteTitle_name}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{messages.ListFaqSiteTitle_path}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.path}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{messages.ListFaqSiteTitle_objectStatus}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.objectStatus}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{faqSiteController.prepareView}" value="#{messages.ListFaqSiteViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{faqSiteController.prepareEdit}" value="#{messages.ListFaqSiteEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{faqSiteController.destroy}" value="#{messages.ListFaqSiteDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{faqSiteController.prepareCreate}" value="#{messages.ListFaqSiteCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{messages.ListFaqSiteIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

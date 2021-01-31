@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{messages.EditQuestionTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{messages.EditQuestionLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{questionController.selected.id}" title="#{messages.EditQuestionTitle_id}" />
+                    <h:outputLabel value="#{messages.EditQuestionLabel_wording}" for="wording" />
+                    <h:inputText id="wording" value="#{questionController.selected.wording}" title="#{messages.EditQuestionTitle_wording}" />
+                    <h:outputLabel value="#{messages.EditQuestionLabel_answer}" for="answer" />
+                    <h:inputText id="answer" value="#{questionController.selected.answer}" title="#{messages.EditQuestionTitle_answer}" />
+                    <h:outputLabel value="#{messages.EditQuestionLabel_objectStatus}" for="objectStatus" />
+                    <h:selectOneMenu id="objectStatus" value="#{questionController.selected.objectStatus}" title="#{messages.EditQuestionTitle_objectStatus}" required="true" requiredMessage="#{messages.EditQuestionRequiredMessage_objectStatus}">
+                        <f:selectItems value="#{objectStatusController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{messages.EditQuestionLabel_questionCategory}" for="questionCategory" />
+                    <h:selectOneMenu id="questionCategory" value="#{questionController.selected.questionCategory}" title="#{messages.EditQuestionTitle_questionCategory}" required="true" requiredMessage="#{messages.EditQuestionRequiredMessage_questionCategory}">
+                        <f:selectItems value="#{questionCategoryController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{questionController.update}" value="#{messages.EditQuestionSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{messages.EditQuestionViewLink}"/>
+                <br />
+                <h:commandLink action="#{questionController.prepareList}" value="#{messages.EditQuestionShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{messages.EditQuestionIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

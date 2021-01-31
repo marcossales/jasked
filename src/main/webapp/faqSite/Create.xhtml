@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{messages.CreateFaqSiteTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{messages.CreateFaqSiteLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{faqSiteController.selected.id}" title="#{messages.CreateFaqSiteTitle_id}" />
+                    <h:outputLabel value="#{messages.CreateFaqSiteLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{faqSiteController.selected.name}" title="#{messages.CreateFaqSiteTitle_name}" />
+                    <h:outputLabel value="#{messages.CreateFaqSiteLabel_path}" for="path" />
+                    <h:inputText id="path" value="#{faqSiteController.selected.path}" title="#{messages.CreateFaqSiteTitle_path}" />
+                    <h:outputLabel value="#{messages.CreateFaqSiteLabel_objectStatus}" for="objectStatus" />
+                    <h:selectOneMenu id="objectStatus" value="#{faqSiteController.selected.objectStatus}" title="#{messages.CreateFaqSiteTitle_objectStatus}" required="true" requiredMessage="#{messages.CreateFaqSiteRequiredMessage_objectStatus}">
+                        <f:selectItems value="#{objectStatusController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{faqSiteController.create}" value="#{messages.CreateFaqSiteSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{faqSiteController.prepareList}" value="#{messages.CreateFaqSiteShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{messages.CreateFaqSiteIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

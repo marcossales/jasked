@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{messages.CreateQuestionCategoryTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{messages.CreateQuestionCategoryLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{questionCategoryController.selected.id}" title="#{messages.CreateQuestionCategoryTitle_id}" />
+                    <h:outputLabel value="#{messages.CreateQuestionCategoryLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{questionCategoryController.selected.name}" title="#{messages.CreateQuestionCategoryTitle_name}" />
+                    <h:outputLabel value="#{messages.CreateQuestionCategoryLabel_description}" for="description" />
+                    <h:inputText id="description" value="#{questionCategoryController.selected.description}" title="#{messages.CreateQuestionCategoryTitle_description}" />
+                    <h:outputLabel value="#{messages.CreateQuestionCategoryLabel_faqSite}" for="faqSite" />
+                    <h:selectOneMenu id="faqSite" value="#{questionCategoryController.selected.faqSite}" title="#{messages.CreateQuestionCategoryTitle_faqSite}" required="true" requiredMessage="#{messages.CreateQuestionCategoryRequiredMessage_faqSite}">
+                        <f:selectItems value="#{faqSiteController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{questionCategoryController.create}" value="#{messages.CreateQuestionCategorySaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{questionCategoryController.prepareList}" value="#{messages.CreateQuestionCategoryShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{messages.CreateQuestionCategoryIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
