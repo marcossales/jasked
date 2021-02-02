@@ -22,7 +22,7 @@
                     <h:outputText value="#{messages.ViewQuestionCategoryLabel_description}"/>
                     <h:outputText value="#{questionCategoryController.selected.description}" title="#{messages.ViewQuestionCategoryTitle_description}"/>
                     <h:outputText value="#{messages.ViewQuestionCategoryLabel_faqSite}"/>
-                    <h:outputText value="#{questionCategoryController.selected.faqSite}" title="#{messages.ViewQuestionCategoryTitle_faqSite}"/>
+                    <h:outputText value="#{questionCategoryController.selected.faqSite.name}" title="#{messages.ViewQuestionCategoryTitle_faqSite}"/>
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{questionCategoryController.destroyAndView}" value="#{messages.ViewQuestionCategoryDestroyLink}"/>

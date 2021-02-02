@@ -42,13 +42,13 @@
                             <f:facet name="header">
                                 <h:outputText value="#{messages.ListQuestionTitle_objectStatus}"/>
                             </f:facet>
-                            <h:outputText value="#{item.objectStatus}"/>
+                            <h:outputText value="#{item.objectStatus.name}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{messages.ListQuestionTitle_questionCategory}"/>
                             </f:facet>
-                            <h:outputText value="#{item.questionCategory}"/>
+                            <h:outputText value="#{item.questionCategory.name}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">

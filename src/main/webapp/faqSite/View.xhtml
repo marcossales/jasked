@@ -22,7 +22,7 @@
                     <h:outputText value="#{messages.ViewFaqSiteLabel_path}"/>
                     <h:outputText value="#{faqSiteController.selected.path}" title="#{messages.ViewFaqSiteTitle_path}"/>
                     <h:outputText value="#{messages.ViewFaqSiteLabel_objectStatus}"/>
-                    <h:outputText value="#{faqSiteController.selected.objectStatus}" title="#{messages.ViewFaqSiteTitle_objectStatus}"/>
+                    <h:outputText value="#{faqSiteController.selected.objectStatus.name}" title="#{messages.ViewFaqSiteTitle_objectStatus}"/>
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{faqSiteController.destroyAndView}" value="#{messages.ViewFaqSiteDestroyLink}"/>

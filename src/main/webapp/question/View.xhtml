@@ -22,9 +22,9 @@
                     <h:outputText value="#{messages.ViewQuestionLabel_answer}"/>
                     <h:outputText value="#{questionController.selected.answer}" title="#{messages.ViewQuestionTitle_answer}"/>
                     <h:outputText value="#{messages.ViewQuestionLabel_objectStatus}"/>
-                    <h:outputText value="#{questionController.selected.objectStatus}" title="#{messages.ViewQuestionTitle_objectStatus}"/>
+                    <h:outputText value="#{questionController.selected.objectStatus.name}" title="#{messages.ViewQuestionTitle_objectStatus}"/>
                     <h:outputText value="#{messages.ViewQuestionLabel_questionCategory}"/>
-                    <h:outputText value="#{questionController.selected.questionCategory}" title="#{messages.ViewQuestionTitle_questionCategory}"/>
+                    <h:outputText value="#{questionController.selected.questionCategory.name}" title="#{messages.ViewQuestionTitle_questionCategory}"/>
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{questionController.destroyAndView}" value="#{messages.ViewQuestionDestroyLink}"/>
