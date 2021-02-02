@@ -134,7 +134,7 @@ public class FaqSite implements Serializable {
 
     @Override
     public String toString() {
-        return "br.dev.amvs.jasked.jpa.domain.FaqSite[ id=" + id + " ]";
+        return this.getName();
     }
     
 }
