@@ -113,7 +113,7 @@ public class ObjectStatus implements Serializable {
 
     @Override
     public String toString() {
-        return "br.dev.amvs.jasked.jpa.domain.ObjectStatus[ id=" + id + " ]";
+        return this.getName();
     }
     
 }
