@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <f:metadata>
+            <f:viewParam name="f" value="#{publicViewingController.currentFaqPath}"/>
+        </f:metadata>
+        <title><h:outputText value="#{publicViewingController.indexPageTitle}"/></title>
+    </h:head>
+    <h:body>
+        <h:panelGroup rendered="#{publicViewingController.currentFaqPathEmpty}">
+            <header>
+                <h1><h:outputText value="#{publicViewingController.indexPageHeaderTitle}"/></h1>
+            </header>
+
+            <main>
+                <div> 
+                    <h2><h:outputText value="#{publicViewingController.selectFaqMessage}"/></h2>
+                </div>
+                <div>
+                    <ul>
+                        <ui:repeat value="#{publicViewingController.publishedFaqSitesSelectOne}" var="item">
+                            <li><h:link outcome="index" value="#{item.label}"/></li>
+                        </ui:repeat>
+
+                    </ul>
+                </div>
+
+            </main>
+
+            <footer>
+
+            </footer>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{!publicViewingController.currentFaqPathEmpty}">
+            <h:outputText  value="Faq selecionado:#{publicViewingController.currentFaqPath}"/>
+        </h:panelGroup>
+    </h:body>
+</html>
+
