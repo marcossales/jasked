@@ -16,7 +16,7 @@
             <h:form>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="#{messages.EditQuestionLabel_id}" for="id" />
-                    <h:inputText id="id" value="#{questionController.selected.id}" title="#{messages.EditQuestionTitle_id}" />
+                    <h:inputText id="id" value="#{questionController.selected.id}" title="#{messages.EditQuestionTitle_id}" disabled="true"/>
                     <h:outputLabel value="#{messages.EditQuestionLabel_wording}" for="wording" />
                     <h:inputText id="wording" value="#{questionController.selected.wording}" title="#{messages.EditQuestionTitle_wording}" />
                     <h:outputLabel value="#{messages.EditQuestionLabel_answer}" for="answer" />
