@@ -5,11 +5,15 @@
  */
 package br.dev.amvs.jasked.jsf;
 
+import br.dev.amvs.jasked.jpa.domain.FaqSite;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
+
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.event.ComponentSystemEvent;
 import javax.faces.model.SelectItem;
 
 /**
@@ -24,12 +28,18 @@ public class PublicViewingController {
    
     @EJB
     private br.dev.amvs.jasked.sessionbeans.FaqSiteFacade ejbFaqSiteFacade;
+
+	private List<FaqSite> publishedFaqs;
     /**
      * Creates a new instance of PublicViewingController
      */
     public PublicViewingController() {
     }
     
+    
+    public void preRenderView(ComponentSystemEvent event) {
+    	this.publishedFaqs = ejbFaqSiteFacade.findAllPublished();
+    }
     
     public String getIndexPageTitle(){
         return ResourceBundle.getBundle("/Messages").getString("PublicIndexPage_title");
@@ -43,7 +53,11 @@ public class PublicViewingController {
     }
     
      public SelectItem[] getPublishedFaqSitesSelectOne() {
-        return JsfUtil.getSelectItems(ejbFaqSiteFacade.findAll(), false);
+        return JsfUtil.getSelectItems(this.publishedFaqs, false);
+    }
+     
+    public String getNoPublishedItemsMessage() {
+    	return ResourceBundle.getBundle("/Messages").getString("PublicIndexPage_noPublishedItems");
     }
       
       
@@ -58,6 +72,12 @@ public class PublicViewingController {
     
     public boolean isCurrentFaqPathEmpty(){
         if(this.currentFaqPath==null || "".equals(this.currentFaqPath)){
+            return true;
+        }
+        return false;
+    }
+    public boolean isPublishedFaqSitesEmpty() {
+    	if(this.publishedFaqs.isEmpty()){
             return true;
         }
         return false;

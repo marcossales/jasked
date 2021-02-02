@@ -5,17 +5,22 @@
  */
 package br.dev.amvs.jasked.sessionbeans;
 
-import br.dev.amvs.jasked.jpa.domain.FaqSite;
+import java.util.List;
+import java.util.ResourceBundle;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+
+import br.dev.amvs.jasked.jpa.domain.FaqSite;
 
 /**
  *
  * @author marcossales
  */
 @Stateless
-public class FaqSiteFacade extends AbstractFacade<FaqSite> {
+public class FaqSiteFacade extends PublishableObjectFacade<FaqSite> {
 
     @PersistenceContext(unitName = "my_persistence_unit")
     private EntityManager em;
@@ -28,5 +33,15 @@ public class FaqSiteFacade extends AbstractFacade<FaqSite> {
     public FaqSiteFacade() {
         super(FaqSite.class);
     }
+
+	@Override
+	public List<FaqSite> findAllPublished() {
+		String publishedStatusName =  ResourceBundle.getBundle("/DomainStrings").getString("ObjectStatus_publishedStatusName");
+		TypedQuery<FaqSite> query =
+				em.createQuery("SELECT f FROM FaqSite f INNER JOIN f.objectStatus s WHERE UPPER(s.name) = UPPER(:publishedStatusName)", FaqSite.class);
+		query.setParameter("publishedStatusName", publishedStatusName);
+	    List<FaqSite> results = query.getResultList();
+		return results;
+	}
     
 }
