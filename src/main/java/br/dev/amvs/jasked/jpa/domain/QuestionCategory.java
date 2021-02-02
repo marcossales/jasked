@@ -130,8 +130,8 @@ public class QuestionCategory implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "br.dev.amvs.jasked.jpa.domain.QuestionCategory[ id=" + id + " ]";
+    public String toString() {      
+        return (getFaqSite()!=null?getFaqSite().getName():"")+": "+this.getName();
     }
     
 }
