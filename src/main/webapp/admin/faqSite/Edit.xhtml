@@ -5,7 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="/admin/template.xhtml">
         <ui:define name="title">
             <h:outputText value="#{messages.EditFaqSiteTitle}"></h:outputText>
         </ui:define>
@@ -34,7 +34,7 @@
                 <h:commandLink action="#{faqSiteController.prepareList}" value="#{messages.EditFaqSiteShowAllLink}" immediate="true"/>
                 <br />
                 <br />
-                <h:link outcome="/index" value="#{messages.EditFaqSiteIndexLink}" />
+                <h:link outcome="/admin/index" value="#{messages.EditFaqSiteIndexLink}" />
             </h:form>
         </ui:define>
     </ui:composition>

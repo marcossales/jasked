@@ -5,7 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="/admin/template.xhtml">
         <ui:define name="title">
             <h:outputText value="#{messages.EditObjectStatusTitle}"></h:outputText>
         </ui:define>
@@ -28,7 +28,7 @@
                 <h:commandLink action="#{objectStatusController.prepareList}" value="#{messages.EditObjectStatusShowAllLink}" immediate="true"/>
                 <br />
                 <br />
-                <h:link outcome="/index" value="#{messages.EditObjectStatusIndexLink}" />
+                <h:link outcome="/admin/index" value="#{messages.EditObjectStatusIndexLink}" />
             </h:form>
         </ui:define>
     </ui:composition>

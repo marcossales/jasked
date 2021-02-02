@@ -5,7 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="/admin/template.xhtml">
         <ui:define name="title">
             <h:outputText value="#{messages.ListQuestionTitle}"></h:outputText>
         </ui:define>
@@ -66,7 +66,7 @@
                 <h:commandLink action="#{questionController.prepareCreate}" value="#{messages.ListQuestionCreateLink}"/>
                 <br />
                 <br />
-                <h:link outcome="/index" value="#{messages.ListQuestionIndexLink}"/>
+                <h:link outcome="/admin/index" value="#{messages.ListQuestionIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>
