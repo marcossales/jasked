@@ -16,7 +16,7 @@
             <h:form>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="#{messages.CreateFaqSiteLabel_id}" for="id" />
-                    <h:inputText id="id" value="#{faqSiteController.selected.id}" title="#{messages.CreateFaqSiteTitle_id}" />
+                    <h:inputText id="id" value="#{faqSiteController.selected.id}" title="#{messages.CreateFaqSiteTitle_id}" disabled="true"/>
                     <h:outputLabel value="#{messages.CreateFaqSiteLabel_name}" for="name" />
                     <h:inputText id="name" value="#{faqSiteController.selected.name}" title="#{messages.CreateFaqSiteTitle_name}" />
                     <h:outputLabel value="#{messages.CreateFaqSiteLabel_path}" for="path" />
