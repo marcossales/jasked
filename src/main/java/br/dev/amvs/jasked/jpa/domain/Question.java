@@ -132,7 +132,7 @@ public class Question implements Serializable {
 
     @Override
     public String toString() {
-        return "br.dev.amvs.jasked.jpa.domain.Question[ id=" + id + " ]";
+        return this.getWording();
     }
     
 }
