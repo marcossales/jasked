@@ -52,8 +52,11 @@ public class PublicViewingController {
         return ResourceBundle.getBundle("/Messages").getString("PublicIndexPage_selectFaqMessage");
     }
     
-     public SelectItem[] getPublishedFaqSitesSelectOne() {
+    public SelectItem[] getPublishedFaqSitesSelectOne() {
         return JsfUtil.getSelectItems(this.publishedFaqs, false);
+    }
+    public List<FaqSite> getPublishedFaqSites() {
+    	return this.publishedFaqs; 
     }
      
     public String getNoPublishedItemsMessage() {
