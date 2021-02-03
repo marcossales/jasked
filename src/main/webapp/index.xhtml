@@ -14,8 +14,9 @@
     </h:head>
     <h:body>
         <h:panelGroup rendered="#{publicViewingController.currentFaqPathEmpty}">
+         <div>
             <header>
-                <h1><h:outputText value="#{publicViewingController.indexPageHeaderTitle}"/></h1>
+                <h1><h:outputText value="#{publicViewingController.indexPageAllPublishedFaqMessage}"/></h1>
             </header>
 
             <main>
@@ -42,9 +43,30 @@
             <footer>
 
             </footer>
+          </div>
         </h:panelGroup>
         <h:panelGroup rendered="#{!publicViewingController.currentFaqPathEmpty}">
-            <h:outputText  value="Faq selecionado:#{publicViewingController.currentFaqPath}"/>
+            
+            <div>
+               <header>
+                   <h1><h:outputText value="#{publicViewingController.currentFaqPath}"/></h1>
+                </header>
+                <main>
+		            <ui:repeat value="#{publicViewingController.questionCategories}" var="categ">
+		                <div> 
+			               <div>
+			                  <h3><h:outputText value="#{categ.name}"/></h3>
+			               </div>
+			               <div>
+			                  <h:outputText value="... Questions from #{categ.name} here! ..."/>
+			               </div>
+			           </div>
+		            </ui:repeat>
+	            </main>
+	            <footer>
+
+                </footer>
+            </div>
         </h:panelGroup>
     </h:body>
     </f:view>

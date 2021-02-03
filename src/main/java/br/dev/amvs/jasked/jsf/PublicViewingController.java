@@ -6,6 +6,7 @@
 package br.dev.amvs.jasked.jsf;
 
 import br.dev.amvs.jasked.jpa.domain.FaqSite;
+import br.dev.amvs.jasked.jpa.domain.QuestionCategory;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 
 import java.util.List;
@@ -28,6 +29,8 @@ public class PublicViewingController {
    
     @EJB
     private br.dev.amvs.jasked.sessionbeans.FaqSiteFacade ejbFaqSiteFacade;
+    @EJB
+    private br.dev.amvs.jasked.sessionbeans.QuestionCategoryFacade ejbQuestionCategoryFacade;
 
 	private List<FaqSite> publishedFaqs;
     /**
@@ -45,8 +48,8 @@ public class PublicViewingController {
         return ResourceBundle.getBundle("/Messages").getString("PublicIndexPage_title");
     }
     
-    public String getIndexPageHeaderTitle(){
-        return ResourceBundle.getBundle("/Messages").getString("PublicIndexPage_headerTitle");
+    public String getIndexPageAllPublishedFaqMessage(){
+        return ResourceBundle.getBundle("/Messages").getString("PublicIndexPage_allPublishedFaq");
     }
     public String getSelectFaqMessage(){
         return ResourceBundle.getBundle("/Messages").getString("PublicIndexPage_selectFaqMessage");
@@ -72,6 +75,12 @@ public class PublicViewingController {
     public void setCurrentFaqPath(String currentFaqPath) {
         this.currentFaqPath = currentFaqPath;
     }
+    
+    public List<QuestionCategory> getQuestionCategories(){
+    	List<QuestionCategory> categories = ejbQuestionCategoryFacade.findByFaqPath(this.currentFaqPath,true);
+    	return categories;
+    }
+    
     
     public boolean isCurrentFaqPathEmpty(){
         if(this.currentFaqPath==null || "".equals(this.currentFaqPath)){
