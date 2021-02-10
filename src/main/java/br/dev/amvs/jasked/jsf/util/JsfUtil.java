@@ -1,6 +1,7 @@
 package br.dev.amvs.jasked.jsf.util;
 
 import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -52,7 +53,8 @@ public class JsfUtil {
         return FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get(key);
     }
 
-    public static Object getObjectFromRequestParameter(String requestParameterName, Converter converter, UIComponent component) {
+    @SuppressWarnings("rawtypes")
+	public static Object getObjectFromRequestParameter(String requestParameterName, Converter converter, UIComponent component) {
         String theId = JsfUtil.getRequestParameter(requestParameterName);
         return converter.getAsObject(FacesContext.getCurrentInstance(), component, theId);
     }

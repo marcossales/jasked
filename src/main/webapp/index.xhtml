@@ -52,15 +52,22 @@
                    <h1><h:outputText value="#{publicViewingController.currentFaqPath}"/></h1>
                 </header>
                 <main>
-		            <ui:repeat value="#{publicViewingController.questionCategories}" var="categ">
-		                <div> 
-			               <div>
-			                  <h3><h:outputText value="#{categ.name}"/></h3>
-			               </div>
-			               <div>
-			                  <h:outputText value="... Questions from #{categ.name} here! ..."/>
-			               </div>
-			           </div>
+		            <ui:repeat value="#{publicViewingController.questionCategoriesWithQuestions}" var="categ">
+			             <h:panelGroup rendered="#{not empty categ.questionCollection}" >
+			                <div> 
+				               <div>
+				                  <h3><h:outputText value="#{categ.name}"/></h3>
+				               </div>
+				               <div>
+				                  <dl>
+					                  <ui:repeat var="q" value="#{categ.questionCollection}">
+					                    <dt><h:outputText value="#{q.wording}"/></dt>
+					                    <dd><h:outputText value="#{q.answer}"/></dd>
+					                  </ui:repeat>
+				                  </dl>
+				               </div>
+				           </div>
+				         </h:panelGroup>
 		            </ui:repeat>
 	            </main>
 	            <footer>

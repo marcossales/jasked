@@ -13,7 +13,8 @@ public abstract class PaginationHelper {
 
     public abstract int getItemsCount();
 
-    public abstract DataModel createPageDataModel();
+    @SuppressWarnings("rawtypes")
+	public abstract DataModel createPageDataModel();
 
     public int getPageFirstItem() {
         return page * pageSize;

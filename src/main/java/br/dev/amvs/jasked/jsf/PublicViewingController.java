@@ -6,6 +6,7 @@
 package br.dev.amvs.jasked.jsf;
 
 import br.dev.amvs.jasked.jpa.domain.FaqSite;
+import br.dev.amvs.jasked.jpa.domain.Question;
 import br.dev.amvs.jasked.jpa.domain.QuestionCategory;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 
@@ -31,6 +32,8 @@ public class PublicViewingController {
     private br.dev.amvs.jasked.sessionbeans.FaqSiteFacade ejbFaqSiteFacade;
     @EJB
     private br.dev.amvs.jasked.sessionbeans.QuestionCategoryFacade ejbQuestionCategoryFacade;
+    @EJB
+    private br.dev.amvs.jasked.sessionbeans.QuestionFacade ejbQuestionFacade;
 
 	private List<FaqSite> publishedFaqs;
     /**
@@ -78,6 +81,16 @@ public class PublicViewingController {
     
     public List<QuestionCategory> getQuestionCategories(){
     	List<QuestionCategory> categories = ejbQuestionCategoryFacade.findByFaqPath(this.currentFaqPath,true);
+    	return categories;
+    }
+    
+    public List<QuestionCategory> getQuestionCategoriesWithQuestions(){
+    	List<QuestionCategory> categories = ejbQuestionCategoryFacade.findByFaqPath(this.currentFaqPath,true);
+    	for(QuestionCategory qc: categories) {
+    		List<Question> questions = ejbQuestionFacade.findByCategory(qc,true);
+    		qc.setQuestionCollection(questions);
+    	}
+    	
     	return categories;
     }
     

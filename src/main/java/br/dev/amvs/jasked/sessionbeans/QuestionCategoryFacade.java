@@ -5,9 +5,6 @@
  */
 package br.dev.amvs.jasked.sessionbeans;
 
-import br.dev.amvs.jasked.jpa.domain.FaqSite;
-import br.dev.amvs.jasked.jpa.domain.QuestionCategory;
-
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -15,6 +12,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+
+import br.dev.amvs.jasked.jpa.domain.QuestionCategory;
 
 /**
  *
