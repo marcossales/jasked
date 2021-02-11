@@ -1,0 +1,53 @@
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+<f:view>
+	<f:event type="preRenderView"
+		listener="#{publicViewingController.preRenderView}" />
+	<h:head>
+		<ui:insert name="pageMetaData">
+
+			<!-- include your f:metadata-->
+
+		</ui:insert>
+		<title><ui:insert name="pageTitle">
+				<!-- include your page title-->
+			</ui:insert></title>
+	</h:head>
+
+	<h:body>
+
+
+		<header id="pageHeader">
+			<ui:insert name="pageHeader">
+    	Header area.  See comments below this line in the source.
+    	<!--  include your header file or uncomment the include below and create header.xhtml in this directory -->
+				<!-- <ui:include src="header.xhtml"/> -->
+			</ui:insert>
+		</header>
+
+
+		<main id="pageMain">
+			<ui:insert name="pageMain">
+    	Content area.  See comments below this line in the source.
+    	<!--  include your content file or uncomment the include below and create content.xhtml in this directory -->
+				<!-- <div> -->
+				<!-- <ui:include src="content.xhtml"/> -->
+				<!-- </div> -->
+			</ui:insert>
+		</main>
+
+		<footer id="pageFooter">
+			<ui:insert name="pageFooter">
+    	Footer area.  See comments below this line in the source.
+    	<!--  include your header file or uncomment the include below and create footer.xhtml in this directory -->
+				<!--<ui:include src="footer.xhtml"/>  -->
+			</ui:insert>
+		</footer>
+
+	</h:body>
+</f:view>
+</html>
