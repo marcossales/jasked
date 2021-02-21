@@ -9,6 +9,9 @@ import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
 
 public class JsfUtil {
+	
+	
+	public static final  String LOGGEDIN_USERNAME_SESSION_ATTRIBUTE= "JASKED_USERNAME";
 
     public static SelectItem[] getSelectItems(List<?> entities, boolean selectOne) {
         int size = selectOne ? entities.size() + 1 : entities.size();

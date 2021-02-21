@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/loggedOutTemplate.xhtml">
+
+
+
+	<ui:define name="pageHeader">
+		<h1>
+			<h:outputText value="#{loginController.pageTitle}"></h:outputText>
+		</h1>
+	</ui:define>
+
+
+
+	<ui:define name="pageMain">
+		<div id="login-dialog">
+
+			<h:form id="frm">
+				<h:messages />
+				
+					<h:outputLabel value="#{loginController.userNameFieldLabel}" for="username_input" /><br/>
+					<h:inputText id="username_input" size="20"	value="#{loginController.userName}" /><br/>
+					<h:outputLabel value="#{loginController.passwordFieldLabel}" for="pass" /><br/>
+					<h:inputSecret id="pass" size="20"	value="#{loginController.password}" /><br/><br/>
+					<h:commandButton value="#{loginController.loginButtonLabel}"
+						action="#{loginController.login}" />
+				
+			</h:form>
+		</div>
+
+	</ui:define>
+
+
+	<ui:define name="pageFooter">
+
+	</ui:define>
+
+</ui:composition>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition>
+	
+	<div id="userbar">
+	   <div>
+	   		<h:outputText value="#{sessionInfoController.welcomeGreeting}, #{sessionInfoController.userInSession}"/>
+	   </div>
+	   <div >
+		   <h:form>
+		      <h:commandLink value="#{sessionInfoController.logoutButtonLabel}" action="#{sessionInfoController.logout}"></h:commandLink>
+		   </h:form>
+	   </div>
+	</div>
+</ui:composition>
+
+</html>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/admin/loggedInTemplate.xhtml">
+       
+        <ui:define name="pageTitle">
+            <h:outputText value="#{messages.ListSessionDataTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="pageMain">
+           <h:outputText value="#{messages.ListSessionDataTitle}"></h:outputText>
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{messages.ListSessionDataEmpty}" rendered="#{sessionDataController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{sessionDataController.items.rowCount > 0}">
+                    <h:outputText value="#{sessionDataController.pagination.pageFirstItem + 1}..#{sessionDataController.pagination.pageLastItem + 1}/#{sessionDataController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{sessionDataController.previous}" value="#{messages.Previous} #{sessionDataController.pagination.pageSize}" rendered="#{sessionDataController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{sessionDataController.next}" value="#{messages.Next} #{sessionDataController.pagination.pageSize}" rendered="#{sessionDataController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{sessionDataController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{messages.ListSessionDataTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sessionId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{messages.ListSessionDataTitle_userName}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.userName}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{messages.ListSessionDataTitle_loginTime}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.loginDateTime}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{messages.ListSessionDataTitle_remoteHost}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.remoteHost}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <span><!--  some operations here--></span>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{sessionDataController.refresh}" value="#{messages.ListSessionDataTitle_refresh}"/>
+                <br />
+                <br />
+                <h:link outcome="/admin/index" value="#{messages.ListSessionDataIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -5,8 +5,7 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html">
 
 <f:view>
-	<f:event type="preRenderView"
-		listener="#{publicViewingController.preRenderView}" />
+	
 	<h:head>
 	    <meta charset="UTF-8" />
 		<ui:insert name="pageMetaData">
@@ -17,6 +16,7 @@
 		<title><ui:insert name="pageTitle">
 				<!-- include your page title-->
 			</ui:insert></title>
+	   <h:outputStylesheet library="css" name="admin/jsfcrud.css"/>
 	</h:head>
 
 	<h:body>
@@ -24,9 +24,7 @@
 
 		<header id="pageHeader">
 			<ui:insert name="pageHeader">
-    	Header area.  See comments below this line in the source.
-    	<!--  include your header file or uncomment the include below and create header.xhtml in this directory -->
-				<!-- <ui:include src="header.xhtml"/> -->
+				<ui:include src="/admin/includes/userBar.xhtml"></ui:include>
 			</ui:insert>
 		</header>
 
@@ -52,3 +50,4 @@
 	</h:body>
 </f:view>
 </html>
+

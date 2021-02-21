@@ -3,9 +3,9 @@ JAsked. A FAQ manager system
 
 ##Version Notes
 
-**Version 0.0.1**
+**Version 0.0.2**
 
-Very simple. Basic operations. No user control, no CSS customization and no internationalization.
+Very simple. Basic operations. Basic user control. No CSS customization and no internationalization.
 
 There is a database model dump at sr/main/sqldump/
 
@@ -35,8 +35,6 @@ The Wildfly Application Server have to be configured for posgresql connection. T
             
 
 ##Next steps at development:
-
-User control for administrative area;
 
 CSS customization;
 

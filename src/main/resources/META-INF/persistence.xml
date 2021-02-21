@@ -9,5 +9,9 @@
     <class>br.dev.amvs.jasked.jpa.domain.ObjectStatus</class>
     <class>br.dev.amvs.jasked.jpa.domain.FaqSite</class>
     <class>br.dev.amvs.jasked.jpa.domain.QuestionCategory</class>
+    <class>br.dev.amvs.jasked.jpa.domain.Role</class>
+    <class>br.dev.amvs.jasked.jpa.domain.User</class>
+    <class>br.dev.amvs.jasked.jpa.domain.Permission</class>
+    <class>br.dev.amvs.jasked.jpa.domain.PermissionPK</class>
   </persistence-unit>
 </persistence>

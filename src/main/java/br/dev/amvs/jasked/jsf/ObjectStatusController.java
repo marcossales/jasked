@@ -1,14 +1,9 @@
 package br.dev.amvs.jasked.jsf;
 
-import br.dev.amvs.jasked.jpa.domain.ObjectStatus;
-import br.dev.amvs.jasked.jsf.util.JsfUtil;
-import br.dev.amvs.jasked.jsf.util.PaginationHelper;
-import br.dev.amvs.jasked.sessionbeans.ObjectStatusFacade;
-
 import java.io.Serializable;
 import java.util.ResourceBundle;
+
 import javax.ejb.EJB;
-import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -17,13 +12,24 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.inject.Named;
+
+import br.dev.amvs.jasked.jpa.domain.ObjectStatus;
+import br.dev.amvs.jasked.jsf.util.JsfUtil;
+import br.dev.amvs.jasked.jsf.util.PaginationHelper;
+import br.dev.amvs.jasked.sessionbeans.ObjectStatusFacade;
 
 @Named("objectStatusController")
 @SessionScoped
 public class ObjectStatusController implements Serializable {
 
-    private ObjectStatus current;
-    private DataModel items = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private ObjectStatus current;
+    @SuppressWarnings("rawtypes")
+	private DataModel items = null;
     @EJB
     private br.dev.amvs.jasked.sessionbeans.ObjectStatusFacade ejbFacade;
     private PaginationHelper pagination;
@@ -53,7 +59,8 @@ public class ObjectStatusController implements Serializable {
                     return getFacade().count();
                 }
 
-                @Override
+                @SuppressWarnings({ "rawtypes", "unchecked" })
+				@Override
                 public DataModel createPageDataModel() {
                     return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
                 }
@@ -153,7 +160,8 @@ public class ObjectStatusController implements Serializable {
         }
     }
 
-    public DataModel getItems() {
+    @SuppressWarnings("rawtypes")
+	public DataModel getItems() {
         if (items == null) {
             items = getPagination().createPageDataModel();
         }
@@ -192,7 +200,8 @@ public class ObjectStatusController implements Serializable {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = ObjectStatus.class)
+    @SuppressWarnings("rawtypes")
+	@FacesConverter(forClass = ObjectStatus.class)
     public static class ObjectStatusControllerConverter implements Converter {
 
         @Override

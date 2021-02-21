@@ -1,14 +1,9 @@
 package br.dev.amvs.jasked.jsf;
 
-import br.dev.amvs.jasked.jpa.domain.QuestionCategory;
-import br.dev.amvs.jasked.jsf.util.JsfUtil;
-import br.dev.amvs.jasked.jsf.util.PaginationHelper;
-import br.dev.amvs.jasked.sessionbeans.QuestionCategoryFacade;
-
 import java.io.Serializable;
 import java.util.ResourceBundle;
+
 import javax.ejb.EJB;
-import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -17,13 +12,21 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.inject.Named;
 
+import br.dev.amvs.jasked.jpa.domain.QuestionCategory;
+import br.dev.amvs.jasked.jsf.util.JsfUtil;
+import br.dev.amvs.jasked.jsf.util.PaginationHelper;
+import br.dev.amvs.jasked.sessionbeans.QuestionCategoryFacade;
+
+@SuppressWarnings("serial")
 @Named("questionCategoryController")
 @SessionScoped
 public class QuestionCategoryController implements Serializable {
 
     private QuestionCategory current;
-    private DataModel items = null;
+    @SuppressWarnings("rawtypes")
+	private DataModel items = null;
     @EJB
     private br.dev.amvs.jasked.sessionbeans.QuestionCategoryFacade ejbFacade;
     private PaginationHelper pagination;
@@ -53,7 +56,8 @@ public class QuestionCategoryController implements Serializable {
                     return getFacade().count();
                 }
 
-                @Override
+                @SuppressWarnings({ "rawtypes", "unchecked" })
+				@Override
                 public DataModel createPageDataModel() {
                     return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
                 }
@@ -153,7 +157,8 @@ public class QuestionCategoryController implements Serializable {
         }
     }
 
-    public DataModel getItems() {
+    @SuppressWarnings("rawtypes")
+	public DataModel getItems() {
         if (items == null) {
             items = getPagination().createPageDataModel();
         }
@@ -192,7 +197,8 @@ public class QuestionCategoryController implements Serializable {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = QuestionCategory.class)
+    @SuppressWarnings("rawtypes")
+	@FacesConverter(forClass = QuestionCategory.class)
     public static class QuestionCategoryControllerConverter implements Converter {
 
         @Override
