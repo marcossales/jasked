@@ -12,6 +12,7 @@ import br.dev.amvs.jasked.exception.DatabaseException;
 import br.dev.amvs.jasked.exception.UnexpectedBehaivorException;
 import br.dev.amvs.jasked.jpa.domain.User;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
+import br.dev.amvs.jasked.security.util.SecurityUtil;
 import br.dev.amvs.jasked.sessionbeans.UserFacade;
 
 @Named("loginController")
@@ -63,7 +64,7 @@ public class LoginController implements Serializable {
     	
     		User found;
 			try {
-				found = getFacade().findByUserNameAndPassword(username, passwd);
+				found = getFacade().findByUserNameAndPassword(username, SecurityUtil.passwordHash(passwd));
 				return found;
 			} catch (DatabaseException e) {
 				e.printStackTrace();
