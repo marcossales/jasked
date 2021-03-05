@@ -12,10 +12,22 @@ public class SecurityUtil {
 	}
     
     public static String passwordHash(String pass) throws UnexpectedBehaivorException {
+    	if(pass==null || pass.length()==0) {
+    		return null;
+    	}
     	HashMaker maker = getDefaultPasswordHashMaker();
     	return maker.hashAsString(pass);
     	
     }
+    public static String passwordHash(char[] pass) throws UnexpectedBehaivorException {
+    	if(pass==null || pass.length==0) {
+    		return null;
+    	}
+    	HashMaker maker = getDefaultPasswordHashMaker();
+    	return maker.hashAsString(new String(pass));
+    	
+    }
+  
     
 
 }

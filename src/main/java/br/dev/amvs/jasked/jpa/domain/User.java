@@ -2,6 +2,8 @@ package br.dev.amvs.jasked.jpa.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 /**
@@ -20,17 +22,26 @@ public class User implements Serializable {
 
 	private String email;
 
+	@Size(min = 1)
+	@NotNull
 	@Column(name="first_name")
 	private String firstName;
 
 	@Column(name="last_name")
 	private String lastName;
 
+	@Size(min = 3)
+	@NotNull
 	@Column(name="user_name")
 	private String userName;
 	
+	@NotNull
+	@Size(min = 8)
 	@Column(name="password")
 	private String password;
+
+	
+	
 
 	@Column(name="super_user")
 	private boolean superUser;
@@ -98,6 +109,10 @@ public class User implements Serializable {
 	public void setSuperUser(boolean superUser) {
 		this.superUser = superUser;
 	}
+	
+	
+
+	
 
 	@Override
 	public int hashCode() {

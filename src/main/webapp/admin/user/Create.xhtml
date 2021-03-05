@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/admin/loggedInTemplate.xhtml">
+        <ui:define name="pageTitle">
+            <h:outputText value="#{messages.CreateUserTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="pageMain">
+            <h:outputText value="#{messages.CreateUserTitle}"></h:outputText>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{messages.CreateUserLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{userController.selected.id}" title="#{messages.CreateUserTitle_id}" disabled="true"/>
+                    <h:outputLabel value="#{messages.CreateUserLabel_userName}" for="username" />
+                    <h:inputText id="username" value="#{userController.selected.userName}" title="#{messages.CreateUserTitle_userName}" />
+                    <h:outputLabel value="#{messages.CreateUserLabel_firstName}" for="firstname" />
+                    <h:inputText id="firstname" value="#{userController.selected.firstName}" title="#{messages.CreateUserTitle_firstName}" />
+                    <h:outputLabel value="#{messages.CreateUserLabel_lastName}" for="lastname" />
+                    <h:inputText id="lastname" value="#{userController.selected.lastName}" title="#{messages.CreateUserTitle_lastName}" />
+                     <h:outputLabel value="#{messages.CreateUserLabel_email}" for="email" /> 
+                    <h:inputText id="email" value="#{userController.selected.email}" title="#{messages.CreateUserTitle_email}" />
+                     <h:outputLabel value="#{messages.CreateUserLabel_superUser}" for="superuser" />
+                    <h:selectBooleanCheckbox id="superuser" value="#{userController.selected.superUser}" title="#{messages.CreateUserTitle_superUser}" converter="javax.faces.Boolean"/>
+                   <h:outputLabel value="#{messages.CreateUserLabel_password}" for="password" /> 
+                    <h:inputSecret id="password" value="#{userController.selected.password}"  title="#{messages.CreateUserTitle_password}" />
+                     <h:outputLabel value="#{messages.CreateUserLabel_permissions}" for="permissions" />
+                    <h:selectManyListbox id="permissions" title="#{messages.CreateUserTitle_permissions}"></h:selectManyListbox>
+                    
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{userController.create}" value="#{messages.CreateUserSaveLink}" /> 
+                <br />
+                <br />
+                <h:commandLink action="#{userController.prepareList}" value="#{messages.CreateUserShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/admin/index" value="#{messages.CreateUserIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

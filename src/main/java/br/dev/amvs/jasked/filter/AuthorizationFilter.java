@@ -26,6 +26,11 @@ public class AuthorizationFilter implements Filter {
 		if (    !isUsuarioLogado(request.getSession()) 
 				&& request.getRequestURI().contains("/admin/")
 				/*&& !request.getRequestURI().contains("/javax.faces.resource/")*/) {
+			
+			//TODO: remember  filter pages only for superuser (if people try access it directly from URL)
+			
+			//TODO: remember  filter pages only for some permission (if people try access it directly from URL)
+			
 			response.sendRedirect(request.getContextPath() + "/Login.xhtml");
 		} else {
 			chain.doFilter(req, res);

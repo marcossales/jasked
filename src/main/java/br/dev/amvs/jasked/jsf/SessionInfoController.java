@@ -79,6 +79,17 @@ public class SessionInfoController implements Serializable{
 		}
 		
 	}
+	public boolean isAllowedToListUsers() {
+		try {
+			User user = userFacade.findByUserName(getUserInSession());
+			return user.isSuperUser();
+			
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+			return false; //TODO  make better,maybe throw an UnexpectedBeahivorException and intercept it in some layer
+		}
+		
+	}
 	
 
 }
