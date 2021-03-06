@@ -30,8 +30,7 @@
                     <h:selectBooleanCheckbox id="superuser" value="#{userController.selected.superUser}" title="#{messages.CreateUserTitle_superUser}" converter="javax.faces.Boolean"/>
                    <h:outputLabel value="#{messages.CreateUserLabel_password}" for="password" /> 
                     <h:inputSecret id="password" value="#{userController.selected.password}"  title="#{messages.CreateUserTitle_password}" />
-                     <h:outputLabel value="#{messages.CreateUserLabel_permissions}" for="permissions" />
-                    <h:selectManyListbox id="permissions" title="#{messages.CreateUserTitle_permissions}"></h:selectManyListbox>
+                    
                     
                 </h:panelGrid>
                 <br />

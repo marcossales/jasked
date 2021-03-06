@@ -1,6 +1,8 @@
 package br.dev.amvs.jasked.jsf;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
@@ -14,6 +16,7 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
 
+import br.dev.amvs.jasked.jpa.domain.Permission;
 import br.dev.amvs.jasked.jpa.domain.User;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 import br.dev.amvs.jasked.jsf.util.PaginationHelper;
@@ -33,8 +36,13 @@ public class UserController implements Serializable {
 	private DataModel items = null;
     @EJB
     private br.dev.amvs.jasked.sessionbeans.UserFacade ejbFacade;
+   
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    
+    @EJB
+    private br.dev.amvs.jasked.sessionbeans.PermissionFacade permissionEjbFacade;
+	private List<Permission> permissions;
     
     
     
@@ -49,6 +57,13 @@ public class UserController implements Serializable {
             selectedItemIndex = -1;
         }
         return current;
+    }
+    
+    public List<Permission> getPermissions(){
+        if(permissions==null) {
+        	permissions = new ArrayList<Permission>(); 
+        }
+    	return permissions;
     }
 
     private UserFacade getFacade() {
@@ -106,6 +121,9 @@ public class UserController implements Serializable {
     public String prepareEdit() {
         current = (User) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        
+        permissions = 	 permissionEjbFacade.findByUser(current);
+        
         return "Edit";
     }
 
@@ -208,7 +226,7 @@ public class UserController implements Serializable {
     }
     
     
-
+   
     
 
 

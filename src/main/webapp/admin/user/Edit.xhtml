@@ -9,6 +9,9 @@
         <ui:define name="pageTitle">
             <h:outputText value="#{messages.EditUserTitle}"></h:outputText>
         </ui:define>
+        <ui:define name="scripts">
+           <h:outputScript library="javascripts" name="admin/popupPermission.js"></h:outputScript>
+        </ui:define>
         <ui:define name="pageMain">
             <h:outputText value="#{messages.EditUserTitle}"></h:outputText>
             <h:panelGroup id="messagePanel" layout="block">
@@ -30,11 +33,41 @@
                     <h:selectBooleanCheckbox id="superuser" value="#{userController.selected.superUser}" title="#{messages.EditUserTitle_superUser}" converter="javax.faces.Boolean"/>
                     <h:outputLabel value="#{messages.EditUserLabel_password}" for="password" /> 
                     <h:inputSecret id="password" value="#{userController.selected.password}"  title="#{messages.EditUserTitle_password}" />
-                    <h:outputLabel value="#{messages.EditUserLabel_permissions}" for="permissions" />
-                    <h:selectManyListbox id="permissions" title="#{messages.EditUserTitle_permissions}"/>  
-                    
                     
                 </h:panelGrid>
+                <br/>
+                <h2><h:outputText value="#{messages.EditUserLabel_permissions}"/> </h2>
+                <br/>
+                <h:commandLink  value="#{messages.EditUserCreatePermissionLink}"   onclick="doPermissionPopup(this);return false;"/><br/>
+                
+                <h:dataTable  value="#{userController.permissions}"   var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        
+                        
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{messages.ListPermissionTitle_faqSite}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id.faqSiteId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{messages.ListPermissionTitle_role}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id.roleId}"/>
+                        </h:column>
+                        
+                         <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink  value="#{messages.ListPermissionViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink  value="#{messages.ListPermissionEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink  value="#{messages.ListPermissionDestroyLink}"/>
+                        </h:column>    
+                </h:dataTable>
+                
                 <h:commandLink action="#{userController.update}" value="#{messages.EditUserSaveLink}"/>
                 <br />
                 <br />
@@ -44,6 +77,13 @@
                 <br />
                 <br />
                 <h:link outcome="/admin/index" value="#{messages.EditUserIndexLink}" />
+            </h:form>
+            
+            <!-- hidden form , because popup -->
+            <h:form id="hiddenPopForm" target="popup">
+               <h:inputHidden id="popPermission" value="#{userController.selected}"/>
+               <h:inputHidden id="popRole" value="#{userController.selected}"/>
+               
             </h:form>
         </ui:define>
     </ui:composition>
