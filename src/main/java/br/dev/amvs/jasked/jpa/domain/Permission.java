@@ -16,6 +16,17 @@ public class Permission implements Serializable {
 
 	@EmbeddedId
 	private PermissionPK id;
+	
+	
+	@Transient
+	private User user;
+	@Transient
+	private FaqSite faqSite;
+	@Transient
+	private Role role;
+	
+
+	
 
 	public Permission() {
 	}
@@ -54,7 +65,30 @@ public class Permission implements Serializable {
 	}
 
 
-	
+	//getter and setter form Transient fields
+	public User getTransientUser() {
+		return user;
+	}
+
+	public void setTransientUser(User user) {
+		this.user = user;
+	}
+
+	public FaqSite getTransientFaqSite() {
+		return faqSite;
+	}
+
+	public void setTransientFaqSite(FaqSite faSite) {
+		this.faqSite = faSite;
+	}
+
+	public Role getTransientRole() {
+		return role;
+	}
+
+	public void setTransientRole(Role role) {
+		this.role = role;
+	}
 	
 	
 

@@ -47,13 +47,13 @@
                             <f:facet name="header">
                                 <h:outputText value="#{messages.ListPermissionTitle_faqSite}"/>
                             </f:facet>
-                            <h:outputText value="#{item.id.faqSiteId}"/>
+                            <h:outputText value="#{item.transientFaqSite.name}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{messages.ListPermissionTitle_role}"/>
                             </f:facet>
-                            <h:outputText value="#{item.id.roleId}"/>
+                            <h:outputText value="#{item.transientRole.name}"/>
                         </h:column>
                         
                          <h:column>
