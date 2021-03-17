@@ -68,19 +68,19 @@ public class SessionInfoController implements Serializable{
 		return ResourceBundle.getBundle("/Messages").getString("UserBar_welcomeGreeting");
 	}
 	
-	public boolean isAllowedToListOpenSessions() {
+	public boolean isAllowedToManageOpenSessions() {
 		return isSuperUser();
 		
 	}
-	public boolean isAllowedToListUsers() {
+	public boolean isAllowedToManageUsers() {
 		return isSuperUser();
 		
 	}
 	
-	public boolean isAllowedToListPermissions() {
+	public boolean isAllowedToManagePermissions() {
 		return isSuperUser();
 	}
-	public boolean isAllowedToListObjectStatus() {
+	public boolean isAllowedToManageObjectStatus() {
 		return isSuperUser();
 	}
 	
