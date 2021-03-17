@@ -80,6 +80,9 @@ public class SessionInfoController implements Serializable{
 	public boolean isAllowedToListPermissions() {
 		return isSuperUser();
 	}
+	public boolean isAllowedToListObjectStatus() {
+		return isSuperUser();
+	}
 	
 	public boolean isSuperUser() {
 		try {
