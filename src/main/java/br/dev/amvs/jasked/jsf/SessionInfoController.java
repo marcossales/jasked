@@ -69,17 +69,19 @@ public class SessionInfoController implements Serializable{
 	}
 	
 	public boolean isAllowedToListOpenSessions() {
-		try {
-			User user = userFacade.findByUserName(getUserInSession());
-			return user.isSuperUser();
-			
-		} catch (DatabaseException e) {
-			e.printStackTrace();
-			return false; //TODO  make better,maybe throw an UnexpectedBeahivorException and intercept it in some layer
-		}
+		return isSuperUser();
 		
 	}
 	public boolean isAllowedToListUsers() {
+		return isSuperUser();
+		
+	}
+	
+	public boolean isAllowedToListPermissions() {
+		return isSuperUser();
+	}
+	
+	public boolean isSuperUser() {
 		try {
 			User user = userFacade.findByUserName(getUserInSession());
 			return user.isSuperUser();
@@ -88,7 +90,6 @@ public class SessionInfoController implements Serializable{
 			e.printStackTrace();
 			return false; //TODO  make better,maybe throw an UnexpectedBeahivorException and intercept it in some layer
 		}
-		
 	}
 	
 

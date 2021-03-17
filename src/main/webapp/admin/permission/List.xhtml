@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/admin/loggedInTemplate.xhtml">
+        <ui:define name="pageTitle">
+            <h:outputText value="#{messages.ListPermissionTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="pageMain">
+            <h:outputText value="#{messages.ListPermissionTitle}"></h:outputText>
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{messages.ListPermissionEmpty}" rendered="#{permissionController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{permissionController.items.rowCount > 0}">
+                    <h:outputText value="#{permissionController.pagination.pageFirstItem + 1}..#{permissionController.pagination.pageLastItem + 1}/#{permissionController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{permissionController.previous}" value="#{messages.Previous} #{permissionController.pagination.pageSize}" rendered="#{permissionController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{permissionController.next}" value="#{messages.Next} #{permissionController.pagination.pageSize}" rendered="#{permissionController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{permissionController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{messages.ListPermissionTitle_user}"/> 
+                            </f:facet>
+                            <h:outputText value="#{item.transientUser.userName}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{messages.ListPermissionTitle_faqSite}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.transientFaqSite.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{messages.ListPermissionTitle_role}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.transientRole.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{permissionController.prepareView}" value="#{messages.ListPermissionViewLink}"/>
+                            <ui:remove>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{permissionController.prepareEdit}" value="#{messages.ListPermissionEditLink}"/>
+                            </ui:remove>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{permissionController.destroy}" value="#{messages.ListPermissionDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{permissionController.prepareCreate}" value="#{messages.ListPermissionCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/admin/index" value="#{messages.ListPermissionIndexLink}"/> 
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

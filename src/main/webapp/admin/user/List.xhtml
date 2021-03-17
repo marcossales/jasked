@@ -57,19 +57,14 @@
                             </f:facet>
                             <h:outputText value="#{item.superUser}" converter="javax.faces.Boolean"/>
                         </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{messages.ListUserTitle_permissions}"/> 
-                            </f:facet>
-                            <h:outputText value="" />
-                        </h:column>
+                       
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
                             <h:commandLink action="#{userController.prepareView}" value="#{messages.ListUserViewLink}"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{userController.prepareEdit}" value="#{messages.ListUserEditLink}"/>
+                            <h:commandLink action="#{userController.prepareEdit}"  value="#{messages.ListUserEditLink}"/>
                             <h:outputText value=" "/>
                             <h:commandLink action="#{userController.destroy}" value="#{messages.ListUserDestroyLink}"/>
                         </h:column>

@@ -8,10 +8,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
 
-import br.dev.amvs.jasked.exception.UnexpectedBehaivorException;
-import br.dev.amvs.jasked.hash.HashMaker;
-import br.dev.amvs.jasked.hash.Sha512HashMaker;
-
 public class JsfUtil {
 	
 	

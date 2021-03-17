@@ -19,12 +19,15 @@ import br.dev.amvs.jasked.jsf.util.JsfUtil;
 import br.dev.amvs.jasked.jsf.util.PaginationHelper;
 import br.dev.amvs.jasked.sessionbeans.QuestionCategoryFacade;
 
-@SuppressWarnings("serial")
 @Named("questionCategoryController")
 @SessionScoped
 public class QuestionCategoryController implements Serializable {
 
-    private QuestionCategory current;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private QuestionCategory current;
     @SuppressWarnings("rawtypes")
 	private DataModel items = null;
     @EJB

@@ -1,8 +1,6 @@
 package br.dev.amvs.jasked.jsf;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
@@ -16,13 +14,10 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
 
-import br.dev.amvs.jasked.jpa.domain.Permission;
 import br.dev.amvs.jasked.jpa.domain.User;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 import br.dev.amvs.jasked.jsf.util.PaginationHelper;
 import br.dev.amvs.jasked.security.util.SecurityUtil;
-import br.dev.amvs.jasked.sessionbeans.FaqSiteFacade;
-import br.dev.amvs.jasked.sessionbeans.RoleFacade;
 import br.dev.amvs.jasked.sessionbeans.UserFacade;
 
 @Named("userController")
@@ -42,16 +37,6 @@ public class UserController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
     
-    @EJB
-    private br.dev.amvs.jasked.sessionbeans.PermissionFacade permissionEjbFacade;
-	private List<Permission> permissions;
-	
-	@EJB
-    private br.dev.amvs.jasked.sessionbeans.FaqSiteFacade faqSiteEjbFacade;
-	@EJB
-    private br.dev.amvs.jasked.sessionbeans.RoleFacade roleEjbFacade;
-    
-    
     
     
     
@@ -66,22 +51,12 @@ public class UserController implements Serializable {
         return current;
     }
     
-    public List<Permission> getPermissions(){
-        if(permissions==null) {
-        	permissions = new ArrayList<Permission>(); 
-        }
-    	return permissions;
-    }
+    
 
     private UserFacade getFacade() {
         return ejbFacade;
     }
-    private FaqSiteFacade getFaqSiteFacade() {
-        return faqSiteEjbFacade;
-    }
-    private RoleFacade getRoleFacade() {
-        return roleEjbFacade;
-    }
+  
 
     public PaginationHelper getPagination() {
         if (pagination == null) {
@@ -131,25 +106,14 @@ public class UserController implements Serializable {
         }
     }
 
-    public String prepareEdit() {
+   
+    public String prepareEdit() { 
         current = (User) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        
-        permissions = 	 permissionEjbFacade.findByUser(current);
-        populatePermissionsTransientFields(permissions);
-        
-        
         return "Edit";
     }
 
-    private void populatePermissionsTransientFields(List<Permission> permissions) {
-		for(Permission p:permissions) {
-			p.setTransientUser(getFacade().find(p.getId().getUserId()));
-			p.setTransientFaqSite(getFaqSiteFacade().find(p.getId().getFaqSiteId()));
-			p.setTransientRole(getRoleFacade().find(p.getId().getRoleId()));
-		}
-		
-	}
+    
 
 	public String update() {
         try {

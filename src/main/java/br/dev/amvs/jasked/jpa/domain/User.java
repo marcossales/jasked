@@ -140,5 +140,19 @@ public class User implements Serializable {
 		return true;
 	}
 	
+	@Override
+		public String toString() {
+		    StringBuilder sb = new StringBuilder();
+		    sb.append(this.firstName);
+		    if(this.lastName!=null) {
+		    	sb.append(" ");
+		    	sb.append(this.lastName);
+		    }
+		    sb.append(" ( ");
+		    sb.append(this.userName);
+		    sb.append(" ) ");
+			return sb.toString();
+		}
+	
 
 }

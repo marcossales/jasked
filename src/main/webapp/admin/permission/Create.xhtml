@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/admin/loggedInTemplate.xhtml">
+        <ui:define name="pageTitle">
+            <h:outputText value="#{messages.CreatePermissionTitle}"></h:outputText> 
+        </ui:define>
+        <ui:define name="pageMain">
+            <h:outputText value="#{messages.CreatePermissionTitle}"></h:outputText>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{messages.CreatePermissionLabel_user}" for="user" />
+                    <h:selectOneMenu id="user" value="#{permissionController.selected.transientUser}" title="#{messages.CreatePermissionTitle_user}" required="true" requiredMessage="#{messages.CreatePermissionRequiredMessage_user}">
+                        <f:selectItems value="#{userController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu> 
+                   <h:outputLabel value="#{messages.CreatePermissionLabel_faqSite}" for="faSite" />
+                    <h:selectOneMenu id="faqSite" value="#{permissionController.selected.transientFaqSite}" title="#{messages.CreatePermissionTitle_faqSite}" required="true" requiredMessage="#{messages.CreatePermissionRequiredMessage_faqSite}">
+                        <f:selectItems value="#{faqSiteController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                 <h:outputLabel value="#{messages.CreatePermissionLabel_role}" for="role" />
+                    <h:selectOneMenu id="role" value="#{permissionController.selected.transientRole}" title="#{messages.CreatePermissionTitle_role}" required="true" requiredMessage="#{messages.CreatePermissionRequiredMessage_role}">
+                        <f:selectItems value="#{permissionController.roleItemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+    					                   
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{permissionController.create}" value="#{messages.CreatePermissionSaveLink}" /> 
+                <br />
+                <br />
+                <h:commandLink action="#{permissionController.prepareList}" value="#{messages.CreatePermissionShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/admin/index" value="#{messages.CreatePermissionIndexLink}"/>  
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

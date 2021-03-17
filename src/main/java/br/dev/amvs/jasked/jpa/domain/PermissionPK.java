@@ -23,6 +23,11 @@ public class PermissionPK implements Serializable {
 
 	public PermissionPK() {
 	}
+	public PermissionPK(Integer userId, Integer faqSiteId, Integer roleId) {
+		this.userId= userId;
+		this.faqSiteId = faqSiteId;
+		this.roleId = roleId;
+	}
 	public Integer getUserId() {
 		return this.userId;
 	}
@@ -65,4 +70,6 @@ public class PermissionPK implements Serializable {
 		
 		return hash;
 	}
+	
+	
 }

@@ -29,6 +29,8 @@
         <h:link outcome="sessionData/List" value="Show All Open Sessions" rendered="#{sessionInfoController.allowedToListOpenSessions}"/>
         <br />
         <h:link outcome="user/List" value="Show All Users" rendered="#{sessionInfoController.allowedToListUsers}"/>
+        <br/>
+        <h:link outcome="permission/List" value="Show All Permissions" rendered="#{sessionInfoController.allowedToListPermissions}"/>
         
 
 	</ui:define>
