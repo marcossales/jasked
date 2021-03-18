@@ -18,25 +18,25 @@
 	<ui:define name="pageMain">
 		<h:outputText value="Index" />
 		<br />
-		<h:link outcome="faqSite/List" value="Show All FaqSite Items" />
+		<h:link outcome="faqSite/List" value="#{messages.AdminIndexFaqSiteShowAllLink}" />
 		<br />
 		
-		<h:link outcome="question/List" value="Show All Question Items" />
+		<h:link outcome="question/List" value="#{messages.AdminIndexQuestionShowAllLink}" />
 		<br />
 		<h:link outcome="questionCategory/List"
-			value="Show All QuestionCategory Items" />
+			value="#{messages.AdminIndexQuestionCategoryShowAllLink}" />
 		<br />
 		<h:link outcome="objectStatus/List"
-			value="Show All ObjectStatus Items"
+			value="#{messages.AdminIndexObjectStatusShowAllLink}"
 			rendered="#{sessionInfoController.allowedToManageObjectStatus}" />
 		<br />
-		<h:link outcome="sessionData/List" value="Show All Open Sessions"
+		<h:link outcome="sessionData/List" value="#{messages.AdminIndexSessionDataShowAllLink}"
 			rendered="#{sessionInfoController.allowedToManageOpenSessions}" />
 		<br />
-		<h:link outcome="user/List" value="Show All Users"
+		<h:link outcome="user/List" value="#{messages.AdminIndexUserShowAllLink}"
 			rendered="#{sessionInfoController.allowedToManageUsers}" />
 		<br />
-		<h:link outcome="permission/List" value="Show All Permissions"
+		<h:link outcome="permission/List" value="#{messages.AdminIndexPermissionShowAllLink}"
 			rendered="#{sessionInfoController.allowedToManagePermissions}" />
 
 
