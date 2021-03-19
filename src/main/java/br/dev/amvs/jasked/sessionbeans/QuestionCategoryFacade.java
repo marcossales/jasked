@@ -13,7 +13,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import br.dev.amvs.jasked.jpa.domain.FaqSite;
 import br.dev.amvs.jasked.jpa.domain.QuestionCategory;
+import br.dev.amvs.jasked.jpa.domain.User;
 
 /**
  *
@@ -51,5 +53,23 @@ public class QuestionCategoryFacade extends AbstractFacade<QuestionCategory> {
 	    List<QuestionCategory> results = query.getResultList();
 		return results;
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<QuestionCategory> findRange(int[] range,User user) {
+		String queryString = " SELECT c.* FROM jasked.question_category c ";
+		if(!user.isSuperUser()) {
+			queryString = " SELECT c.* FROM jasked.question_category c "
+					+ " INNER JOIN jasked.faq_site f on(f.id=c.site_id) "
+					+ " INNER JOIN jasked.user_role_faq perm on (perm.faq_site_id = f.id) WHERE perm.user_id = ?1 ";
+		}
+        javax.persistence.Query q = getEntityManager().createNativeQuery(queryString,QuestionCategory.class);
+        if(!user.isSuperUser()) {
+           q.setParameter(1, user.getId());
+        }
+        q.setMaxResults(range[1] - range[0] + 1);
+        q.setFirstResult(range[0]);
+        return q.getResultList();
+    }
     
 }

@@ -12,6 +12,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.dev.amvs.jasked.jpa.domain.QuestionCategory;
@@ -34,6 +35,9 @@ public class QuestionCategoryController implements Serializable {
     private br.dev.amvs.jasked.sessionbeans.QuestionCategoryFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    
+    @Inject
+    private SessionInfoController sessionInfoController;
 
     public QuestionCategoryController() {
     }
@@ -62,7 +66,7 @@ public class QuestionCategoryController implements Serializable {
                 @SuppressWarnings({ "rawtypes", "unchecked" })
 				@Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()},sessionInfoController.getUserInSession()));
                 }
             };
         }
