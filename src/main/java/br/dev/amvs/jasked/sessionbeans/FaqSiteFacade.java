@@ -14,13 +14,14 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import br.dev.amvs.jasked.jpa.domain.FaqSite;
+import br.dev.amvs.jasked.jpa.domain.User;
 
 /**
  *
  * @author marcossales
  */
 @Stateless
-public class FaqSiteFacade extends PublishableObjectFacade<FaqSite> {
+public class FaqSiteFacade extends PublishableObjectFacade<FaqSite>{
 
     @PersistenceContext(unitName = "my_persistence_unit")
     private EntityManager em;
@@ -43,5 +44,20 @@ public class FaqSiteFacade extends PublishableObjectFacade<FaqSite> {
 	    List<FaqSite> results = query.getResultList();
 		return results;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<FaqSite> findRange(int[] range,User user) {
+		String queryString = " SELECT f.* FROM jasked.faq_site f ";
+		if(!user.isSuperUser()) {
+			queryString = " SELECT f.* FROM jasked.faq_site f INNER JOIN jasked.user_role_faq perm on (perm.faq_site_id = f.id) WHERE perm.user_id = ?1 ";
+		}
+        javax.persistence.Query q = getEntityManager().createNativeQuery(queryString,FaqSite.class);
+        if(!user.isSuperUser()) {
+           q.setParameter(1, user.getId());
+        }
+        q.setMaxResults(range[1] - range[0] + 1);
+        q.setFirstResult(range[0]);
+        return q.getResultList();
+    }
     
 }

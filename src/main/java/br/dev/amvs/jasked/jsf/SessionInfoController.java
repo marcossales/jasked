@@ -2,6 +2,7 @@ package br.dev.amvs.jasked.jsf;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -12,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.dev.amvs.jasked.exception.DatabaseException;
+import br.dev.amvs.jasked.jpa.domain.Permission;
 import br.dev.amvs.jasked.jpa.domain.User;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 import br.dev.amvs.jasked.sessionbeans.PermissionFacade;
@@ -46,9 +48,18 @@ public class SessionInfoController implements Serializable{
 		appInfoController.addSessionData(new SessionData(sessionId, userName, remoteHost, LocalDateTime.now()));
 	}
 	
-	public String getUserInSession() {
+	public String getUsernameInSession() {
 		Object attr = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(JsfUtil.LOGGEDIN_USERNAME_SESSION_ATTRIBUTE);
 		return attr!=null?(String)attr:null ;
+	}
+	public User getUserInSession() {
+		String username = getUsernameInSession();
+		try {
+			return userFacade.findByUserName(username);
+		} catch (DatabaseException e) {
+			e.printStackTrace();//TODO  make better,maybe throw an UnexpectedBeahivorException and intercept it in some layer
+			return null;
+		}
 	}
 	
 	
@@ -84,9 +95,25 @@ public class SessionInfoController implements Serializable{
 		return isSuperUser();
 	}
 	
+	public boolean isAllowedToManageAFaqSite(Integer faqSiteId) {
+		try {
+			User user = userFacade.findByUserName(getUsernameInSession());
+			List<Permission> perms =permissionFacade.findByUser(user);
+			for(Permission p: perms) {
+				if(p.getId().getFaqSiteId().equals(faqSiteId)) {
+					return true;
+				}
+			}
+			return false;
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+			return false;//TODO  make better,maybe throw an UnexpectedBeahivorException and intercept it in some layer
+		}
+	}
+	
 	public boolean isSuperUser() {
 		try {
-			User user = userFacade.findByUserName(getUserInSession());
+			User user = userFacade.findByUserName(getUsernameInSession());
 			return user.isSuperUser();
 			
 		} catch (DatabaseException e) {

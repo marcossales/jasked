@@ -10,4 +10,6 @@ public abstract class PublishableObjectFacade<T> extends AbstractFacade<T>{
 	}
 
 	public abstract List<T> findAllPublished();
+	
+	
 }

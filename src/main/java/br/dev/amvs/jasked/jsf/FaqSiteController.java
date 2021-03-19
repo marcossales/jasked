@@ -1,6 +1,7 @@
 package br.dev.amvs.jasked.jsf;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
@@ -12,6 +13,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.dev.amvs.jasked.jpa.domain.FaqSite;
@@ -32,8 +34,14 @@ public class FaqSiteController implements Serializable {
 	private DataModel items = null;
     @EJB
     private br.dev.amvs.jasked.sessionbeans.FaqSiteFacade ejbFacade;
+    @EJB
+    private br.dev.amvs.jasked.sessionbeans.UserFacade userFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    
+    
+    @Inject
+    private SessionInfoController sessionInfoController;
 
     public FaqSiteController() {
     }
@@ -62,8 +70,15 @@ public class FaqSiteController implements Serializable {
                 @SuppressWarnings({ "rawtypes", "unchecked" })
 				@Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                	List<FaqSite> l = getFacade().findRange(
+                			new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()},
+                			sessionInfoController.getUserInSession()
+                			);
+                	
+                    return new ListDataModel(l);
                 }
+
+				
             };
         }
         return pagination;
