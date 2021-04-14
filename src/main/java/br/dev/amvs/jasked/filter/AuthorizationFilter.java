@@ -24,7 +24,7 @@ public class AuthorizationFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) res;
 		HttpServletRequest request = (HttpServletRequest) req;
 		if (    !isUsuarioLogado(request.getSession()) 
-				&& request.getRequestURI().contains("/admin/")
+				&& request.getRequestURI().contains(request.getContextPath()+"/admin/")
 				/*&& !request.getRequestURI().contains("/javax.faces.resource/")*/) {
 			
 			//TODO: remember  filter pages only for superuser (if people try access it directly from URL)

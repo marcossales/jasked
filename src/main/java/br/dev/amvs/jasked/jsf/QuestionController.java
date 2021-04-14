@@ -12,6 +12,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.dev.amvs.jasked.jpa.domain.Question;
@@ -29,6 +30,8 @@ public class QuestionController implements Serializable {
 	private DataModel items = null;
     @EJB
     private br.dev.amvs.jasked.sessionbeans.QuestionFacade ejbFacade;
+    @Inject
+    private SessionInfoController sessionInfoController;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -59,7 +62,7 @@ public class QuestionController implements Serializable {
                 @SuppressWarnings({ "rawtypes", "unchecked" })
 				@Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()},sessionInfoController.getUserInSession()));
                 }
             };
         }

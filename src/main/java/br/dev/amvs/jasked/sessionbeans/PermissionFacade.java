@@ -12,7 +12,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import br.dev.amvs.jasked.jpa.domain.FaqSite;
 import br.dev.amvs.jasked.jpa.domain.Permission;
+import br.dev.amvs.jasked.jpa.domain.Role;
 import br.dev.amvs.jasked.jpa.domain.User;
 
 /**
@@ -41,6 +43,18 @@ public class PermissionFacade extends AbstractFacade<Permission> {
 	public List<Permission> findByUser(User user) {
 		Query  query =  em.createQuery(" SELECT p FROM Permission p WHERE p.id.userId = :userId ");
 		query.setParameter("userId", user.getId());
+		return query.getResultList();
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Permission> findByUserAndRoleAndFaqSite(User user,Role role, FaqSite faqSite) {
+		Query  query =  em.createQuery(" SELECT p FROM Permission p WHERE p.id.userId = :userId "
+				+ " AND p.id.roleId = :roleId "
+				+ " AND p.id.faqSiteId = :faqSiteId ");
+		query.setParameter("userId", user.getId());
+		query.setParameter("roleId", role.getId());
+		query.setParameter("faqSiteId", faqSite.getId());
 		return query.getResultList();
 		
 	}
