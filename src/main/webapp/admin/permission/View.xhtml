@@ -6,6 +6,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/admin/loggedInTemplate.xhtml">
+        <ui:define name="preRenderListener">
+           <f:event type="preRenderView" listener="#{permissionController.checkPreRenderView}">
+           </f:event>
+        </ui:define>
         <ui:define name="pageTitle">
             <h:outputText value="#{messages.ViewPermissionTitle}"></h:outputText>
         </ui:define>
@@ -17,27 +21,33 @@
             <h:form>
                 <h:panelGrid columns="2">
                     <h:outputText value="#{messages.ViewPermissionLabel_userName}"/>
-                    <h:outputText value="#{permissionController.selected.transientUser.userName}" title="#{messages.ViewPermissionTitle_userName}"/>
+                    <h:outputText value="#{permissionController.selected.user.userName}" title="#{messages.ViewPermissionTitle_userName}"/>
                     <h:outputText value="#{messages.ViewPermissionLabel_faqSite}"/>
-                    <h:outputText value="#{permissionController.selected.transientFaqSite.name}" title="#{messages.ViewPermissionTitle_faqSite}"/>
+                    <h:outputText value="#{permissionController.selected.faqSite.name}" title="#{messages.ViewPermissionTitle_faqSite}"/>
                     <h:outputText value="#{messages.ViewPermissionLabel_role}"/>
-                    <h:outputText value="#{permissionController.selected.transientRole.name}" title="#{messages.ViewPermissionTitle_role}"/> 
+                    <h:outputText value="#{permissionController.selected.role.name}" title="#{messages.ViewPermissionTitle_role}"/> 
                     
                     
                     
                     
                 </h:panelGrid>
                 <br />
-                <h:commandLink action="#{permissionController.destroyAndView}" value="#{messages.ViewPermissionDestroyLink}"/>
+                <h:commandLink action="#{permissionController.destroyAndView}" value="#{messages.ViewPermissionDestroyLink}"
+                 rendered="#{permissionController.canDelete(selected)}"
+                />
                 <br />
                 <ui:remove>
                 <br />
-                <h:link outcome="Edit" value="#{messages.ViewPermissionEditLink}"/>
+                <h:link outcome="Edit" value="#{messages.ViewPermissionEditLink}" rendered="#{permissionController.canUpdate(selected)}"/>
                 </ui:remove>
                 <br />
-                <h:commandLink action="#{permissionController.prepareCreate}" value="#{messages.ViewPermissionCreateLink}" />
+                <h:commandLink action="#{permissionController.prepareCreate}"
+                 value="#{messages.ViewPermissionCreateLink}" 
+                 rendered="#{permissionController.canCreate}"/>
                 <br />
-                <h:commandLink action="#{permissionController.prepareList}" value="#{messages.ViewPermissionShowAllLink}"/>
+                <h:commandLink action="#{permissionController.prepareList}" 
+                value="#{messages.ViewPermissionShowAllLink}"
+                rendered="#{permissionController.canRead}"/>
                 <br />
                 <br />
                 <h:link outcome="/admin/index" value="#{messages.ViewPermissionIndexLink}"/> 

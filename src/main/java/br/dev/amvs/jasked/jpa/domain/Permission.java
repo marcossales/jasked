@@ -5,39 +5,77 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the user_role_faq database table.
+ * The persistent class for the permission database table.
  * 
  */
 @Entity
-@Table(name="user_role_faq",schema = "jasked")
+@Table(name = "permission", schema = "jasked")
 @NamedQuery(name="Permission.findAll", query="SELECT p FROM Permission p")
-public class Permission implements Serializable {
+public class Permission implements Identifiable<Integer>  {
 	private static final long serialVersionUID = 1L;
-
-	@EmbeddedId
-	private PermissionPK id;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+	private Integer id;
 	
-	
-	@Transient
-	private User user;
-	@Transient
+	@JoinColumn(name = "faq_site_id", referencedColumnName = "id")
+	@ManyToOne(optional = true)
 	private FaqSite faqSite;
-	@Transient
+	@JoinColumn(name = "role_id", referencedColumnName = "id")
+	@ManyToOne(optional = true)
 	private Role role;
-	
-
-	
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	@ManyToOne(optional = false)
+	private User user;
 
 	public Permission() {
 	}
 
-	public PermissionPK getId() {
+
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(PermissionPK id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
+
+
+	public FaqSite getFaqSite() {
+		return faqSite;
+	}
+
+
+	public void setFaqSite(FaqSite faqSite) {
+		this.faqSite = faqSite;
+	}
+
+
+	public Role getRole() {
+		return role;
+	}
+
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Permission [id=" + id + ", faqSite=" + faqSite + ", role=" + role + ", user=" + user + "]";
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -46,6 +84,7 @@ public class Permission implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -63,33 +102,8 @@ public class Permission implements Serializable {
 			return false;
 		return true;
 	}
-
-
-	//getter and setter form Transient fields
-	public User getTransientUser() {
-		return user;
-	}
-
-	public void setTransientUser(User user) {
-		this.user = user;
-	}
-
-	public FaqSite getTransientFaqSite() {
-		return faqSite;
-	}
-
-	public void setTransientFaqSite(FaqSite faSite) {
-		this.faqSite = faSite;
-	}
-
-	public Role getTransientRole() {
-		return role;
-	}
-
-	public void setTransientRole(Role role) {
-		this.role = role;
-	}
 	
-	
+
+ 
 
 }

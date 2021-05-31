@@ -1,9 +1,9 @@
 package br.dev.amvs.jasked.jsf;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -13,18 +13,19 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.dev.amvs.jasked.jpa.domain.Permission;
-import br.dev.amvs.jasked.jpa.domain.PermissionPK;
 import br.dev.amvs.jasked.jpa.domain.Role;
+import br.dev.amvs.jasked.jpa.domain.User;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 import br.dev.amvs.jasked.jsf.util.PaginationHelper;
 import br.dev.amvs.jasked.sessionbeans.PermissionFacade;
 
 @Named("permissionController")
 @SessionScoped
-public class PermissionController implements Serializable{
+public class PermissionController extends BasicCrudPermissionVerifier<Permission>{
 	/**
 	 * 
 	 */
@@ -45,7 +46,25 @@ public class PermissionController implements Serializable{
     @EJB
     private br.dev.amvs.jasked.sessionbeans.RoleFacade ejbRoleFacade;
     
+    @Inject
+    private SessionInfoController sessionInfoController;
+    
 
+    private User user;
+
+    @Override
+    public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+    
+    @PostConstruct
+    public void init() {
+    	this.user = sessionInfoController.getUserInSessionWithPermissions();
+    }
     public PermissionController() {
     }
 
@@ -74,7 +93,6 @@ public class PermissionController implements Serializable{
 				@Override
                 public DataModel createPageDataModel() {
                 	List<Permission> permissions = getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()});
-                	populatePermissionsTransientFields(permissions);
                     return new ListDataModel(permissions);
                 }
             };
@@ -101,7 +119,6 @@ public class PermissionController implements Serializable{
 
     public String create() {
         try { 
-        	current.setId(new PermissionPK(current.getTransientUser().getId(),current.getTransientFaqSite().getId(),current.getTransientRole().getId()));
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Messages").getString("PermissionCreated"));
             return prepareCreate();
@@ -171,7 +188,6 @@ public class PermissionController implements Serializable{
         }
         if (selectedItemIndex >= 0) {
             current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
-            populatePermissionTransientFields(current);
         }
     }
 
@@ -214,7 +230,7 @@ public class PermissionController implements Serializable{
    
 
    
-    public Permission getPermission(PermissionPK id) {
+    public Permission getPermission(java.lang.Integer id) {
         return ejbFacade.find(id);
     }
 
@@ -232,29 +248,15 @@ public class PermissionController implements Serializable{
             return controller.getPermission(getKey(value));
         }
 
-        /**
-         * 
-         * @param value A String in the format "userId_faqSiteId_roleId"
-         * @return
-         */
-        PermissionPK getKey(String value) {
-        	PermissionPK key = null;
-        	String ids[] = value.split("_");
-        	key = new PermissionPK();
-        	key.setUserId(Integer.valueOf(ids[0]));
-        	key.setFaqSiteId(Integer.valueOf(ids[1]));
-        	key.setRoleId(Integer.valueOf(ids[2]));
-            
+        Integer getKey(String value) {
+            java.lang.Integer key;
+            key = Integer.valueOf(value);
             return key;
         }
 
-        String getStringKey(PermissionPK value) {
+        String getStringKey(Integer value) {
             StringBuilder sb = new StringBuilder();
-            sb.append(value.getUserId());
-            sb.append("_");
-            sb.append(value.getFaqSiteId());
-            sb.append("_");
-            sb.append(value.getRoleId());
+            sb.append(value);
             return sb.toString();
         }
 
@@ -287,20 +289,7 @@ public class PermissionController implements Serializable{
 		return ejbRoleFacade;
 	}
 
-	private void populatePermissionsTransientFields(List<Permission> permissions) {
-		for(Permission p:permissions) {
-			p.setTransientUser(getUserFacade().find(p.getId().getUserId()));
-			p.setTransientFaqSite(getFaqSiteFacade().find(p.getId().getFaqSiteId()));
-			p.setTransientRole(getRoleFacade().find(p.getId().getRoleId()));
-		}
-		
-	}
-	private void populatePermissionTransientFields(Permission p) {
-			p.setTransientUser(getUserFacade().find(p.getId().getUserId()));
-			p.setTransientFaqSite(getFaqSiteFacade().find(p.getId().getFaqSiteId()));
-			p.setTransientRole(getRoleFacade().find(p.getId().getRoleId()));
-		
-	}
+	
 	
 	//Since the Role entity does not have a controller bean (since there is no CRUD for it), 
 	//some code are right here:
@@ -357,6 +346,53 @@ public class PermissionController implements Serializable{
 
 	    }
 	 //end code for Role entity
+
+
+
+	@Override
+	protected String getCreateRoleName() {
+		return "CREATE_PERMISSION";
+	}
+
+	@Override
+	protected String getReadRoleName() {
+		return "READ_PERMISSION";
+	}
+
+	@Override
+	protected String getUpdateRoleName() {
+		return "UPDATE_PERMISSION";
+	}
+
+	@Override
+	protected String getDeleteRoleName() {
+		return "DELETE_PERMISSION";
+	}
+
+	@Override
+	protected String getAccessDeniedPageOutcome() {
+		
+		return "/admin/denied";
+	}
+
+	@Override
+	public boolean canRead(Permission selected) {
+		return isCanRead();
+	}
+
+	@Override
+	public boolean canUpdate(Permission selected) {
+		return isCanUpdate();
+	}
+
+	@Override
+	public boolean canDelete(Permission selected) {
+		return isCanDelete();
+	}
+
+
+
+
 	
 	
     

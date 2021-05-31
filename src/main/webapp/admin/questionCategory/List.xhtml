@@ -6,6 +6,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
    <ui:composition template="/admin/loggedInTemplate.xhtml">
+   <ui:define name="preRenderListener">
+           <f:event type="preRenderView" listener="#{questionCategoryController.checkPreRenderList}">
+           </f:event>
+        </ui:define>
         <ui:define name="pageTitle">
             <h:outputText value="#{messages.ListQuestionCategoryTitle}"></h:outputText>
         </ui:define>
@@ -49,16 +53,24 @@
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
-                            <h:commandLink action="#{questionCategoryController.prepareView}" value="#{messages.ListQuestionCategoryViewLink}"/>
+                            <h:commandLink action="#{questionCategoryController.prepareView}"
+                             value="#{messages.ListQuestionCategoryViewLink}"
+                             rendered="#{questionCategoryController.canRead(item)}"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{questionCategoryController.prepareEdit}" value="#{messages.ListQuestionCategoryEditLink}"/>
+                            <h:commandLink action="#{questionCategoryController.prepareEdit}" 
+                            value="#{messages.ListQuestionCategoryEditLink}"
+                            rendered="#{questionCategoryController.canUpdate(item)}"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{questionCategoryController.destroy}" value="#{messages.ListQuestionCategoryDestroyLink}"/>
+                            <h:commandLink action="#{questionCategoryController.destroy}"
+                             value="#{messages.ListQuestionCategoryDestroyLink}"
+                             rendered="#{questionCategoryController.canDelete(item)}"/>
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>
                 <br />
-                <h:commandLink action="#{questionCategoryController.prepareCreate}" value="#{messages.ListQuestionCategoryCreateLink}"/>
+                <h:commandLink action="#{questionCategoryController.prepareCreate}"
+                 value="#{messages.ListQuestionCategoryCreateLink}"
+                 rendered="#{questionCategoryController.canCreate}"/>
                 <br />
                 <br />
                 <h:link outcome="/admin/index" value="#{messages.ListQuestionCategoryIndexLink}"/>

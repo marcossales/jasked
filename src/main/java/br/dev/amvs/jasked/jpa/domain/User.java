@@ -1,7 +1,15 @@
 package br.dev.amvs.jasked.jpa.domain;
 
-import java.io.Serializable;
-import javax.persistence.*;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -13,7 +21,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "user", schema = "jasked")
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
-public class User implements Serializable {
+public class User implements Identifiable<Integer> {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -40,11 +48,15 @@ public class User implements Serializable {
 	@Column(name="password")
 	private String password;
 
-	
+	@Transient
+	private boolean editingPassword;
 	
 
 	@Column(name="super_user")
 	private boolean superUser;
+	
+	@Transient
+	List<Permission> permissions;
 	
 	public User() {
 	}
@@ -101,6 +113,15 @@ public class User implements Serializable {
 	}
 	
 	
+	
+
+	public boolean isEditingPassword() {
+		return editingPassword;
+	}
+
+	public void setEditingPassword(boolean editingPassword) {
+		this.editingPassword = editingPassword;
+	}
 
 	public boolean isSuperUser() {
 		return superUser;
@@ -112,6 +133,14 @@ public class User implements Serializable {
 	
 	
 
+
+	public List<Permission> getPermissions() {
+		return permissions;
+	}
+
+	public void setPermissions(List<Permission> permissions) {
+		this.permissions = permissions;
+	}
 	
 
 	@Override

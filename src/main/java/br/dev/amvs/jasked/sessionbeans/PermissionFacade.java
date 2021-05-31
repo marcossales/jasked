@@ -41,23 +41,41 @@ public class PermissionFacade extends AbstractFacade<Permission> {
 	
 	@SuppressWarnings("unchecked")
 	public List<Permission> findByUser(User user) {
-		Query  query =  em.createQuery(" SELECT p FROM Permission p WHERE p.id.userId = :userId ");
+		Query  query =  em.createQuery(" SELECT p FROM Permission p WHERE p.user.id = :userId ");
 		query.setParameter("userId", user.getId());
+		return query.getResultList();
+		
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Permission> findByUserAndRoles(User user,Role ...roles ) {
+		Query  query =  em.createQuery(" SELECT p FROM Permission p WHERE p.user.id = :userId "
+				+ " AND p.role.id IN :roleIdList "
+				);
+		List<Object> roleIdList = extractIds(roles);
+		query.setParameter("userId", user.getId());
+		query.setParameter("roleIdList", roleIdList);	
 		return query.getResultList();
 		
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Permission> findByUserAndRoleAndFaqSite(User user,Role role, FaqSite faqSite) {
-		Query  query =  em.createQuery(" SELECT p FROM Permission p WHERE p.id.userId = :userId "
-				+ " AND p.id.roleId = :roleId "
-				+ " AND p.id.faqSiteId = :faqSiteId ");
+	public List<Permission> findByUserAndFaqSiteAndRoles(User user, FaqSite faqSite,Role ...roles ) {
+		Query  query =  em.createQuery(" SELECT p FROM Permission p WHERE p.user.id = :userId "
+				
+				+ " AND p.faqSite.id = :faqSiteId "
+				+ " AND p.role.id IN :roleIdList ");
+		List<Object> roleIdList = extractIds(roles);
 		query.setParameter("userId", user.getId());
-		query.setParameter("roleId", role.getId());
 		query.setParameter("faqSiteId", faqSite.getId());
+		query.setParameter("roleIdList",roleIdList);	
+
 		return query.getResultList();
 		
 	}
+
+	
+	
 	
 	
 	

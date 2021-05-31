@@ -6,6 +6,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/admin/loggedInTemplate.xhtml">
+    <ui:define name="preRenderListener">
+           <f:event type="preRenderView" listener="#{questionController.checkPreRenderEdit}">
+           </f:event>
+        </ui:define>
         <ui:define name="pageTitle">
             <h:outputText value="#{messages.EditQuestionTitle}"></h:outputText>
         </ui:define>
@@ -31,12 +35,15 @@
                         <f:selectItems value="#{questionCategoryController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>
-                <h:commandLink action="#{questionController.update}" value="#{messages.EditQuestionSaveLink}"/>
+                <h:commandLink action="#{questionController.update}" value="#{messages.EditQuestionSaveLink}"
+                rendered="#{questionController.canUpdate(selected)}"/>
                 <br />
                 <br />
-                <h:link outcome="View" value="#{messages.EditQuestionViewLink}"/>
+                <h:link outcome="View" value="#{messages.EditQuestionViewLink}"
+                rendered="#{questionController.canRead(selected)}"/>
                 <br />
-                <h:commandLink action="#{questionController.prepareList}" value="#{messages.EditQuestionShowAllLink}" immediate="true"/>
+                <h:commandLink action="#{questionController.prepareList}" value="#{messages.EditQuestionShowAllLink}" immediate="true"
+                rendered="#{questionController.canRead}"/>
                 <br />
                 <br />
                 <h:link outcome="/admin/index" value="#{messages.EditQuestionIndexLink}" />

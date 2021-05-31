@@ -1,8 +1,8 @@
 package br.dev.amvs.jasked.jsf;
 
-import java.io.Serializable;
 import java.util.ResourceBundle;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -12,16 +12,19 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.dev.amvs.jasked.jpa.domain.ObjectStatus;
+import br.dev.amvs.jasked.jpa.domain.User;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 import br.dev.amvs.jasked.jsf.util.PaginationHelper;
 import br.dev.amvs.jasked.sessionbeans.ObjectStatusFacade;
+import br.dev.amvs.jasked.sessionbeans.RoleFacade;
 
 @Named("objectStatusController")
 @SessionScoped
-public class ObjectStatusController implements Serializable {
+public class ObjectStatusController extends BasicCrudPermissionVerifier<ObjectStatus> {
 
     /**
 	 * 
@@ -34,8 +37,30 @@ public class ObjectStatusController implements Serializable {
     private br.dev.amvs.jasked.sessionbeans.ObjectStatusFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    
+    @Inject
+    private SessionInfoController sessionInfoController;
+    
+    @EJB
+    private RoleFacade roleFacade; 
 
     public ObjectStatusController() {
+    }
+    
+    private User user;
+
+    @Override
+    public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+    
+    @PostConstruct
+    public void init() {
+    	this.user = sessionInfoController.getUserInSessionWithPermissions();
     }
 
     public ObjectStatus getSelected() {
@@ -240,5 +265,52 @@ public class ObjectStatusController implements Serializable {
         }
 
     }
+
+	@Override
+	protected String getCreateRoleName() {
+		return "CREATE_OBJECT_STATUS";
+	}
+
+	@Override
+	protected String getReadRoleName() {
+		return "READ_OBJECT_STATUS";
+	}
+
+	@Override
+	protected String getUpdateRoleName() {
+		return "UPDATE_OBJECT_STATUS";
+	}
+
+	@Override
+	protected String getDeleteRoleName() {
+		return "DELETE_OBJECT_STATUS";
+	}
+
+	@Override
+	public RoleFacade getRoleFacade() {
+		return this.roleFacade;
+	}
+
+	@Override
+	protected String getAccessDeniedPageOutcome() {
+		return "/admin/denied";
+	}
+
+	@Override
+	public boolean canRead(ObjectStatus selected) {
+		return isCanRead();
+	}
+
+	@Override
+	public boolean canUpdate(ObjectStatus selected) {
+		return isCanUpdate();
+	}
+
+	@Override
+	public boolean canDelete(ObjectStatus selected) {
+		return isCanDelete();
+	}
+    
+   
 
 }

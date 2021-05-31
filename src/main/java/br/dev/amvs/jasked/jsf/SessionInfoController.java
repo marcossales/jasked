@@ -17,6 +17,7 @@ import br.dev.amvs.jasked.jpa.domain.Permission;
 import br.dev.amvs.jasked.jpa.domain.User;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 import br.dev.amvs.jasked.sessionbeans.PermissionFacade;
+import br.dev.amvs.jasked.sessionbeans.RoleFacade;
 import br.dev.amvs.jasked.sessionbeans.UserFacade;
 
 @Named("sessionInfoController")
@@ -30,11 +31,16 @@ public class SessionInfoController implements Serializable{
 	
 	@EJB
 	private PermissionFacade permissionFacade;
+
+	@EJB
+	private RoleFacade roleFacade;
 	@EJB
 	private UserFacade userFacade;
 	
 	@Inject
 	private AppInfoController appInfoController;
+	
+	
 
 	public void putUserInSession(User user) {
 		Map<String,Object> sessionMap =FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
@@ -61,6 +67,18 @@ public class SessionInfoController implements Serializable{
 			return null;
 		}
 	}
+	public User getUserInSessionWithPermissions() {
+		String username = getUsernameInSession();
+		try {
+			User u = userFacade.findByUserName(username);
+			List<Permission> p = permissionFacade.findByUser(u);
+			u.setPermissions(p);
+			return u;
+		} catch (DatabaseException e) {
+			e.printStackTrace();//TODO  make better,maybe throw an UnexpectedBeahivorException and intercept it in some layer
+			return null;
+		}
+	}
 	
 	
 	public String logout() {
@@ -79,37 +97,8 @@ public class SessionInfoController implements Serializable{
 		return ResourceBundle.getBundle("/Messages").getString("UserBar_welcomeGreeting");
 	}
 	
-	public boolean isAllowedToManageOpenSessions() {
-		return isSuperUser();
-		
-	}
-	public boolean isAllowedToManageUsers() {
-		return isSuperUser();
-		
-	}
+
 	
-	public boolean isAllowedToManagePermissions() {
-		return isSuperUser();
-	}
-	public boolean isAllowedToManageObjectStatus() {
-		return isSuperUser();
-	}
-	
-	public boolean isAllowedToManageAFaqSite(Integer faqSiteId) {
-		try {
-			User user = userFacade.findByUserName(getUsernameInSession());
-			List<Permission> perms =permissionFacade.findByUser(user);
-			for(Permission p: perms) {
-				if(p.getId().getFaqSiteId().equals(faqSiteId)) {
-					return true;
-				}
-			}
-			return false;
-		} catch (DatabaseException e) {
-			e.printStackTrace();
-			return false;//TODO  make better,maybe throw an UnexpectedBeahivorException and intercept it in some layer
-		}
-	}
 	
 	public boolean isSuperUser() {
 		try {
@@ -121,6 +110,16 @@ public class SessionInfoController implements Serializable{
 			return false; //TODO  make better,maybe throw an UnexpectedBeahivorException and intercept it in some layer
 		}
 	}
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
 	
 
 }

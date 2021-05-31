@@ -12,6 +12,11 @@
     <class>br.dev.amvs.jasked.jpa.domain.Role</class>
     <class>br.dev.amvs.jasked.jpa.domain.User</class>
     <class>br.dev.amvs.jasked.jpa.domain.Permission</class>
-    <class>br.dev.amvs.jasked.jpa.domain.PermissionPK</class>
+    <properties>
+      <!-- TODO remover -->
+      <property name = "hibernate.show_sql" value = "true" />
+      <property name = "hibernate.format_sql" value = "true" />
+      <!--  -->
+    </properties>
   </persistence-unit>
 </persistence>

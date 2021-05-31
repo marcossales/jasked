@@ -6,6 +6,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/admin/loggedInTemplate.xhtml">
+    <ui:define name="preRenderListener">
+           <f:event type="preRenderView" listener="#{questionController.checkPreRenderList}">
+           </f:event>
+        </ui:define>
         <ui:define name="pageTitle">
             <h:outputText value="#{messages.ListQuestionTitle}"></h:outputText>
         </ui:define>
@@ -55,16 +59,21 @@
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
-                            <h:commandLink action="#{questionController.prepareView}" value="#{messages.ListQuestionViewLink}"/>
+                            <h:commandLink action="#{questionController.prepareView}" value="#{messages.ListQuestionViewLink}"
+                            rendered="#{questionController.canRead(item)}"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{questionController.prepareEdit}" value="#{messages.ListQuestionEditLink}"/>
+                            <h:commandLink action="#{questionController.prepareEdit}" value="#{messages.ListQuestionEditLink}"
+                            rendered="#{questionController.canUpdate(item)}"
+                            />
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{questionController.destroy}" value="#{messages.ListQuestionDestroyLink}"/>
+                            <h:commandLink action="#{questionController.destroy}" value="#{messages.ListQuestionDestroyLink}"
+                            rendered="#{questionController.canDelete(item)}"/>
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>
                 <br />
-                <h:commandLink action="#{questionController.prepareCreate}" value="#{messages.ListQuestionCreateLink}"/>
+                <h:commandLink action="#{questionController.prepareCreate}" value="#{messages.ListQuestionCreateLink}"
+                rendered="#{questionController.canCreate}"/>
                 <br />
                 <br />
                 <h:link outcome="/admin/index" value="#{messages.ListQuestionIndexLink}"/>

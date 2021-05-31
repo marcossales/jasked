@@ -1,8 +1,8 @@
 package br.dev.amvs.jasked.jsf;
 
-import java.io.Serializable;
 import java.util.ResourceBundle;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -16,14 +16,16 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.dev.amvs.jasked.jpa.domain.Question;
+import br.dev.amvs.jasked.jpa.domain.User;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 import br.dev.amvs.jasked.jsf.util.PaginationHelper;
 import br.dev.amvs.jasked.sessionbeans.QuestionFacade;
+import br.dev.amvs.jasked.sessionbeans.RoleFacade;
 
 @SuppressWarnings("serial")
 @Named("questionController")
 @SessionScoped
-public class QuestionController implements Serializable {
+public class QuestionController extends BelongingToFaqSiteCrudPermissionVerifier<Question> {
 
     private Question current;
     @SuppressWarnings("rawtypes")
@@ -34,8 +36,27 @@ public class QuestionController implements Serializable {
     private SessionInfoController sessionInfoController;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    
+    @EJB
+    private RoleFacade roleFacade; 
 
     public QuestionController() {
+    }
+    
+    private User user;
+
+    @Override
+    public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+    
+    @PostConstruct
+    public void init() {
+    	this.user = sessionInfoController.getUserInSessionWithPermissions();
     }
 
     public Question getSelected() {
@@ -240,5 +261,35 @@ public class QuestionController implements Serializable {
         }
 
     }
+    
+	@Override
+	protected String getCreateRoleName() {
+		return "CREATE_QUESTION";
+	}
+
+	@Override
+	protected String getReadRoleName() {
+		return "READ_QUESTION";
+	}
+
+	@Override
+	protected String getUpdateRoleName() {
+		return "UPDATE_QUESTION";
+	}
+
+	@Override
+	protected String getDeleteRoleName() {
+		return "DELETE_QUESTION";
+	}
+
+	@Override
+	public RoleFacade getRoleFacade() {
+		return this.roleFacade;
+	}
+
+	@Override
+	protected String getAccessDeniedPageOutcome() {
+		return "/admin/denied";
+	}
 
 }

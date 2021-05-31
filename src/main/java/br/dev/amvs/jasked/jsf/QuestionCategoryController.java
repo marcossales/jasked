@@ -1,8 +1,8 @@
 package br.dev.amvs.jasked.jsf;
 
-import java.io.Serializable;
 import java.util.ResourceBundle;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -16,13 +16,15 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.dev.amvs.jasked.jpa.domain.QuestionCategory;
+import br.dev.amvs.jasked.jpa.domain.User;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 import br.dev.amvs.jasked.jsf.util.PaginationHelper;
 import br.dev.amvs.jasked.sessionbeans.QuestionCategoryFacade;
+import br.dev.amvs.jasked.sessionbeans.RoleFacade;
 
 @Named("questionCategoryController")
 @SessionScoped
-public class QuestionCategoryController implements Serializable {
+public class QuestionCategoryController extends BelongingToFaqSiteCrudPermissionVerifier<QuestionCategory> {
 
     /**
 	 * 
@@ -39,9 +41,29 @@ public class QuestionCategoryController implements Serializable {
     @Inject
     private SessionInfoController sessionInfoController;
 
+    
+    @EJB
+    private RoleFacade roleFacade; 
+    
+    
     public QuestionCategoryController() {
     }
 
+    private User user;
+
+    @Override
+    public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+    
+    @PostConstruct
+    public void init() {
+    	this.user = sessionInfoController.getUserInSessionWithPermissions();
+    }
     public QuestionCategory getSelected() {
         if (current == null) {
             current = new QuestionCategory();
@@ -245,4 +267,34 @@ public class QuestionCategoryController implements Serializable {
 
     }
 
+    
+	@Override
+	protected String getCreateRoleName() {
+		return "CREATE_QUESTION_CATEGORY";
+	}
+
+	@Override
+	protected String getReadRoleName() {
+		return "READ_QUESTION_CATEGORY";
+	}
+
+	@Override
+	protected String getUpdateRoleName() {
+		return "UPDATE_QUESTION_CATEGORY";
+	}
+
+	@Override
+	protected String getDeleteRoleName() {
+		return "DELETE_QUESTION_CATEGORY";
+	}
+
+	@Override
+	public RoleFacade getRoleFacade() {
+		return this.roleFacade;
+	}
+
+	@Override
+	protected String getAccessDeniedPageOutcome() {
+		return "/admin/denied";
+	}
 }

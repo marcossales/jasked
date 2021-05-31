@@ -6,6 +6,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/admin/loggedInTemplate.xhtml">
+        <ui:define name="preRenderListener">
+           <f:event type="preRenderView" listener="#{permissionController.checkPreRenderList}">
+           </f:event>
+        </ui:define>
         <ui:define name="pageTitle">
             <h:outputText value="#{messages.ListPermissionTitle}"></h:outputText>
         </ui:define>
@@ -25,36 +29,43 @@
                             <f:facet name="header">
                                 <h:outputText value="#{messages.ListPermissionTitle_user}"/> 
                             </f:facet>
-                            <h:outputText value="#{item.transientUser.userName}"/>
+                            <h:outputText value="#{item.user.userName}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{messages.ListPermissionTitle_faqSite}"/>
                             </f:facet>
-                            <h:outputText value="#{item.transientFaqSite.name}"/>
+                            <h:outputText value="#{item.faqSite.name}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{messages.ListPermissionTitle_role}"/>
                             </f:facet>
-                            <h:outputText value="#{item.transientRole.name}"/>
+                            <h:outputText value="#{item.role.name}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
-                            <h:commandLink action="#{permissionController.prepareView}" value="#{messages.ListPermissionViewLink}"/>
+                            <h:commandLink action="#{permissionController.prepareView}" 
+                            value="#{messages.ListPermissionViewLink}"
+                            rendered="#{permissionController.canRead(item)}"/>
                             <ui:remove>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{permissionController.prepareEdit}" value="#{messages.ListPermissionEditLink}"/>
+                            <h:commandLink action="#{permissionController.prepareEdit}" value="#{messages.ListPermissionEditLink}"
+                            rendered="#{permissionController.canUpdate(item)}"
+                            />
                             </ui:remove>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{permissionController.destroy}" value="#{messages.ListPermissionDestroyLink}"/>
+                            <h:commandLink action="#{permissionController.destroy}" value="#{messages.ListPermissionDestroyLink}"
+                            rendered="#{permissionController.canDelete(item)}"
+                            />
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>
                 <br />
-                <h:commandLink action="#{permissionController.prepareCreate}" value="#{messages.ListPermissionCreateLink}"/>
+                <h:commandLink action="#{permissionController.prepareCreate}" value="#{messages.ListPermissionCreateLink}"
+                rendered="#{permissionController.canCreate}"/>
                 <br />
                 <br />
                 <h:link outcome="/admin/index" value="#{messages.ListPermissionIndexLink}"/> 

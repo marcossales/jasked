@@ -6,6 +6,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/admin/loggedInTemplate.xhtml">
+    	<ui:define name="preRenderListener">
+           <f:event type="preRenderView" listener="#{questionCategoryController.checkPreRenderView}">
+           </f:event>
+        </ui:define>
         <ui:define name="pageTitle">
             <h:outputText value="#{messages.ViewQuestionCategoryTitle}"></h:outputText>
         </ui:define>
@@ -26,14 +30,22 @@
                     <h:outputText value="#{questionCategoryController.selected.faqSite.name}" title="#{messages.ViewQuestionCategoryTitle_faqSite}"/>
                 </h:panelGrid>
                 <br />
-                <h:commandLink action="#{questionCategoryController.destroyAndView}" value="#{messages.ViewQuestionCategoryDestroyLink}"/>
+                <h:commandLink action="#{questionCategoryController.destroyAndView}" 
+                value="#{messages.ViewQuestionCategoryDestroyLink}"
+                rendered="#{questionCategoryController.canDelete(selected)}"/>
                 <br />
                 <br />
-                <h:link outcome="Edit" value="#{messages.ViewQuestionCategoryEditLink}"/>
+                <h:link outcome="Edit" value="#{messages.ViewQuestionCategoryEditLink}"
+                rendered="#{questionCategoryController.canUpdate(selected)}"/>
                 <br />
-                <h:commandLink action="#{questionCategoryController.prepareCreate}" value="#{messages.ViewQuestionCategoryCreateLink}" />
+                <h:commandLink action="#{questionCategoryController.prepareCreate}"
+                 value="#{messages.ViewQuestionCategoryCreateLink}"
+                 rendered="#{questionCategoryController.canCreate}" />
                 <br />
-                <h:commandLink action="#{questionCategoryController.prepareList}" value="#{messages.ViewQuestionCategoryShowAllLink}"/>
+                <h:commandLink action="#{questionCategoryController.prepareList}" 
+                value="#{messages.ViewQuestionCategoryShowAllLink}"
+                rendered="#{questionCategoryController.canRead}"
+                />
                 <br />
                 <br />
                 <h:link outcome="/admin/index" value="#{messages.ViewQuestionCategoryIndexLink}"/>

@@ -6,6 +6,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/admin/loggedInTemplate.xhtml">
+    <ui:define name="preRenderListener">
+           <f:event type="preRenderView" listener="#{userController.checkPreRenderEdit}">
+           </f:event>
+     </ui:define>
         <ui:define name="pageTitle">
             <h:outputText value="#{messages.EditUserTitle}"></h:outputText>
         </ui:define>
@@ -29,18 +33,35 @@
                     <h:inputText id="email" value="#{userController.selected.email}" title="#{messages.EditUserTitle_email}" />
                     <h:outputLabel value="#{messages.EditUserLabel_superUser}" for="superuser" />
                     <h:selectBooleanCheckbox id="superuser" value="#{userController.selected.superUser}" title="#{messages.EditUserTitle_superUser}" converter="javax.faces.Boolean"/>
+                    
+                    
+                     <h:outputLabel value="#{messages.EditUserLabel_editingPassword}" for="editingPassword" />
+                    <h:selectBooleanCheckbox id="editingPassword" value="#{userController.selected.editingPassword}" 
+                    title="#{messages.EditUserTitle_editingPassword}" converter="javax.faces.Boolean"
+                    >
+                     <f:ajax event="click" execute="@this" render="password"></f:ajax>
+                    </h:selectBooleanCheckbox>
+                    
+                    
                     <h:outputLabel value="#{messages.EditUserLabel_password}" for="password" /> 
-                    <h:inputSecret id="password" value="#{userController.selected.password}"  title="#{messages.EditUserTitle_password}" />
+                    <h:inputSecret id="password" value="#{userController.selected.password}"  title="#{messages.EditUserTitle_password}" 
+                    disabled="#{userController.selected.editingPassword == false}" />
                     
                 </h:panelGrid>
                 <br/>
                 
-                <h:commandLink action="#{userController.update}" value="#{messages.EditUserSaveLink}"/>
+                <h:commandLink action="#{userController.update}" 
+                value="#{messages.EditUserSaveLink}"
+                rendered="#{userController.canUpdate(selected)}"/>
                 <br />
                 <br />
-                <h:link outcome="View" value="#{messages.EditUserViewLink}"/>
+                <h:link outcome="View" value="#{messages.EditUserViewLink}"
+                rendered="#{userController.canRead(selected)}"/>
                 <br />
-                <h:commandLink action="#{userController.prepareList}" value="#{messages.EditUserShowAllLink}" immediate="true"/>
+                <h:commandLink action="#{userController.prepareList}" 
+                value="#{messages.EditUserShowAllLink}" immediate="true"
+                rendered="#{userController.canRead}"
+                />
                 <br />
                 <br />
                 <h:link outcome="/admin/index" value="#{messages.EditUserIndexLink}" />

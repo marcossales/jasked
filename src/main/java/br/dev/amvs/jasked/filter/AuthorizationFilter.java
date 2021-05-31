@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import br.dev.amvs.jasked.jpa.domain.Role;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 
 @WebFilter("*.xhtml")
@@ -23,13 +24,12 @@ public class AuthorizationFilter implements Filter {
 
 		HttpServletResponse response = (HttpServletResponse) res;
 		HttpServletRequest request = (HttpServletRequest) req;
-		if (    !isUsuarioLogado(request.getSession()) 
+		if (    !hasLoggedIn(request.getSession()) 
 				&& request.getRequestURI().contains(request.getContextPath()+"/admin/")
 				/*&& !request.getRequestURI().contains("/javax.faces.resource/")*/) {
 			
-			//TODO: remember  filter pages only for superuser (if people try access it directly from URL)
 			
-			//TODO: remember  filter pages only for some permission (if people try access it directly from URL)
+			
 			
 			response.sendRedirect(request.getContextPath() + "/Login.xhtml");
 		} else {
@@ -38,8 +38,10 @@ public class AuthorizationFilter implements Filter {
 
 	}
 
-	private boolean isUsuarioLogado(HttpSession session) {
+	private boolean hasLoggedIn(HttpSession session) {
 		return session.getAttribute(JsfUtil.LOGGEDIN_USERNAME_SESSION_ATTRIBUTE)!=null;
 	}
+	
+	
 
 }

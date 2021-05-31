@@ -11,8 +11,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "role", schema = "jasked")
 @NamedQuery(name="Role.findAll", query="SELECT r FROM Role r")
-public class Role implements Serializable {
+public class Role implements Identifiable<Integer> {
 	private static final long serialVersionUID = 1L;
+	
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

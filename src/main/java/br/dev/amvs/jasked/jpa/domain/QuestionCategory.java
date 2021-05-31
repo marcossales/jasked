@@ -32,7 +32,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "QuestionCategory.findById", query = "SELECT q FROM QuestionCategory q WHERE q.id = :id"),
     @NamedQuery(name = "QuestionCategory.findByName", query = "SELECT q FROM QuestionCategory q WHERE q.name = :name"),
     @NamedQuery(name = "QuestionCategory.findByDescription", query = "SELECT q FROM QuestionCategory q WHERE q.description = :description")})
-public class QuestionCategory implements Serializable {
+public class QuestionCategory implements Identifiable<Integer>,FaqSiteOrBelongingToIt {
 
     private static final long serialVersionUID = 1L;
     

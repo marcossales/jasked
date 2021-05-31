@@ -5,8 +5,8 @@
  */
 package br.dev.amvs.jasked.jpa.domain;
 
-import java.io.Serializable;
 import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,6 +21,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import br.dev.amvs.jasked.jsf.SessionInfoController;
+
 
 /**
  *
@@ -33,7 +35,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "FaqSite.findById", query = "SELECT f FROM FaqSite f WHERE f.id = :id"),
     @NamedQuery(name = "FaqSite.findByName", query = "SELECT f FROM FaqSite f WHERE f.name = :name"),
     @NamedQuery(name = "FaqSite.findByPath", query = "SELECT f FROM FaqSite f WHERE f.path = :path")})
-public class FaqSite implements Serializable {
+public class FaqSite implements Identifiable<Integer>,FaqSiteOrBelongingToIt {
 
     private static final long serialVersionUID = 1L;
     
@@ -58,6 +60,7 @@ public class FaqSite implements Serializable {
     @JoinColumn(name = "status_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private ObjectStatus objectStatus;
+    
 
     public FaqSite() {
     }
@@ -143,5 +146,11 @@ public class FaqSite implements Serializable {
     public String toString() {
         return this.getName();
     }
-    
+
+	@Override
+	public FaqSite getFaqSite() {
+		return this;
+	}
+	
+	
 }

@@ -1,8 +1,8 @@
 package br.dev.amvs.jasked.jsf;
 
-import java.io.Serializable;
 import java.util.ResourceBundle;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -12,17 +12,19 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.dev.amvs.jasked.jpa.domain.User;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 import br.dev.amvs.jasked.jsf.util.PaginationHelper;
 import br.dev.amvs.jasked.security.util.SecurityUtil;
+import br.dev.amvs.jasked.sessionbeans.RoleFacade;
 import br.dev.amvs.jasked.sessionbeans.UserFacade;
 
 @Named("userController")
 @SessionScoped
-public class UserController implements Serializable {
+public class UserController extends BasicCrudPermissionVerifier<User> {
 
     /**
 	 * 
@@ -33,12 +35,31 @@ public class UserController implements Serializable {
 	private DataModel items = null;
     @EJB
     private br.dev.amvs.jasked.sessionbeans.UserFacade ejbFacade;
+    
+    @Inject
+    private SessionInfoController sessionInfoController;
    
     private PaginationHelper pagination;
     private int selectedItemIndex;
     
+    @EJB
+    private RoleFacade roleFacade; 
     
+    private User user;
+
+    @Override
+    public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
     
+    @PostConstruct
+    public void init() {
+    	this.user = sessionInfoController.getUserInSessionWithPermissions();
+    }
     
     public UserController() {
     }
@@ -110,6 +131,7 @@ public class UserController implements Serializable {
     public String prepareEdit() { 
         current = (User) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        current.setEditingPassword(false);
         return "Edit";
     }
 
@@ -117,7 +139,10 @@ public class UserController implements Serializable {
 
 	public String update() {
         try {
-        	current.setPassword(SecurityUtil.passwordHash(current.getPassword()));
+        	if(current.isEditingPassword()) {
+        		current.setPassword(SecurityUtil.passwordHash(current.getPassword()));	
+        	}
+        	
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Messages").getString("UserUpdated"));
             return "View";
@@ -260,7 +285,50 @@ public class UserController implements Serializable {
 
     }
 	
+	@Override
+	protected String getCreateRoleName() {
+		return "CREATE_USER";
+	}
 
+	@Override
+	protected String getReadRoleName() {
+		return "READ_USER";
+	}
+
+	@Override
+	protected String getUpdateRoleName() {
+		return "UPDATE_USER";
+	}
+
+	@Override
+	protected String getDeleteRoleName() {
+		return "DELETE_USER";
+	}
+
+	@Override
+	public RoleFacade getRoleFacade() {
+		return this.roleFacade;
+	}
+
+	@Override
+	protected String getAccessDeniedPageOutcome() {
+		return "/admin/denied";
+	}
+
+	@Override
+	public boolean canRead(User selected) {
+		return  isCanRead();
+	}
+
+	@Override
+	public boolean canUpdate(User selected) {
+		return isCanUpdate();
+	}
+
+	@Override
+	public boolean canDelete(User selected) {
+		return isCanDelete();
+	}
 	
 
 }

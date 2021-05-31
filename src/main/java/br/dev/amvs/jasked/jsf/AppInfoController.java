@@ -21,6 +21,9 @@ public class AppInfoController implements Serializable {
     
     private  Map<String,SessionData> openSessions ;
     
+    
+   
+    
   
 	
     
@@ -36,10 +39,15 @@ public class AppInfoController implements Serializable {
     @PostConstruct
     public void init() {
     	openSessions = new HashMap<String,SessionData>();
+    	
     }
 	public  Map<String, SessionData> getOpenSessions() {
 		return openSessions;
 	}
+	
+	
+
+	
 	
     
     

@@ -49,7 +49,7 @@ public class FaqSiteFacade extends PublishableObjectFacade<FaqSite>{
 	public List<FaqSite> findRange(int[] range,User user) {
 		String queryString = " SELECT f.* FROM jasked.faq_site f ";
 		if(!user.isSuperUser()) {
-			queryString = " SELECT f.* FROM jasked.faq_site f INNER JOIN jasked.user_role_faq perm on (perm.faq_site_id = f.id) WHERE perm.user_id = ?1 ";
+			queryString = " SELECT f.* FROM jasked.faq_site f INNER JOIN jasked.permission perm on (perm.faq_site_id = f.id) WHERE perm.user_id = ?1 ";
 		}
         javax.persistence.Query q = getEntityManager().createNativeQuery(queryString,FaqSite.class);
         if(!user.isSuperUser()) {

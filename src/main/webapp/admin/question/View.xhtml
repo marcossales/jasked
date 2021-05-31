@@ -6,6 +6,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/admin/loggedInTemplate.xhtml">
+    <ui:define name="preRenderListener">
+           <f:event type="preRenderView" listener="#{questionController.checkPreRenderView}">
+           </f:event>
+        </ui:define>
         <ui:define name="pageTitle">
             <h:outputText value="#{messages.ViewQuestionTitle}"></h:outputText>
         </ui:define>
@@ -28,14 +32,18 @@
                     <h:outputText value="#{questionController.selected.questionCategory.name}" title="#{messages.ViewQuestionTitle_questionCategory}"/>
                 </h:panelGrid>
                 <br />
-                <h:commandLink action="#{questionController.destroyAndView}" value="#{messages.ViewQuestionDestroyLink}"/>
+                <h:commandLink action="#{questionController.destroyAndView}" value="#{messages.ViewQuestionDestroyLink}"
+                rendered="#{questionController.canDelete(selected)}"/>
                 <br />
                 <br />
-                <h:link outcome="Edit" value="#{messages.ViewQuestionEditLink}"/>
+                <h:link outcome="Edit" value="#{messages.ViewQuestionEditLink}"
+                rendered="#{questionController.canUpdate(selected)}"/>
                 <br />
-                <h:commandLink action="#{questionController.prepareCreate}" value="#{messages.ViewQuestionCreateLink}" />
+                <h:commandLink action="#{questionController.prepareCreate}" value="#{messages.ViewQuestionCreateLink}"
+                rendered="#{questionController.canCreate}" />
                 <br />
-                <h:commandLink action="#{questionController.prepareList}" value="#{messages.ViewQuestionShowAllLink}"/>
+                <h:commandLink action="#{questionController.prepareList}" value="#{messages.ViewQuestionShowAllLink}"
+                rendered="#{questionController.canRead}"/>
                 <br />
                 <br />
                 <h:link outcome="/admin/index" value="#{messages.ViewQuestionIndexLink}"/>

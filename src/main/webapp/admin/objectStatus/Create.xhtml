@@ -6,6 +6,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/admin/loggedInTemplate.xhtml">
+    	<ui:define name="preRenderListener">
+    	   <f:event type="preRenderView" listener="#{objectStatusController.checkPreRenderCreate}" >
+		</f:event>
+    	</ui:define>
         <ui:define name="pageTitle">
             <h:outputText value="#{messages.CreateObjectStatusTitle}"></h:outputText>
         </ui:define>
@@ -22,10 +26,14 @@
                     <h:inputText id="name" value="#{objectStatusController.selected.name}" title="#{messages.CreateObjectStatusTitle_name}" />
                 </h:panelGrid>
                 <br />
-                <h:commandLink action="#{objectStatusController.create}" value="#{messages.CreateObjectStatusSaveLink}" />
+                <h:commandLink action="#{objectStatusController.create}" 
+                value="#{messages.CreateObjectStatusSaveLink}" 
+                rendered="#{objectStatusController.canCreate}"/>
                 <br />
                 <br />
-                <h:commandLink action="#{objectStatusController.prepareList}" value="#{messages.CreateObjectStatusShowAllLink}" immediate="true"/>
+                <h:commandLink action="#{objectStatusController.prepareList}" 
+                value="#{messages.CreateObjectStatusShowAllLink}" immediate="true"
+                 rendered="#{objectStatusController.canRead}"/>
                 <br />
                 <br />
                 <h:link outcome="/admin/index" value="#{messages.CreateObjectStatusIndexLink}"/>

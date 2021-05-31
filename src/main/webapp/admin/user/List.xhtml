@@ -6,6 +6,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/admin/loggedInTemplate.xhtml">
+    	<ui:define name="preRenderListener">
+           <f:event type="preRenderView" listener="#{userController.checkPreRenderList}">
+           </f:event>
+     </ui:define>
         <ui:define name="pageTitle">
             <h:outputText value="#{messages.ListUserTitle}"></h:outputText>
         </ui:define>
@@ -62,16 +66,24 @@
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
-                            <h:commandLink action="#{userController.prepareView}" value="#{messages.ListUserViewLink}"/>
+                            <h:commandLink action="#{userController.prepareView}"
+                             value="#{messages.ListUserViewLink}"
+                             rendered="#{userController.canRead(item)}"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{userController.prepareEdit}"  value="#{messages.ListUserEditLink}"/>
+                            <h:commandLink action="#{userController.prepareEdit}"
+                              value="#{messages.ListUserEditLink}"
+                              rendered="#{userController.canUpdate(item)}"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{userController.destroy}" value="#{messages.ListUserDestroyLink}"/>
+                            <h:commandLink action="#{userController.destroy}" 
+                            value="#{messages.ListUserDestroyLink}"
+                            rendered="#{userController.canDelete(item)}"/>
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>
                 <br />
-                <h:commandLink action="#{userController.prepareCreate}" value="#{messages.ListUserCreateLink}"/>
+                <h:commandLink action="#{userController.prepareCreate}"
+                 value="#{messages.ListUserCreateLink}"
+                 rendered="#{userController.canCreate}"/>
                 <br />
                 <br />
                 <h:link outcome="/admin/index" value="#{messages.ListUserIndexLink}"/>

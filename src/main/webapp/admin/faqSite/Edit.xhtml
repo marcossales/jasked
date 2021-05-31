@@ -6,6 +6,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/admin/loggedInTemplate.xhtml">
+    <ui:define name="preRenderListener">
+    	   <f:event type="preRenderView" listener="#{faqSiteController.checkPreRenderEdit}" >
+		</f:event>
+    	</ui:define>
         <ui:define name="pageTitle">
             <h:outputText value="#{messages.EditFaqSiteTitle}"></h:outputText>
         </ui:define>
@@ -27,12 +31,17 @@
                         <f:selectItems value="#{objectStatusController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>
-                <h:commandLink action="#{faqSiteController.update}" value="#{messages.EditFaqSiteSaveLink}"/>
+                <h:commandLink action="#{faqSiteController.update}" 
+                value="#{messages.EditFaqSiteSaveLink}"
+                rendered="#{faqSiteController.canUpdate(selected)}"/>
                 <br />
                 <br />
-                <h:link outcome="View" value="#{messages.EditFaqSiteViewLink}"/>
+                <h:link outcome="View" value="#{messages.EditFaqSiteViewLink}"
+                rendered="#{faqSiteController.canRead(selected)}"/>
                 <br />
-                <h:commandLink action="#{faqSiteController.prepareList}" value="#{messages.EditFaqSiteShowAllLink}" immediate="true"/>
+                <h:commandLink action="#{faqSiteController.prepareList}"
+                 value="#{messages.EditFaqSiteShowAllLink}" immediate="true"
+                 rendered="#{faqSiteController.canRead}"/>
                 <br />
                 <br />
                 <h:link outcome="/admin/index" value="#{messages.EditFaqSiteIndexLink}" />

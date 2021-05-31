@@ -6,7 +6,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/admin/loggedInTemplate.xhtml">
-       
+        <ui:define name="preRenderListener">
+           <f:event type="preRenderView" listener="#{sessionDataController.checkPreRenderList}">
+           </f:event>
+     </ui:define>
         <ui:define name="pageTitle">
             <h:outputText value="#{messages.ListSessionDataTitle}"></h:outputText>
         </ui:define>

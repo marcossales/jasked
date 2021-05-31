@@ -9,6 +9,9 @@
 
 <ui:composition template="/admin/loggedInTemplate.xhtml">
 
+	
+
+
 	<ui:define name="pageTitle">
 		<h:outputText value="Index" />
 	</ui:define>
@@ -18,26 +21,29 @@
 	<ui:define name="pageMain">
 		<h:outputText value="Index" />
 		<br />
-		<h:link outcome="faqSite/List" value="#{messages.AdminIndexFaqSiteShowAllLink}" />
+		<h:link outcome="faqSite/List" value="#{messages.AdminIndexFaqSiteShowAllLink}" 
+		rendered="#{faqSiteController.canRead}"/>
 		<br />
 		
-		<h:link outcome="question/List" value="#{messages.AdminIndexQuestionShowAllLink}" />
+		<h:link outcome="question/List" value="#{messages.AdminIndexQuestionShowAllLink}" 
+		rendered="#{questionController.canRead}"/> 
 		<br />
 		<h:link outcome="questionCategory/List"
-			value="#{messages.AdminIndexQuestionCategoryShowAllLink}" />
+			value="#{messages.AdminIndexQuestionCategoryShowAllLink}" 
+			rendered="#{questionCategoryController.canRead}"/>
 		<br />
 		<h:link outcome="objectStatus/List"
 			value="#{messages.AdminIndexObjectStatusShowAllLink}"
-			rendered="#{sessionInfoController.allowedToManageObjectStatus}" />
+			rendered="#{objectStatusController.canRead}" />
 		<br />
 		<h:link outcome="sessionData/List" value="#{messages.AdminIndexSessionDataShowAllLink}"
-			rendered="#{sessionInfoController.allowedToManageOpenSessions}" />
+			rendered="#{sessionDataController.canRead}" />
 		<br />
 		<h:link outcome="user/List" value="#{messages.AdminIndexUserShowAllLink}"
-			rendered="#{sessionInfoController.allowedToManageUsers}" />
+			rendered="#{userController.canRead}" />
 		<br />
 		<h:link outcome="permission/List" value="#{messages.AdminIndexPermissionShowAllLink}"
-			rendered="#{sessionInfoController.allowedToManagePermissions}" />
+			rendered="#{permissionController.canRead}" />
 
 
 	</ui:define>

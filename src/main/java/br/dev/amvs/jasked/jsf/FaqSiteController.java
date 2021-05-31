@@ -1,9 +1,9 @@
 package br.dev.amvs.jasked.jsf;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -17,18 +17,24 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.dev.amvs.jasked.jpa.domain.FaqSite;
+import br.dev.amvs.jasked.jpa.domain.User;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 import br.dev.amvs.jasked.jsf.util.PaginationHelper;
 import br.dev.amvs.jasked.sessionbeans.FaqSiteFacade;
+import br.dev.amvs.jasked.sessionbeans.RoleFacade;
 
 @Named("faqSiteController")
 @SessionScoped
-public class FaqSiteController implements Serializable {
+public class FaqSiteController extends BelongingToFaqSiteCrudPermissionVerifier<FaqSite> {
 
+	
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
 	private FaqSite current;
     @SuppressWarnings("rawtypes")
 	private DataModel items = null;
@@ -36,16 +42,42 @@ public class FaqSiteController implements Serializable {
     private br.dev.amvs.jasked.sessionbeans.FaqSiteFacade ejbFacade;
     @EJB
     private br.dev.amvs.jasked.sessionbeans.UserFacade userFacade;
+   
     private PaginationHelper pagination;
     private int selectedItemIndex;
     
     
     @Inject
     private SessionInfoController sessionInfoController;
+    
+    @EJB
+    private RoleFacade roleFacade; 
+   
+    private User user;
 
-    public FaqSiteController() {
+ 
+    @Override
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+    
+    @PostConstruct
+    public void init() {
+    	this.user = sessionInfoController.getUserInSessionWithPermissions();
     }
+   
+    
 
+
+
+
+	public FaqSiteController() {
+    }
+	@Override
     public FaqSite getSelected() {
         if (current == null) {
             current = new FaqSite();
@@ -255,5 +287,40 @@ public class FaqSiteController implements Serializable {
         }
 
     }
+    
+	@Override
+	protected String getCreateRoleName() {
+		return "CREATE_FAQ_SITE";
+	}
+
+	@Override
+	protected String getReadRoleName() {
+		return "READ_FAQ_SITE";
+	}
+
+	@Override
+	protected String getUpdateRoleName() {
+		return "UPDATE_FAQ_SITE";
+	}
+
+	@Override
+	protected String getDeleteRoleName() {
+		return "DELETE_FAQ_SITE";
+	}
+
+	@Override
+	public RoleFacade getRoleFacade() {
+		
+		return this.roleFacade;
+	}
+
+	@Override
+	protected String getAccessDeniedPageOutcome() {
+		
+		return "/admin/denied";
+	}
+
+	
+    
 
 }

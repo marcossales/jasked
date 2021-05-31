@@ -6,6 +6,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/admin/loggedInTemplate.xhtml">
+    <ui:define name="preRenderListener">
+    	   <f:event type="preRenderView" listener="#{objectStatusController.checkPreRenderView}" >
+		</f:event>
+    	</ui:define>
         <ui:define name="pageTitle">
             <h:outputText value="#{messages.ViewObjectStatusTitle}"></h:outputText>
         </ui:define>
@@ -22,14 +26,20 @@
                     <h:outputText value="#{objectStatusController.selected.name}" title="#{messages.ViewObjectStatusTitle_name}"/>
                 </h:panelGrid>
                 <br />
-                <h:commandLink action="#{objectStatusController.destroyAndView}" value="#{messages.ViewObjectStatusDestroyLink}"/>
+                <h:commandLink action="#{objectStatusController.destroyAndView}" value="#{messages.ViewObjectStatusDestroyLink}"
+                rendered="#{objectStatusController.canDelete(selected)}"/>
                 <br />
                 <br />
-                <h:link outcome="Edit" value="#{messages.ViewObjectStatusEditLink}"/>
+                <h:link outcome="Edit" value="#{messages.ViewObjectStatusEditLink}"
+                rendered="#{objectStatusController.canUpdate(selected)}"/>
                 <br />
-                <h:commandLink action="#{objectStatusController.prepareCreate}" value="#{messages.ViewObjectStatusCreateLink}" />
+                <h:commandLink action="#{objectStatusController.prepareCreate}" 
+                value="#{messages.ViewObjectStatusCreateLink}" 
+                rendered="#{objectStatusController.canCreate}"/>
                 <br />
-                <h:commandLink action="#{objectStatusController.prepareList}" value="#{messages.ViewObjectStatusShowAllLink}"/>
+                <h:commandLink action="#{objectStatusController.prepareList}" 
+                value="#{messages.ViewObjectStatusShowAllLink}"
+                rendered="#{objectStatusController.canRead}"/>
                 <br />
                 <br />
                 <h:link outcome="/admin/index" value="#{messages.ViewObjectStatusIndexLink}"/>

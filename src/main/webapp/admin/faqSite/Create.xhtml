@@ -6,6 +6,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/admin/loggedInTemplate.xhtml">
+    <ui:define name="preRenderListener">
+    	   <f:event type="preRenderView" listener="#{faqSiteController.checkPreRenderCreate}" >
+		</f:event>
+    	</ui:define>
         <ui:define name="pageTitle">
             <h:outputText value="#{messages.CreateFaqSiteTitle}"></h:outputText>
         </ui:define>
@@ -28,10 +32,14 @@
                     </h:selectOneMenu>
                 </h:panelGrid>
                 <br />
-                <h:commandLink action="#{faqSiteController.create}" value="#{messages.CreateFaqSiteSaveLink}" />
+                <h:commandLink action="#{faqSiteController.create}" 
+                value="#{messages.CreateFaqSiteSaveLink}" 
+                rendered="#{faqSiteController.canCreate}"/>
                 <br />
                 <br />
-                <h:commandLink action="#{faqSiteController.prepareList}" value="#{messages.CreateFaqSiteShowAllLink}" immediate="true"/>
+                <h:commandLink action="#{faqSiteController.prepareList}" 
+                value="#{messages.CreateFaqSiteShowAllLink}" immediate="true"
+                rendered="#{faqSiteController.canRead}"/>
                 <br />
                 <br />
                 <h:link outcome="/admin/index" value="#{messages.CreateFaqSiteIndexLink}"/>

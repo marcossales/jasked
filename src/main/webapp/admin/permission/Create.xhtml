@@ -6,6 +6,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/admin/loggedInTemplate.xhtml">
+   		 <ui:define name="preRenderListener">
+           <f:event type="preRenderView" listener="#{permissionController.checkPreRenderCreate}">
+           </f:event>
+        </ui:define>
         <ui:define name="pageTitle">
             <h:outputText value="#{messages.CreatePermissionTitle}"></h:outputText> 
         </ui:define>
@@ -17,24 +21,24 @@
             <h:form>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="#{messages.CreatePermissionLabel_user}" for="user" />
-                    <h:selectOneMenu id="user" value="#{permissionController.selected.transientUser}" title="#{messages.CreatePermissionTitle_user}" required="true" requiredMessage="#{messages.CreatePermissionRequiredMessage_user}">
+                    <h:selectOneMenu id="user" value="#{permissionController.selected.user}" title="#{messages.CreatePermissionTitle_user}" required="true" requiredMessage="#{messages.CreatePermissionRequiredMessage_user}">
                         <f:selectItems value="#{userController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu> 
                    <h:outputLabel value="#{messages.CreatePermissionLabel_faqSite}" for="faSite" />
-                    <h:selectOneMenu id="faqSite" value="#{permissionController.selected.transientFaqSite}" title="#{messages.CreatePermissionTitle_faqSite}" required="true" requiredMessage="#{messages.CreatePermissionRequiredMessage_faqSite}">
+                    <h:selectOneMenu id="faqSite" value="#{permissionController.selected.faqSite}" title="#{messages.CreatePermissionTitle_faqSite}" required="true" requiredMessage="#{messages.CreatePermissionRequiredMessage_faqSite}">
                         <f:selectItems value="#{faqSiteController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                  <h:outputLabel value="#{messages.CreatePermissionLabel_role}" for="role" />
-                    <h:selectOneMenu id="role" value="#{permissionController.selected.transientRole}" title="#{messages.CreatePermissionTitle_role}" required="true" requiredMessage="#{messages.CreatePermissionRequiredMessage_role}">
+                    <h:selectOneMenu id="role" value="#{permissionController.selected.role}" title="#{messages.CreatePermissionTitle_role}" required="true" requiredMessage="#{messages.CreatePermissionRequiredMessage_role}">
                         <f:selectItems value="#{permissionController.roleItemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
     					                   
                 </h:panelGrid>
                 <br />
-                <h:commandLink action="#{permissionController.create}" value="#{messages.CreatePermissionSaveLink}" /> 
+                <h:commandLink action="#{permissionController.create}" value="#{messages.CreatePermissionSaveLink}" rendered="#{permissionController.canCreate}"/> 
                 <br />
                 <br />
-                <h:commandLink action="#{permissionController.prepareList}" value="#{messages.CreatePermissionShowAllLink}" immediate="true"/>
+                <h:commandLink action="#{permissionController.prepareList}" value="#{messages.CreatePermissionShowAllLink}" immediate="true" rendered="#{permissionController.canRead}"/>
                 <br />
                 <br />
                 <h:link outcome="/admin/index" value="#{messages.CreatePermissionIndexLink}"/>  

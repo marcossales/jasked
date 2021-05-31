@@ -30,7 +30,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Question.findById", query = "SELECT q FROM Question q WHERE q.id = :id"),
     @NamedQuery(name = "Question.findByWording", query = "SELECT q FROM Question q WHERE q.wording = :wording"),
     @NamedQuery(name = "Question.findByAnswer", query = "SELECT q FROM Question q WHERE q.answer = :answer")})
-public class Question implements Serializable {
+public class Question implements Identifiable<Integer>,FaqSiteOrBelongingToIt {
 
     private static final long serialVersionUID = 1L;
     
@@ -141,5 +141,10 @@ public class Question implements Serializable {
     public String toString() {
         return this.getWording();
     }
+
+	@Override
+	public FaqSite getFaqSite() {
+		return questionCategory.getFaqSite();
+	}
     
 }

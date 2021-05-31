@@ -6,6 +6,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/admin/loggedInTemplate.xhtml">
+    	<ui:define name="preRenderListener">
+    	   <f:event type="preRenderView" listener="#{objectStatusController.checkPreRenderEdit}" >
+		</f:event>
+    	</ui:define>
         <ui:define name="pageTitle">
             <h:outputText value="#{messages.EditObjectStatusTitle}"></h:outputText>
         </ui:define>
@@ -21,12 +25,17 @@
                     <h:outputLabel value="#{messages.EditObjectStatusLabel_name}" for="name" />
                     <h:inputText id="name" value="#{objectStatusController.selected.name}" title="#{messages.EditObjectStatusTitle_name}" />
                 </h:panelGrid>
-                <h:commandLink action="#{objectStatusController.update}" value="#{messages.EditObjectStatusSaveLink}"/>
+                <h:commandLink action="#{objectStatusController.update}"
+                 value="#{messages.EditObjectStatusSaveLink}"
+                 rendered="#{objectStatusController.canUpdate(selected)}"/>
                 <br />
                 <br />
-                <h:link outcome="View" value="#{messages.EditObjectStatusViewLink}"/>
+                <h:link outcome="View" value="#{messages.EditObjectStatusViewLink}"
+                rendered="#{objectStatusController.canRead(selected)}"/>
                 <br />
-                <h:commandLink action="#{objectStatusController.prepareList}" value="#{messages.EditObjectStatusShowAllLink}" immediate="true"/>
+                <h:commandLink action="#{objectStatusController.prepareList}" 
+                value="#{messages.EditObjectStatusShowAllLink}" immediate="true"
+                rendered="#{objectStatusController.canRead}"/>
                 <br />
                 <br />
                 <h:link outcome="/admin/index" value="#{messages.EditObjectStatusIndexLink}" />

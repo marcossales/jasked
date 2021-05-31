@@ -6,16 +6,21 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.ComponentSystemEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.dev.amvs.jasked.jpa.domain.Permission;
+import br.dev.amvs.jasked.jpa.domain.Role;
+import br.dev.amvs.jasked.jpa.domain.User;
 import br.dev.amvs.jasked.jsf.util.PaginationHelper;
 
 
@@ -36,6 +41,28 @@ public class SessionDataController implements Serializable {
 	private int selectedItemIndex;
     
     
+    private User user;
+    @EJB
+	private br.dev.amvs.jasked.sessionbeans.RoleFacade roleFacade;
+    
+    @Inject
+    private SessionInfoController sessionInfoController;
+    
+    public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+    
+	 @PostConstruct
+	    public void init() {
+	    	this.user = sessionInfoController.getUserInSessionWithPermissions();
+	    	reloadOpenSessions();
+	    }
+    
+    
     @Inject
     private AppInfoController appInfoController;
     
@@ -54,10 +81,7 @@ public class SessionDataController implements Serializable {
 
  
     
-    @PostConstruct
-    public void init() {
-    	reloadOpenSessions();
-    }
+   
 
     public String refresh() {
     	reloadOpenSessions();
@@ -207,5 +231,30 @@ public class SessionDataController implements Serializable {
         }
 
     }
+    
+	public boolean isCanRead() {
+		User u = getUser();
+    	if(u.isSuperUser()) {
+    		return true;
+    	}
+		Role role = roleFacade.findByExactName("READ_SESSION_DATA"); 
+		for(Permission p: getUser().getPermissions()) {
+			 if( role.equals(p.getRole())   ) {
+				 return true;
+			 }
+		 }
+		return false;
+	}
+	
+    public void checkPreRenderList(ComponentSystemEvent event) {
+    	if(!isCanRead() ) {
+    		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+    		.handleNavigation(FacesContext.getCurrentInstance(), null, getAccessDeniedPageOutcome());
+    	}
+    }
+
+	private String getAccessDeniedPageOutcome() {
+		return "/admin/denied";
+	}
 
 }

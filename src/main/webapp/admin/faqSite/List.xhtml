@@ -6,6 +6,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/admin/loggedInTemplate.xhtml">
+        <ui:define name="preRenderListener">
+           <f:event type="preRenderView" listener="#{faqSiteController.checkPreRenderList}">
+           </f:event>
+        </ui:define>
         <ui:define name="pageTitle">
             <h:outputText value="#{messages.ListFaqSiteTitle}"></h:outputText>
         </ui:define>
@@ -49,19 +53,28 @@
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
-                            <h:commandLink action="#{faqSiteController.prepareView}" value="#{messages.ListFaqSiteViewLink}"/>
+                            <h:commandLink action="#{faqSiteController.prepareView}" 
+                            value="#{messages.ListFaqSiteViewLink}" 
+                            rendered="#{faqSiteController.canRead(item)}"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{faqSiteController.prepareEdit}" value="#{messages.ListFaqSiteEditLink}"/>
+                            <h:commandLink action="#{faqSiteController.prepareEdit}" 
+                            value="#{messages.ListFaqSiteEditLink}" 
+                            rendered="#{faqSiteController.canUpdate(item)}"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{faqSiteController.destroy}" value="#{messages.ListFaqSiteDestroyLink}"/>
+                            <h:commandLink action="#{faqSiteController.destroy}" 
+                            value="#{messages.ListFaqSiteDestroyLink}"
+                             rendered="#{faqSiteController.canDelete(item)}"/>
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>
                 <br />
-                <h:commandLink action="#{faqSiteController.prepareCreate}" value="#{messages.ListFaqSiteCreateLink}"/>
+                <h:commandLink action="#{faqSiteController.prepareCreate}" 
+                value="#{messages.ListFaqSiteCreateLink}"
+                 rendered="#{faqSiteController.canCreate}"/>
                 <br />
                 <br />
                 <h:link outcome="/admin/index" value="#{messages.ListFaqSiteIndexLink}"/>
+               
             </h:form>
         </ui:define>
     </ui:composition>

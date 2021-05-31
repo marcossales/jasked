@@ -27,7 +27,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "ObjectStatus.findAll", query = "SELECT o FROM ObjectStatus o"),
     @NamedQuery(name = "ObjectStatus.findById", query = "SELECT o FROM ObjectStatus o WHERE o.id = :id"),
     @NamedQuery(name = "ObjectStatus.findByName", query = "SELECT o FROM ObjectStatus o WHERE o.name = :name")})
-public class ObjectStatus implements Serializable {
+public class ObjectStatus implements Identifiable<Integer> {
 
     private static final long serialVersionUID = 1L;
     

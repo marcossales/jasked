@@ -6,6 +6,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/admin/loggedInTemplate.xhtml">
+    <ui:define name="preRenderListener">
+    	   <f:event type="preRenderView" listener="#{objectStatusController.checkPreRenderList}" >
+		</f:event>
+    	</ui:define>
         <ui:define name="pageTitle">
             <h:outputText value="#{messages.ListObjectStatusTitle}"></h:outputText>
         </ui:define>
@@ -37,16 +41,18 @@
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
-                            <h:commandLink action="#{objectStatusController.prepareView}" value="#{messages.ListObjectStatusViewLink}"/>
+                            <h:commandLink action="#{objectStatusController.prepareView}" value="#{messages.ListObjectStatusViewLink}" rendered="#{objectStatusController.canRead(item)}"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{objectStatusController.prepareEdit}" value="#{messages.ListObjectStatusEditLink}"/>
+                            <h:commandLink action="#{objectStatusController.prepareEdit}" value="#{messages.ListObjectStatusEditLink}" rendered="#{objectStatusController.canUpdate(item)}"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{objectStatusController.destroy}" value="#{messages.ListObjectStatusDestroyLink}"/>
+                            <h:commandLink action="#{objectStatusController.destroy}" value="#{messages.ListObjectStatusDestroyLink}" rendered="#{objectStatusController.canDelete(item)}"/>
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>
                 <br />
-                <h:commandLink action="#{objectStatusController.prepareCreate}" value="#{messages.ListObjectStatusCreateLink}"/>
+                <h:commandLink action="#{objectStatusController.prepareCreate}" 
+                value="#{messages.ListObjectStatusCreateLink}"
+                rendered="#{objectStatusController.canCreate}"/>
                 <br />
                 <br />
                 <h:link outcome="/admin/index" value="#{messages.ListObjectStatusIndexLink}"/>

@@ -6,6 +6,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/admin/loggedInTemplate.xhtml">
+    <ui:define name="preRenderListener">
+    	   <f:event type="preRenderView" listener="#{faqSiteController.checkPreRenderView}" >
+		</f:event>
+    	</ui:define>
         <ui:define name="pageTitle">
             <h:outputText value="#{messages.ViewFaqSiteTitle}"></h:outputText>
         </ui:define>
@@ -26,14 +30,21 @@
                     <h:outputText value="#{faqSiteController.selected.objectStatus.name}" title="#{messages.ViewFaqSiteTitle_objectStatus}"/>
                 </h:panelGrid>
                 <br />
-                <h:commandLink action="#{faqSiteController.destroyAndView}" value="#{messages.ViewFaqSiteDestroyLink}"/>
+                <h:commandLink action="#{faqSiteController.destroyAndView}" 
+                value="#{messages.ViewFaqSiteDestroyLink}"
+                rendered="#{faqSiteController.canDelete(selected)}"/>
                 <br />
                 <br />
-                <h:link outcome="Edit" value="#{messages.ViewFaqSiteEditLink}"/>
+                <h:link outcome="Edit" value="#{messages.ViewFaqSiteEditLink}"
+                 rendered="#{faqSiteController.canUpdate(selected)}"/>
                 <br />
-                <h:commandLink action="#{faqSiteController.prepareCreate}" value="#{messages.ViewFaqSiteCreateLink}" />
+                <h:commandLink action="#{faqSiteController.prepareCreate}"
+                 value="#{messages.ViewFaqSiteCreateLink}" 
+                  rendered="#{faqSiteController.canCreate}"/>
                 <br />
-                <h:commandLink action="#{faqSiteController.prepareList}" value="#{messages.ViewFaqSiteShowAllLink}"/>
+                <h:commandLink action="#{faqSiteController.prepareList}"
+                 value="#{messages.ViewFaqSiteShowAllLink}"
+                  rendered="#{faqSiteController.canRead}"/>
                 <br />
                 <br />
                 <h:link outcome="/admin/index" value="#{messages.ViewFaqSiteIndexLink}"/>

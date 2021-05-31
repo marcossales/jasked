@@ -61,7 +61,7 @@ public class QuestionCategoryFacade extends AbstractFacade<QuestionCategory> {
 		if(!user.isSuperUser()) {
 			queryString = " SELECT c.* FROM jasked.question_category c "
 					+ " INNER JOIN jasked.faq_site f on(f.id=c.site_id) "
-					+ " INNER JOIN jasked.user_role_faq perm on (perm.faq_site_id = f.id) WHERE perm.user_id = ?1 ";
+					+ " INNER JOIN jasked.permission perm on (perm.faq_site_id = f.id) WHERE perm.user_id = ?1 ";
 		}
         javax.persistence.Query q = getEntityManager().createNativeQuery(queryString,QuestionCategory.class);
         if(!user.isSuperUser()) {
