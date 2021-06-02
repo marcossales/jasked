@@ -10,11 +10,16 @@ import br.dev.amvs.jasked.jpa.domain.Question;
 import br.dev.amvs.jasked.jpa.domain.QuestionCategory;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.model.SelectItem;
 
@@ -108,11 +113,50 @@ public class PublicViewingController {
         return false;
     }
     
-    public String getStylesheetLibrary() {
-    	return "css";//TODO try get from db and change dynamically
+   
+   
+    
+    
+    public String getStyle() {
+    	if(!isCurrentFaqPathEmpty()) {
+    		FaqSite f = ejbFaqSiteFacade.findByFaqPath(this.currentFaqPath, true);
+    		if(f.getStyle()!=null && !f.getStyle().isEmpty()) {
+    			StringBuilder sb = new StringBuilder();
+    			sb.append("<style>");
+    			sb.append(f.getStyle());
+    			sb.append("</style>");
+    			return sb.toString();
+    		}
+    	}
+    	
+    	
+    	return getContentFromDefautStyle();
+    	
     }
-    public String getStylesheetName() {
-    	return "default-public-theme.css";//TODO try get from db and change dynamically
-    }
+
+
+	private String getContentFromDefautStyle() {
+		InputStream input = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("resources/css/default-public-theme.css");
+   	 StringBuilder sb = new StringBuilder();
+        BufferedReader br = new BufferedReader(new InputStreamReader(input));
+        
+        String line;
+        try {
+        	sb.append("<style>");
+			while ((line = br.readLine()) != null) {
+			     sb.append(line + System.lineSeparator());
+			 }
+			sb.append("</style>");
+			return sb.toString();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			return "";
+		}
+	}
+
+
+	
     
 }
+

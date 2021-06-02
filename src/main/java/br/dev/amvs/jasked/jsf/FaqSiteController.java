@@ -68,6 +68,7 @@ public class FaqSiteController extends BelongingToFaqSiteCrudPermissionVerifier<
     @PostConstruct
     public void init() {
     	this.user = sessionInfoController.getUserInSessionWithPermissions();
+    	
     }
    
     

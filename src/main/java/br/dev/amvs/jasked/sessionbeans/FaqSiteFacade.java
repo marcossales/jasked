@@ -14,6 +14,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import br.dev.amvs.jasked.jpa.domain.FaqSite;
+import br.dev.amvs.jasked.jpa.domain.QuestionCategory;
 import br.dev.amvs.jasked.jpa.domain.User;
 
 /**
@@ -59,5 +60,22 @@ public class FaqSiteFacade extends PublishableObjectFacade<FaqSite>{
         q.setFirstResult(range[0]);
         return q.getResultList();
     }
+	
+	public FaqSite findByFaqPath(String path, boolean onlyPublished) {
+		String publishedStatusName =  ResourceBundle.getBundle("/DomainStrings").getString("ObjectStatus_publishedStatusName");
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT DISTINCT f FROM FaqSite f INNER JOIN f.objectStatus fs WHERE UPPER(f.path) = UPPER(:path) ");
+		if(onlyPublished) {
+			sb.append(" AND UPPER(fs.name) = UPPER(:publishedStatusName) ");
+		}
+		TypedQuery<FaqSite> query =
+				em.createQuery(sb.toString(), FaqSite.class);
+		query.setParameter("path", path);
+		if(onlyPublished) {
+			query.setParameter("publishedStatusName", publishedStatusName);
+		}
+	    FaqSite result = query.getSingleResult();
+		return result;
+	}
     
 }

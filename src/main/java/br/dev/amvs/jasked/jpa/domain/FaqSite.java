@@ -18,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -60,6 +61,12 @@ public class FaqSite implements Identifiable<Integer>,FaqSiteOrBelongingToIt {
     @JoinColumn(name = "status_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private ObjectStatus objectStatus;
+    
+   
+
+	private String style;
+	
+	
     
 
     public FaqSite() {
@@ -117,7 +124,15 @@ public class FaqSite implements Identifiable<Integer>,FaqSiteOrBelongingToIt {
 
   
 
-    @Override
+    public String getStyle() {
+		return style;
+	}
+
+	public void setStyle(String style) {
+		this.style = style;
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
