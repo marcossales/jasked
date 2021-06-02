@@ -9,19 +9,19 @@
 
 
 
-		<div>
+		<div >
 			<h:panelGroup
 				rendered="#{!publicViewingController.publishedFaqSitesEmpty}">
-				<div>
-					<h2>
+				<div >
+					<h2 class="selection-request">
 						<h:outputText value="#{publicViewingController.selectFaqMessage}" />
 					</h2>
 				</div>
-				<div>
-					<ul>
+				<div >
+					<ul class="faq-sites-collection">
 						<ui:repeat value="#{publicViewingController.publishedFaqSites}"
 							var="item">
-							<li><h:link outcome="index?f=#{item.path}"
+							<li class="faq-sites-collection__item"><h:link outcome="index?f=#{item.path}"
 									value="#{item.name}" /></li>
 						</ui:repeat>
 
@@ -30,8 +30,8 @@
 			</h:panelGroup>
 			<h:panelGroup
 				rendered="#{publicViewingController.publishedFaqSitesEmpty}">
-				<div>
-					<span><h:outputText
+				<div >
+					<span class="faq-sites-collection__none_published"><h:outputText
 							value="#{publicViewingController.noPublishedItemsMessage}" /></span>
 				</div>
 			</h:panelGroup>

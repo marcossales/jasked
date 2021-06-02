@@ -14,9 +14,11 @@
 			<!-- include your f:metadata-->
 
 		</ui:insert>
-		<title><ui:insert name="pageTitle">
+		<title><ui:insert name="pageTitle"> 
 				<!-- include your page title-->
 			</ui:insert></title>
+			
+		<h:outputStylesheet library = "#{publicViewingController.stylesheetLibrary}" name = "#{publicViewingController.stylesheetName}" /> 
 	</h:head>
 
 	<h:body>

@@ -14,18 +14,18 @@
 				var="categ">
 				<h:panelGroup rendered="#{not empty categ.questionCollection}">
 					<div>
-						<div>
-							<h2>
+						<div >
+							<h2 class="category_name">
 								<h:outputText value="#{categ.name}" />
 							</h2>
 						</div>
-						<div>
-							<dl>
+						<div >
+							<dl class="questions-collection">
 								<ui:repeat var="q" value="#{categ.questionCollection}">
-									<dt>
+									<dt class="questions-collection__wording">
 										<h:outputText value="#{q.wording}" />
 									</dt>
-									<dd>
+									<dd  class="questions-collection__answer">
 										<h:outputText value="#{q.answer}" />
 									</dd>
 								</ui:repeat>

@@ -107,4 +107,12 @@ public class PublicViewingController {
         }
         return false;
     }
+    
+    public String getStylesheetLibrary() {
+    	return "css";//TODO try get from db and change dynamically
+    }
+    public String getStylesheetName() {
+    	return "default-public-theme.css";//TODO try get from db and change dynamically
+    }
+    
 }
