@@ -1,0 +1,37 @@
+<!DOCTYPE html >
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="templates/publicViewTemplate.xhtml">
+
+
+	
+	<ui:define name="pageTitle">
+		   <h:outputText value="#{publicViewingController.expiredPageTitle}" />
+	</ui:define>
+
+   <ui:define name="pageHeader">
+		<div class="public-page-header">
+	     <h1>
+	     
+	         <h:outputText value="#{publicViewingController.expiredPageTitle}"/>
+	     </h1>
+	</div>
+	</ui:define>
+	
+	<ui:define name="pageMain">
+	    <br/> <br/>
+		<h:outputText value="#{publicViewingController.expiredPageMessage}" styleClass="selection-request" />
+		 <br/> <br/>
+		 <h:link outcome="index" value="#{messages.ExpiredPagePublicHomeLink}"   />
+		 <br/> <br/>
+		 <h:link outcome="Login" value="#{messages.ExpiredPagePublicLoginLink}"   />
+	</ui:define>
+	<ui:define name="pageFooter">
+		<ui:include src="/includes/publicViewFooter.xhtml"></ui:include>
+	</ui:define>
+</ui:composition>
+</html>

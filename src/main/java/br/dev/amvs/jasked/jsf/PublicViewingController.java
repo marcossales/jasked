@@ -18,7 +18,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.ViewExpiredException;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.model.SelectItem;
@@ -55,6 +57,12 @@ public class PublicViewingController {
     public String getIndexPageTitle(){
         return ResourceBundle.getBundle("/Messages").getString("PublicIndexPage_title");
     }
+    public String getExpiredPageTitle(){
+        return ResourceBundle.getBundle("/Messages").getString("PublicExpiredPage_title");
+    }
+    public String getExpiredPageMessage(){
+        return ResourceBundle.getBundle("/Messages").getString("PublicExpiredPage_message");
+    }
     
     public String getIndexPageAllPublishedFaqMessage(){
         return ResourceBundle.getBundle("/Messages").getString("PublicIndexPage_allPublishedFaq");
@@ -85,17 +93,20 @@ public class PublicViewingController {
     }
     
     public List<QuestionCategory> getQuestionCategories(){
+    	
     	List<QuestionCategory> categories = ejbQuestionCategoryFacade.findByFaqPath(this.currentFaqPath,true);
     	return categories;
     }
     
     public List<QuestionCategory> getQuestionCategoriesWithQuestions(){
+    	
     	List<QuestionCategory> categories = ejbQuestionCategoryFacade.findByFaqPath(this.currentFaqPath,true);
     	for(QuestionCategory qc: categories) {
     		List<Question> questions = ejbQuestionFacade.findByCategory(qc,true);
     		qc.setQuestionCollection(questions);
     	}
     	
+    
     	return categories;
     }
     
