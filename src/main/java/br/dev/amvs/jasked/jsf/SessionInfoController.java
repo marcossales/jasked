@@ -63,7 +63,8 @@ public class SessionInfoController implements Serializable{
 		try {
 			return userFacade.findByUserName(username);
 		} catch (DatabaseException e) {
-			e.printStackTrace();//TODO  make better,maybe throw an UnexpectedBeahivorException and intercept it in some layer
+			JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Messages").getString("DatabaseQueryErrorOccured"));
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -75,7 +76,8 @@ public class SessionInfoController implements Serializable{
 			u.setPermissions(p);
 			return u;
 		} catch (DatabaseException e) {
-			e.printStackTrace();//TODO  make better,maybe throw an UnexpectedBeahivorException and intercept it in some layer
+			JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Messages").getString("DatabaseQueryErrorOccured"));
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -106,8 +108,9 @@ public class SessionInfoController implements Serializable{
 			return user.isSuperUser();
 			
 		} catch (DatabaseException e) {
+			JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Messages").getString("DatabaseQueryErrorOccured"));
 			e.printStackTrace();
-			return false; //TODO  make better,maybe throw an UnexpectedBeahivorException and intercept it in some layer
+			return false; 
 		}
 	}
 	

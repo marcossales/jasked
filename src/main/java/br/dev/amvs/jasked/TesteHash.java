@@ -9,7 +9,6 @@ public class TesteHash {
 		try {
 			System.out.println(SecurityUtil.passwordHash("admin"));
 		} catch (UnexpectedBehaivorException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
