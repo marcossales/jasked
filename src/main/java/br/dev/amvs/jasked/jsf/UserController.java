@@ -116,7 +116,7 @@ public class UserController extends BasicCrudPermissionVerifier<User> {
         return "Create";
     }
 
-    @Transactional
+    
     public String create() {
         try {
         	current.setPassword(SecurityUtil.passwordHash(current.getPassword()));
@@ -139,7 +139,7 @@ public class UserController extends BasicCrudPermissionVerifier<User> {
 
     
 
-    @Transactional
+    
 	public String update() {
         try {
         	if(current.isEditingPassword()) {
@@ -159,7 +159,7 @@ public class UserController extends BasicCrudPermissionVerifier<User> {
         }
     }
 
-    @Transactional
+    
     public String destroy() {
         current = (User) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
@@ -169,7 +169,7 @@ public class UserController extends BasicCrudPermissionVerifier<User> {
         return "List";
     }
 
-    @Transactional
+    
     public String destroyAndView() {
         performDestroy();
         recreateModel();

@@ -111,7 +111,7 @@ public class ObjectStatusController extends BasicCrudPermissionVerifier<ObjectSt
         return "Create";
     }
 
-    @Transactional
+    
     public String create() {
         try {
             getFacade().create(current);
@@ -129,7 +129,7 @@ public class ObjectStatusController extends BasicCrudPermissionVerifier<ObjectSt
         return "Edit";
     }
 
-    @Transactional
+    
     public String update() {
         try {
             getFacade().edit(current);
@@ -141,7 +141,7 @@ public class ObjectStatusController extends BasicCrudPermissionVerifier<ObjectSt
         }
     }
 
-    @Transactional
+    
     public String destroy() {
         current = (ObjectStatus) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
@@ -151,7 +151,7 @@ public class ObjectStatusController extends BasicCrudPermissionVerifier<ObjectSt
         return "List";
     }
 
-    @Transactional
+    
     public String destroyAndView() {
         performDestroy();
         recreateModel();

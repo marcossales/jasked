@@ -134,7 +134,7 @@ public class FaqSiteController extends BelongingToFaqSiteCrudPermissionVerifier<
         selectedItemIndex = -1;
         return "Create";
     }
-    @Transactional
+    
     public String create() {
         try {
             getFacade().create(current);
@@ -152,7 +152,7 @@ public class FaqSiteController extends BelongingToFaqSiteCrudPermissionVerifier<
         return "Edit";
     }
 
-    @Transactional
+    
     public String update() {
         try {
             getFacade().edit(current);
@@ -164,7 +164,7 @@ public class FaqSiteController extends BelongingToFaqSiteCrudPermissionVerifier<
         }
     }
 
-    @Transactional
+    
     public String destroy() {
         current = (FaqSite) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
@@ -174,7 +174,7 @@ public class FaqSiteController extends BelongingToFaqSiteCrudPermissionVerifier<
         return "List";
     }
 
-    @Transactional
+    
     public String destroyAndView() {
         performDestroy();
         recreateModel();

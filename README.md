@@ -3,41 +3,21 @@ JAsked. A FAQ manager system
 
 ##Version Notes
 
-**Version 0.0.4**
+**Version 1.0.0-sc**
 
-With access control, basic i18n, css customization
+This version includes: user and permission control, public and administrative modules, css editing by FAQ, i18n for 'en' and 'pt_BR', FAQ exporting (html and css).
+Obs: without audit record. 
 
-There is a database model dump at sr/main/sqldump/
+Database schema creation script at sr/main/sqldump/
 
-The Wildfly Application Server have to be configured for posgresql connection. Tested with standalone-full.xml configuration file, edited as:
-
-
-
-	<datasources>
-			...
-			<datasource jndi-name="java:jboss/datasources/JAskedDS" pool-name="JAskedDS" enabled="true" use-java-context="true">
-                    <connection-url>jdbc:postgresql://localhost:5432/jaskeddb</connection-url>
-                    <driver>postgresql</driver>
-                    <security>
-                        <user-name>jasked_app</user-name>
-                        <password>jasked_app</password><!-- change the password-->
-                    </security>
-          </datasource>
-          <drivers>
-                    ...
-                    <driver name="postgresql" module="org.postgresql"> <!-- add the jar file in the corret folder-->
-                        <driver-class>org.postgresql.Driver</driver-class>
-                        <xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
-                    </driver>
-          </drivers>
-                ...
-	</datasources>
+This branch was modified to run over Apache Tomcat Servlet Container
             
 
 ##Next steps at development:
-Some exceptions intercept
 
-FAQ exporting
+Rich text editor for questions
+
+Maybe include JS editing and exporting;
 
 Audit record.
  

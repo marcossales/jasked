@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.dev.amvs</groupId>
 	<artifactId>jasked</artifactId>
-	<version>0.0.4-ALPHA</version>
+	<version>1.0.0-sc</version>
 	<packaging>war</packaging>
 	<name>JAsked</name>
 

@@ -117,7 +117,7 @@ public class PermissionController extends BasicCrudPermissionVerifier<Permission
         return "Create";
     }
 
-    @Transactional
+    
     public String create() {
         try { 
             getFacade().create(current);
@@ -135,7 +135,7 @@ public class PermissionController extends BasicCrudPermissionVerifier<Permission
         return "Edit";
     }
 
-    @Transactional
+    
     public String update() {
         try {
             getFacade().edit(current);
@@ -147,7 +147,7 @@ public class PermissionController extends BasicCrudPermissionVerifier<Permission
         }
     }
 
-    @Transactional
+    
     public String destroy() {
         current = (Permission) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
@@ -157,7 +157,7 @@ public class PermissionController extends BasicCrudPermissionVerifier<Permission
         return "List";
     }
 
-    @Transactional
+    
     public String destroyAndView() {
         performDestroy();
         recreateModel();

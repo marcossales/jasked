@@ -112,7 +112,7 @@ public class QuestionCategoryController extends BelongingToFaqSiteCrudPermission
         return "Create";
     }
 
-    @Transactional
+    
     public String create() {
         try {
             getFacade().create(current);
@@ -130,7 +130,7 @@ public class QuestionCategoryController extends BelongingToFaqSiteCrudPermission
         return "Edit";
     }
 
-    @Transactional
+    
     public String update() {
         try {
             getFacade().edit(current);
@@ -142,7 +142,7 @@ public class QuestionCategoryController extends BelongingToFaqSiteCrudPermission
         }
     }
 
-    @Transactional
+    
     public String destroy() {
         current = (QuestionCategory) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
@@ -151,7 +151,7 @@ public class QuestionCategoryController extends BelongingToFaqSiteCrudPermission
         recreateModel();
         return "List";
     }
-    @Transactional
+    
     public String destroyAndView() {
         performDestroy();
         recreateModel();

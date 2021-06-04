@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import br.dev.amvs.jasked.jpa.domain.Identifiable;
+import br.dev.amvs.jasked.jpa.util.Transactional;
 
 /**
  *
@@ -27,14 +28,17 @@ public abstract class AbstractFacade<T> {
 
     protected abstract EntityManager getEntityManager();
 
+    @Transactional
     public void create(T entity) {
         getEntityManager().persist(entity);
     }
 
+    @Transactional
     public void edit(T entity) {
         getEntityManager().merge(entity);
     }
 
+    @Transactional
     public void remove(T entity) {
         getEntityManager().remove(getEntityManager().merge(entity));
     }

@@ -5,7 +5,7 @@
 -- Dumped from database version 9.4.25
 -- Dumped by pg_dump version 11.2
 
--- Started on 2021-06-01 23:26:11
+-- Started on 2021-06-04 17:13:51
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -44,7 +44,7 @@ CREATE TABLE jasked.faq_site (
 
 
 --
--- TOC entry 2083 (class 0 OID 0)
+-- TOC entry 2084 (class 0 OID 0)
 -- Dependencies: 174
 -- Name: TABLE faq_site; Type: COMMENT; Schema: jasked; Owner: -
 --
@@ -53,7 +53,7 @@ COMMENT ON TABLE jasked.faq_site IS 'Site or administrative unit to which the FA
 
 
 --
--- TOC entry 2084 (class 0 OID 0)
+-- TOC entry 2085 (class 0 OID 0)
 -- Dependencies: 174
 -- Name: COLUMN faq_site.path; Type: COMMENT; Schema: jasked; Owner: -
 --
@@ -75,7 +75,7 @@ CREATE SEQUENCE jasked.faq_site_id_seq
 
 
 --
--- TOC entry 2085 (class 0 OID 0)
+-- TOC entry 2087 (class 0 OID 0)
 -- Dependencies: 175
 -- Name: faq_site_id_seq; Type: SEQUENCE OWNED BY; Schema: jasked; Owner: -
 --
@@ -135,7 +135,7 @@ CREATE TABLE jasked.question (
 
 
 --
--- TOC entry 2086 (class 0 OID 0)
+-- TOC entry 2092 (class 0 OID 0)
 -- Dependencies: 180
 -- Name: COLUMN question.wording; Type: COMMENT; Schema: jasked; Owner: -
 --
@@ -144,7 +144,7 @@ COMMENT ON COLUMN jasked.question.wording IS 'the question itself';
 
 
 --
--- TOC entry 2087 (class 0 OID 0)
+-- TOC entry 2093 (class 0 OID 0)
 -- Dependencies: 180
 -- Name: COLUMN question.answer; Type: COMMENT; Schema: jasked; Owner: -
 --
@@ -179,7 +179,7 @@ CREATE SEQUENCE jasked.question_category_id_seq
 
 
 --
--- TOC entry 2088 (class 0 OID 0)
+-- TOC entry 2096 (class 0 OID 0)
 -- Dependencies: 177
 -- Name: question_category_id_seq; Type: SEQUENCE OWNED BY; Schema: jasked; Owner: -
 --
@@ -201,7 +201,7 @@ CREATE SEQUENCE jasked.question_id_seq
 
 
 --
--- TOC entry 2089 (class 0 OID 0)
+-- TOC entry 2098 (class 0 OID 0)
 -- Dependencies: 179
 -- Name: question_id_seq; Type: SEQUENCE OWNED BY; Schema: jasked; Owner: -
 --
@@ -235,7 +235,7 @@ CREATE SEQUENCE jasked.role_id_seq
 
 
 --
--- TOC entry 2090 (class 0 OID 0)
+-- TOC entry 2101 (class 0 OID 0)
 -- Dependencies: 183
 -- Name: role_id_seq; Type: SEQUENCE OWNED BY; Schema: jasked; Owner: -
 --
@@ -273,7 +273,7 @@ CREATE SEQUENCE jasked.user_id_seq
 
 
 --
--- TOC entry 2091 (class 0 OID 0)
+-- TOC entry 2104 (class 0 OID 0)
 -- Dependencies: 181
 -- Name: user_id_seq; Type: SEQUENCE OWNED BY; Schema: jasked; Owner: -
 --
@@ -321,6 +321,11 @@ ALTER TABLE ONLY jasked.role ALTER COLUMN id SET DEFAULT nextval('jasked.role_id
 ALTER TABLE ONLY jasked."user" ALTER COLUMN id SET DEFAULT nextval('jasked.user_id_seq'::regclass);
 
 
+--
+-- TOC entry 2065 (class 0 OID 56372)
+-- Dependencies: 174
+-- Data for Name: faq_site; Type: TABLE DATA; Schema: jasked; Owner: -
+--
 
 
 
@@ -333,6 +338,28 @@ ALTER TABLE ONLY jasked."user" ALTER COLUMN id SET DEFAULT nextval('jasked.user_
 INSERT INTO jasked.object_status VALUES (1, 'private');
 INSERT INTO jasked.object_status VALUES (100, 'published');
 
+
+--
+-- TOC entry 2077 (class 0 OID 72882)
+-- Dependencies: 186
+-- Data for Name: permission; Type: TABLE DATA; Schema: jasked; Owner: -
+--
+
+
+
+--
+-- TOC entry 2071 (class 0 OID 56424)
+-- Dependencies: 180
+-- Data for Name: question; Type: TABLE DATA; Schema: jasked; Owner: -
+--
+
+
+
+--
+-- TOC entry 2069 (class 0 OID 56404)
+-- Dependencies: 178
+-- Data for Name: question_category; Type: TABLE DATA; Schema: jasked; Owner: -
+--
 
 
 
@@ -367,6 +394,7 @@ INSERT INTO jasked.role VALUES (22, 'READ_PERMISSION', NULL);
 INSERT INTO jasked.role VALUES (23, 'UPDATE_PERMISSION', NULL);
 INSERT INTO jasked.role VALUES (24, 'DELETE_PERMISSION', NULL);
 INSERT INTO jasked.role VALUES (25, 'READ_SESSION_DATA', NULL);
+INSERT INTO jasked.role VALUES (26, 'EXPORT_FAQ_SITE', NULL);
 
 
 --
@@ -374,62 +402,62 @@ INSERT INTO jasked.role VALUES (25, 'READ_SESSION_DATA', NULL);
 -- Dependencies: 182
 -- Data for Name: user; Type: TABLE DATA; Schema: jasked; Owner: -
 --
--- pass admin123
-INSERT INTO jasked."user" VALUES (10, 'admin', 'marcos.vs15@gmail.com', 'Administrador', 'do Sistema', 'RUsh6QYcwUzlBqyXWAKBN5e+gIJJNaEwoufogQRaig53c0pVbPAdMeJtSHeiqUNeqzGmetfrkOCeMfd7yfOaAg==', true);
+
+INSERT INTO jasked."user" VALUES (1, 'admin', 'admin@admin', 'Administrador', 'do Sistema', 'RUsh6QYcwUzlBqyXWAKBN5e+gIJJNaEwoufogQRaig53c0pVbPAdMeJtSHeiqUNeqzGmetfrkOCeMfd7yfOaAg==', true);
 
 
 --
--- TOC entry 2092 (class 0 OID 0)
+-- TOC entry 2106 (class 0 OID 0)
 -- Dependencies: 175
 -- Name: faq_site_id_seq; Type: SEQUENCE SET; Schema: jasked; Owner: -
 --
 
-SELECT pg_catalog.setval('jasked.faq_site_id_seq', 6, true);
+SELECT pg_catalog.setval('jasked.faq_site_id_seq', 1, false);
 
 
 --
--- TOC entry 2093 (class 0 OID 0)
+-- TOC entry 2107 (class 0 OID 0)
 -- Dependencies: 185
 -- Name: permission_id_seq; Type: SEQUENCE SET; Schema: jasked; Owner: -
 --
 
-SELECT pg_catalog.setval('jasked.permission_id_seq', 5, true);
+SELECT pg_catalog.setval('jasked.permission_id_seq', 1, false);
 
 
 --
--- TOC entry 2094 (class 0 OID 0)
+-- TOC entry 2108 (class 0 OID 0)
 -- Dependencies: 177
 -- Name: question_category_id_seq; Type: SEQUENCE SET; Schema: jasked; Owner: -
 --
 
-SELECT pg_catalog.setval('jasked.question_category_id_seq', 17, true);
+SELECT pg_catalog.setval('jasked.question_category_id_seq', 1, false);
 
 
 --
--- TOC entry 2095 (class 0 OID 0)
+-- TOC entry 2109 (class 0 OID 0)
 -- Dependencies: 179
 -- Name: question_id_seq; Type: SEQUENCE SET; Schema: jasked; Owner: -
 --
 
-SELECT pg_catalog.setval('jasked.question_id_seq', 9, true);
+SELECT pg_catalog.setval('jasked.question_id_seq', 1, false);
 
 
 --
--- TOC entry 2096 (class 0 OID 0)
+-- TOC entry 2110 (class 0 OID 0)
 -- Dependencies: 183
 -- Name: role_id_seq; Type: SEQUENCE SET; Schema: jasked; Owner: -
 --
 
-SELECT pg_catalog.setval('jasked.role_id_seq', 25, true);
+SELECT pg_catalog.setval('jasked.role_id_seq', 26, true);
 
 
 --
--- TOC entry 2097 (class 0 OID 0)
+-- TOC entry 2111 (class 0 OID 0)
 -- Dependencies: 181
 -- Name: user_id_seq; Type: SEQUENCE SET; Schema: jasked; Owner: -
 --
 
-SELECT pg_catalog.setval('jasked.user_id_seq', 16, true);
+SELECT pg_catalog.setval('jasked.user_id_seq', 2, false);
 
 
 --
@@ -592,7 +620,175 @@ ALTER TABLE ONLY jasked.question
     ADD CONSTRAINT question_fk_1 FOREIGN KEY (category_id) REFERENCES jasked.question_category(id);
 
 
--- Completed on 2021-06-01 23:26:12
+--
+-- TOC entry 2083 (class 0 OID 0)
+-- Dependencies: 8
+-- Name: SCHEMA jasked; Type: ACL; Schema: -; Owner: -
+--
+
+REVOKE ALL ON SCHEMA jasked FROM PUBLIC;
+REVOKE ALL ON SCHEMA jasked FROM postgres;
+GRANT ALL ON SCHEMA jasked TO postgres;
+GRANT USAGE ON SCHEMA jasked TO jasked_app;
+
+
+--
+-- TOC entry 2086 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: TABLE faq_site; Type: ACL; Schema: jasked; Owner: -
+--
+
+REVOKE ALL ON TABLE jasked.faq_site FROM PUBLIC;
+REVOKE ALL ON TABLE jasked.faq_site FROM postgres;
+GRANT ALL ON TABLE jasked.faq_site TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE jasked.faq_site TO jasked_app;
+
+
+--
+-- TOC entry 2088 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: SEQUENCE faq_site_id_seq; Type: ACL; Schema: jasked; Owner: -
+--
+
+REVOKE ALL ON SEQUENCE jasked.faq_site_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE jasked.faq_site_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE jasked.faq_site_id_seq TO postgres;
+GRANT SELECT,USAGE ON SEQUENCE jasked.faq_site_id_seq TO jasked_app;
+
+
+--
+-- TOC entry 2089 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: TABLE object_status; Type: ACL; Schema: jasked; Owner: -
+--
+
+REVOKE ALL ON TABLE jasked.object_status FROM PUBLIC;
+REVOKE ALL ON TABLE jasked.object_status FROM postgres;
+GRANT ALL ON TABLE jasked.object_status TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE jasked.object_status TO jasked_app;
+
+
+--
+-- TOC entry 2090 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: SEQUENCE permission_id_seq; Type: ACL; Schema: jasked; Owner: -
+--
+
+REVOKE ALL ON SEQUENCE jasked.permission_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE jasked.permission_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE jasked.permission_id_seq TO postgres;
+GRANT SELECT,USAGE ON SEQUENCE jasked.permission_id_seq TO jasked_app;
+
+
+--
+-- TOC entry 2091 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: TABLE permission; Type: ACL; Schema: jasked; Owner: -
+--
+
+REVOKE ALL ON TABLE jasked.permission FROM PUBLIC;
+REVOKE ALL ON TABLE jasked.permission FROM postgres;
+GRANT ALL ON TABLE jasked.permission TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE jasked.permission TO jasked_app;
+
+
+--
+-- TOC entry 2094 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: TABLE question; Type: ACL; Schema: jasked; Owner: -
+--
+
+REVOKE ALL ON TABLE jasked.question FROM PUBLIC;
+REVOKE ALL ON TABLE jasked.question FROM postgres;
+GRANT ALL ON TABLE jasked.question TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE jasked.question TO jasked_app;
+
+
+--
+-- TOC entry 2095 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: TABLE question_category; Type: ACL; Schema: jasked; Owner: -
+--
+
+REVOKE ALL ON TABLE jasked.question_category FROM PUBLIC;
+REVOKE ALL ON TABLE jasked.question_category FROM postgres;
+GRANT ALL ON TABLE jasked.question_category TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE jasked.question_category TO jasked_app;
+
+
+--
+-- TOC entry 2097 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: SEQUENCE question_category_id_seq; Type: ACL; Schema: jasked; Owner: -
+--
+
+REVOKE ALL ON SEQUENCE jasked.question_category_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE jasked.question_category_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE jasked.question_category_id_seq TO postgres;
+GRANT SELECT,USAGE ON SEQUENCE jasked.question_category_id_seq TO jasked_app;
+
+
+--
+-- TOC entry 2099 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: SEQUENCE question_id_seq; Type: ACL; Schema: jasked; Owner: -
+--
+
+REVOKE ALL ON SEQUENCE jasked.question_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE jasked.question_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE jasked.question_id_seq TO postgres;
+GRANT SELECT,USAGE ON SEQUENCE jasked.question_id_seq TO jasked_app;
+
+
+--
+-- TOC entry 2100 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: TABLE role; Type: ACL; Schema: jasked; Owner: -
+--
+
+REVOKE ALL ON TABLE jasked.role FROM PUBLIC;
+REVOKE ALL ON TABLE jasked.role FROM postgres;
+GRANT ALL ON TABLE jasked.role TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE jasked.role TO jasked_app;
+
+
+--
+-- TOC entry 2102 (class 0 OID 0)
+-- Dependencies: 183
+-- Name: SEQUENCE role_id_seq; Type: ACL; Schema: jasked; Owner: -
+--
+
+REVOKE ALL ON SEQUENCE jasked.role_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE jasked.role_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE jasked.role_id_seq TO postgres;
+GRANT SELECT,USAGE ON SEQUENCE jasked.role_id_seq TO jasked_app;
+
+
+--
+-- TOC entry 2103 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: TABLE "user"; Type: ACL; Schema: jasked; Owner: -
+--
+
+REVOKE ALL ON TABLE jasked."user" FROM PUBLIC;
+REVOKE ALL ON TABLE jasked."user" FROM postgres;
+GRANT ALL ON TABLE jasked."user" TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE jasked."user" TO jasked_app;
+
+
+--
+-- TOC entry 2105 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: SEQUENCE user_id_seq; Type: ACL; Schema: jasked; Owner: -
+--
+
+REVOKE ALL ON SEQUENCE jasked.user_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE jasked.user_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE jasked.user_id_seq TO postgres;
+GRANT SELECT,USAGE ON SEQUENCE jasked.user_id_seq TO jasked_app;
+
+
+-- Completed on 2021-06-04 17:13:52
 
 --
 -- PostgreSQL database dump complete
