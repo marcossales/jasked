@@ -3,7 +3,6 @@ package br.dev.amvs.jasked.jsf;
 import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -15,12 +14,13 @@ import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.dev.amvs.jasked.dbfacade.ObjectStatusFacade;
+import br.dev.amvs.jasked.dbfacade.RoleFacade;
 import br.dev.amvs.jasked.jpa.domain.ObjectStatus;
 import br.dev.amvs.jasked.jpa.domain.User;
+import br.dev.amvs.jasked.jpa.util.Transactional;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 import br.dev.amvs.jasked.jsf.util.PaginationHelper;
-import br.dev.amvs.jasked.sessionbeans.ObjectStatusFacade;
-import br.dev.amvs.jasked.sessionbeans.RoleFacade;
 
 @Named("objectStatusController")
 @SessionScoped
@@ -33,15 +33,15 @@ public class ObjectStatusController extends BasicCrudPermissionVerifier<ObjectSt
 	private ObjectStatus current;
     @SuppressWarnings("rawtypes")
 	private DataModel items = null;
-    @EJB
-    private br.dev.amvs.jasked.sessionbeans.ObjectStatusFacade ejbFacade;
+    @Inject
+    private br.dev.amvs.jasked.dbfacade.ObjectStatusFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
     
     @Inject
     private SessionInfoController sessionInfoController;
     
-    @EJB
+    @Inject
     private RoleFacade roleFacade; 
 
     public ObjectStatusController() {
@@ -111,6 +111,7 @@ public class ObjectStatusController extends BasicCrudPermissionVerifier<ObjectSt
         return "Create";
     }
 
+    @Transactional
     public String create() {
         try {
             getFacade().create(current);
@@ -128,6 +129,7 @@ public class ObjectStatusController extends BasicCrudPermissionVerifier<ObjectSt
         return "Edit";
     }
 
+    @Transactional
     public String update() {
         try {
             getFacade().edit(current);
@@ -139,6 +141,7 @@ public class ObjectStatusController extends BasicCrudPermissionVerifier<ObjectSt
         }
     }
 
+    @Transactional
     public String destroy() {
         current = (ObjectStatus) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
@@ -148,6 +151,7 @@ public class ObjectStatusController extends BasicCrudPermissionVerifier<ObjectSt
         return "List";
     }
 
+    @Transactional
     public String destroyAndView() {
         performDestroy();
         recreateModel();

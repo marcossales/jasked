@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.dev.amvs.jasked.sessionbeans;
+package br.dev.amvs.jasked.dbfacade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +17,7 @@ import br.dev.amvs.jasked.jpa.domain.Identifiable;
  * @author marcossales
  */
 public abstract class AbstractFacade<T> {
+	
 
     private Class<T> entityClass;
 

@@ -6,19 +6,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.dev.amvs.jasked.dbfacade.PermissionFacade;
+import br.dev.amvs.jasked.dbfacade.UserFacade;
 import br.dev.amvs.jasked.exception.DatabaseException;
 import br.dev.amvs.jasked.jpa.domain.Permission;
 import br.dev.amvs.jasked.jpa.domain.User;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
-import br.dev.amvs.jasked.sessionbeans.PermissionFacade;
-import br.dev.amvs.jasked.sessionbeans.RoleFacade;
-import br.dev.amvs.jasked.sessionbeans.UserFacade;
 
 @Named("sessionInfoController")
 @SessionScoped
@@ -29,12 +27,11 @@ public class SessionInfoController implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	@EJB
+	@Inject
 	private PermissionFacade permissionFacade;
 
-	@EJB
-	private RoleFacade roleFacade;
-	@EJB
+	
+	@Inject
 	private UserFacade userFacade;
 	
 	@Inject

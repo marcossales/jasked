@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -16,15 +15,15 @@ import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.dev.amvs.jasked.dbfacade.FaqSiteFacade;
+import br.dev.amvs.jasked.dbfacade.RoleFacade;
 import br.dev.amvs.jasked.jpa.domain.FaqSite;
-import br.dev.amvs.jasked.jpa.domain.FaqSiteOrBelongingToIt;
 import br.dev.amvs.jasked.jpa.domain.Permission;
 import br.dev.amvs.jasked.jpa.domain.Role;
 import br.dev.amvs.jasked.jpa.domain.User;
+import br.dev.amvs.jasked.jpa.util.Transactional;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 import br.dev.amvs.jasked.jsf.util.PaginationHelper;
-import br.dev.amvs.jasked.sessionbeans.FaqSiteFacade;
-import br.dev.amvs.jasked.sessionbeans.RoleFacade;
 
 @Named("faqSiteController")
 @SessionScoped
@@ -41,10 +40,9 @@ public class FaqSiteController extends BelongingToFaqSiteCrudPermissionVerifier<
 	private FaqSite current;
     @SuppressWarnings("rawtypes")
 	private DataModel items = null;
-    @EJB
-    private br.dev.amvs.jasked.sessionbeans.FaqSiteFacade ejbFacade;
-    @EJB
-    private br.dev.amvs.jasked.sessionbeans.UserFacade userFacade;
+    @Inject
+    private br.dev.amvs.jasked.dbfacade.FaqSiteFacade ejbFacade;
+ 
    
     private PaginationHelper pagination;
     private int selectedItemIndex;
@@ -53,7 +51,7 @@ public class FaqSiteController extends BelongingToFaqSiteCrudPermissionVerifier<
     @Inject
     private SessionInfoController sessionInfoController;
     
-    @EJB
+    @Inject
     private RoleFacade roleFacade; 
    
     private User user;
@@ -136,7 +134,7 @@ public class FaqSiteController extends BelongingToFaqSiteCrudPermissionVerifier<
         selectedItemIndex = -1;
         return "Create";
     }
-
+    @Transactional
     public String create() {
         try {
             getFacade().create(current);
@@ -154,6 +152,7 @@ public class FaqSiteController extends BelongingToFaqSiteCrudPermissionVerifier<
         return "Edit";
     }
 
+    @Transactional
     public String update() {
         try {
             getFacade().edit(current);
@@ -165,6 +164,7 @@ public class FaqSiteController extends BelongingToFaqSiteCrudPermissionVerifier<
         }
     }
 
+    @Transactional
     public String destroy() {
         current = (FaqSite) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
@@ -174,6 +174,7 @@ public class FaqSiteController extends BelongingToFaqSiteCrudPermissionVerifier<
         return "List";
     }
 
+    @Transactional
     public String destroyAndView() {
         performDestroy();
         recreateModel();

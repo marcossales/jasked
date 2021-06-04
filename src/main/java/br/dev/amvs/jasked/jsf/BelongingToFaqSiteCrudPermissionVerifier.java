@@ -1,9 +1,5 @@
 package br.dev.amvs.jasked.jsf;
 
-import javax.ejb.EJB;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ComponentSystemEvent;
-
 import br.dev.amvs.jasked.jpa.domain.FaqSiteOrBelongingToIt;
 import br.dev.amvs.jasked.jpa.domain.Permission;
 import br.dev.amvs.jasked.jpa.domain.Role;

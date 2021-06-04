@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.faces.event.ComponentSystemEvent;
 
-import br.dev.amvs.jasked.jpa.domain.FaqSite;
 import br.dev.amvs.jasked.jpa.domain.User;
 
 public interface CrudPermissionVerification<T> extends Serializable{

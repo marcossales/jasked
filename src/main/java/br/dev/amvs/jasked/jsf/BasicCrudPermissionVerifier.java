@@ -1,14 +1,12 @@
 package br.dev.amvs.jasked.jsf;
 
-import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
-import br.dev.amvs.jasked.jpa.domain.FaqSiteOrBelongingToIt;
+import br.dev.amvs.jasked.dbfacade.RoleFacade;
 import br.dev.amvs.jasked.jpa.domain.Permission;
 import br.dev.amvs.jasked.jpa.domain.Role;
 import br.dev.amvs.jasked.jpa.domain.User;
-import br.dev.amvs.jasked.sessionbeans.RoleFacade;
 
 public abstract class BasicCrudPermissionVerifier<T> implements CrudPermissionVerification<T> {
 

@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.dev.amvs.jasked.sessionbeans;
+package br.dev.amvs.jasked.dbfacade;
 
+import java.io.Serializable;
 import java.util.List;
 
-import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import br.dev.amvs.jasked.jpa.domain.FaqSite;
@@ -21,19 +21,23 @@ import br.dev.amvs.jasked.jpa.domain.User;
  *
  * @author marcossales
  */
-@Stateless
-public class PermissionFacade extends AbstractFacade<Permission> {
+public class PermissionFacade extends AbstractFacade<Permission> implements Serializable {
 
-    @PersistenceContext(unitName = "my_persistence_unit")
-    private EntityManager em;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private EntityManager em;
 
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public PermissionFacade() {
+    @Inject
+    public PermissionFacade(EntityManager em) {
         super(Permission.class);
+        this.em = em;
     }
 
 	

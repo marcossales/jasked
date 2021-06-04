@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
-  <!-- Define Persistence Unit -->
-  <persistence-unit name="my_persistence_unit" transaction-type="JTA">
-      
-    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>  
-    <jta-data-source>java:jboss/datasources/JAskedDS</jta-data-source>
-    <class>br.dev.amvs.jasked.jpa.domain.Question</class>
-    <class>br.dev.amvs.jasked.jpa.domain.ObjectStatus</class>
-    <class>br.dev.amvs.jasked.jpa.domain.FaqSite</class>
-    <class>br.dev.amvs.jasked.jpa.domain.QuestionCategory</class>
-    <class>br.dev.amvs.jasked.jpa.domain.Role</class>
-    <class>br.dev.amvs.jasked.jpa.domain.User</class>
-    <class>br.dev.amvs.jasked.jpa.domain.Permission</class>
-    <properties>
-      <!-- TODO remover -->
-      <property name = "hibernate.show_sql" value = "true" />
-      <property name = "hibernate.format_sql" value = "true" />
-      <!--  -->
-    </properties>
-  </persistence-unit>
+<persistence version="2.2"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+	<!-- Define Persistence Unit -->
+	<persistence-unit name="my_persistence_unit">
+
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<class>br.dev.amvs.jasked.jpa.domain.ObjectStatus</class>
+		<class>br.dev.amvs.jasked.jpa.domain.Role</class>
+		<class>br.dev.amvs.jasked.jpa.domain.User</class>
+		<class>br.dev.amvs.jasked.jpa.domain.Permission</class>
+		<class>br.dev.amvs.jasked.jpa.domain.FaqSite</class>
+		<class>br.dev.amvs.jasked.jpa.domain.QuestionCategory</class>
+		<class>br.dev.amvs.jasked.jpa.domain.Question</class>
+		
+		
+		<properties>
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:postgresql://localhost:5432/jaskeddb" />
+			<property name="javax.persistence.jdbc.user" value="jasked_app" />
+			<property name="javax.persistence.jdbc.password"
+				value="jasked_app" />
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
+			<!-- TODO remover -->
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+			<!-- -->
+	
+
+		</properties>
+		
+		
+		
+	</persistence-unit>
+	
+
 </persistence>

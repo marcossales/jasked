@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -42,8 +41,8 @@ public class SessionDataController implements Serializable {
     
     
     private User user;
-    @EJB
-	private br.dev.amvs.jasked.sessionbeans.RoleFacade roleFacade;
+    @Inject
+	private br.dev.amvs.jasked.dbfacade.RoleFacade roleFacade;
     
     @Inject
     private SessionInfoController sessionInfoController;

@@ -3,17 +3,16 @@ package br.dev.amvs.jasked.jsf;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.dev.amvs.jasked.dbfacade.UserFacade;
 import br.dev.amvs.jasked.exception.DatabaseException;
 import br.dev.amvs.jasked.exception.UnexpectedBehaivorException;
 import br.dev.amvs.jasked.jpa.domain.User;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 import br.dev.amvs.jasked.security.util.SecurityUtil;
-import br.dev.amvs.jasked.sessionbeans.UserFacade;
 
 @Named("loginController")
 @RequestScoped
@@ -28,8 +27,8 @@ public class LoginController implements Serializable {
 	private String userName;
 	private String password;
 	
-	 @EJB
-	 private br.dev.amvs.jasked.sessionbeans.UserFacade ejbFacade;
+	 @Inject
+	 private br.dev.amvs.jasked.dbfacade.UserFacade ejbFacade;
 	 
 	 @Inject
 	 private SessionInfoController sessionInfoController;

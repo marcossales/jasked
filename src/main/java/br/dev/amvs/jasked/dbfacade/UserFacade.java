@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.dev.amvs.jasked.sessionbeans;
+package br.dev.amvs.jasked.dbfacade;
 
+import java.io.Serializable;
 import java.util.List;
 
-import javax.ejb.EJBException;
-import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import br.dev.amvs.jasked.exception.DatabaseException;
@@ -21,10 +20,12 @@ import br.dev.amvs.jasked.jpa.domain.User;
  *
  * @author marcossales
  */
-@Stateless
-public class UserFacade extends AbstractFacade<User> {
+public class UserFacade extends AbstractFacade<User> implements Serializable {
 
-	@PersistenceContext(unitName = "my_persistence_unit")
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private EntityManager em;
 
 	@Override
@@ -32,8 +33,10 @@ public class UserFacade extends AbstractFacade<User> {
 		return em;
 	}
 
-	public UserFacade() {
+	@Inject
+	public UserFacade(EntityManager em) {
 		super(User.class);
+		this.em = em;
 	}
 
 	public User findByUserNameAndPassword(String userName, String password) throws DatabaseException {
@@ -46,15 +49,13 @@ public class UserFacade extends AbstractFacade<User> {
 			return (User) query.getSingleResult();
 		} catch (NoResultException e) {
 			return null;
-		} catch (EJBException e) {
+		} catch (Exception e) {
 			if (e.getCause() != null && (e.getCause() instanceof NoResultException)) {
 				return null;
 			} else {
 				throw new DatabaseException(e);
 			}
 
-		} catch (Exception e) {
-			throw new DatabaseException(e);
 		}
 
 	}
@@ -68,15 +69,13 @@ public class UserFacade extends AbstractFacade<User> {
 			return (User) query.getSingleResult();
 		} catch (NoResultException e) {
 			return null;
-		} catch (EJBException e) {
+		} catch (Exception e) {
 			if (e.getCause() != null && (e.getCause() instanceof NoResultException)) {
 				return null;
 			} else {
 				throw new DatabaseException(e);
 			}
 
-		} catch (Exception e) {
-			throw new DatabaseException(e);
 		}
 
 	}

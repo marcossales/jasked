@@ -3,7 +3,6 @@ package br.dev.amvs.jasked.jsf;
 import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -15,13 +14,14 @@ import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.dev.amvs.jasked.dbfacade.RoleFacade;
+import br.dev.amvs.jasked.dbfacade.UserFacade;
 import br.dev.amvs.jasked.exception.UnexpectedBehaivorException;
 import br.dev.amvs.jasked.jpa.domain.User;
+import br.dev.amvs.jasked.jpa.util.Transactional;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 import br.dev.amvs.jasked.jsf.util.PaginationHelper;
 import br.dev.amvs.jasked.security.util.SecurityUtil;
-import br.dev.amvs.jasked.sessionbeans.RoleFacade;
-import br.dev.amvs.jasked.sessionbeans.UserFacade;
 
 @Named("userController")
 @SessionScoped
@@ -34,8 +34,8 @@ public class UserController extends BasicCrudPermissionVerifier<User> {
 	private User current;
     @SuppressWarnings("rawtypes")
 	private DataModel items = null;
-    @EJB
-    private br.dev.amvs.jasked.sessionbeans.UserFacade ejbFacade;
+    @Inject
+    private br.dev.amvs.jasked.dbfacade.UserFacade ejbFacade;
     
     @Inject
     private SessionInfoController sessionInfoController;
@@ -43,7 +43,7 @@ public class UserController extends BasicCrudPermissionVerifier<User> {
     private PaginationHelper pagination;
     private int selectedItemIndex;
     
-    @EJB
+    @Inject
     private RoleFacade roleFacade; 
     
     private User user;
@@ -116,6 +116,7 @@ public class UserController extends BasicCrudPermissionVerifier<User> {
         return "Create";
     }
 
+    @Transactional
     public String create() {
         try {
         	current.setPassword(SecurityUtil.passwordHash(current.getPassword()));
@@ -138,6 +139,7 @@ public class UserController extends BasicCrudPermissionVerifier<User> {
 
     
 
+    @Transactional
 	public String update() {
         try {
         	if(current.isEditingPassword()) {
@@ -157,6 +159,7 @@ public class UserController extends BasicCrudPermissionVerifier<User> {
         }
     }
 
+    @Transactional
     public String destroy() {
         current = (User) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
@@ -166,6 +169,7 @@ public class UserController extends BasicCrudPermissionVerifier<User> {
         return "List";
     }
 
+    @Transactional
     public String destroyAndView() {
         performDestroy();
         recreateModel();

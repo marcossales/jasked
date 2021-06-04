@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.dev.amvs.jasked.sessionbeans;
+package br.dev.amvs.jasked.dbfacade;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import br.dev.amvs.jasked.jpa.domain.Question;
@@ -21,19 +21,23 @@ import br.dev.amvs.jasked.jpa.domain.User;
  *
  * @author marcossales
  */
-@Stateless
-public class QuestionFacade extends AbstractFacade<Question> {
+public class QuestionFacade extends AbstractFacade<Question> implements Serializable {
 
-    @PersistenceContext(unitName = "my_persistence_unit")
-    private EntityManager em;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private EntityManager em;
 
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public QuestionFacade() {
+    @Inject
+    public QuestionFacade(EntityManager em) {
         super(Question.class);
+        this.em = em;
     }
 
 	public List<Question> findByCategory(QuestionCategory qc, boolean onlyPublished) {

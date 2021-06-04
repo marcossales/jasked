@@ -3,7 +3,6 @@ package br.dev.amvs.jasked.jsf;
 import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -15,12 +14,13 @@ import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.dev.amvs.jasked.dbfacade.QuestionCategoryFacade;
+import br.dev.amvs.jasked.dbfacade.RoleFacade;
 import br.dev.amvs.jasked.jpa.domain.QuestionCategory;
 import br.dev.amvs.jasked.jpa.domain.User;
+import br.dev.amvs.jasked.jpa.util.Transactional;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 import br.dev.amvs.jasked.jsf.util.PaginationHelper;
-import br.dev.amvs.jasked.sessionbeans.QuestionCategoryFacade;
-import br.dev.amvs.jasked.sessionbeans.RoleFacade;
 
 @Named("questionCategoryController")
 @SessionScoped
@@ -33,8 +33,8 @@ public class QuestionCategoryController extends BelongingToFaqSiteCrudPermission
 	private QuestionCategory current;
     @SuppressWarnings("rawtypes")
 	private DataModel items = null;
-    @EJB
-    private br.dev.amvs.jasked.sessionbeans.QuestionCategoryFacade ejbFacade;
+    @Inject
+    private br.dev.amvs.jasked.dbfacade.QuestionCategoryFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
     
@@ -42,7 +42,7 @@ public class QuestionCategoryController extends BelongingToFaqSiteCrudPermission
     private SessionInfoController sessionInfoController;
 
     
-    @EJB
+    @Inject
     private RoleFacade roleFacade; 
     
     
@@ -112,6 +112,7 @@ public class QuestionCategoryController extends BelongingToFaqSiteCrudPermission
         return "Create";
     }
 
+    @Transactional
     public String create() {
         try {
             getFacade().create(current);
@@ -129,6 +130,7 @@ public class QuestionCategoryController extends BelongingToFaqSiteCrudPermission
         return "Edit";
     }
 
+    @Transactional
     public String update() {
         try {
             getFacade().edit(current);
@@ -140,6 +142,7 @@ public class QuestionCategoryController extends BelongingToFaqSiteCrudPermission
         }
     }
 
+    @Transactional
     public String destroy() {
         current = (QuestionCategory) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
@@ -148,7 +151,7 @@ public class QuestionCategoryController extends BelongingToFaqSiteCrudPermission
         recreateModel();
         return "List";
     }
-
+    @Transactional
     public String destroyAndView() {
         performDestroy();
         recreateModel();

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -16,12 +15,13 @@ import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.dev.amvs.jasked.dbfacade.PermissionFacade;
 import br.dev.amvs.jasked.jpa.domain.Permission;
 import br.dev.amvs.jasked.jpa.domain.Role;
 import br.dev.amvs.jasked.jpa.domain.User;
+import br.dev.amvs.jasked.jpa.util.Transactional;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 import br.dev.amvs.jasked.jsf.util.PaginationHelper;
-import br.dev.amvs.jasked.sessionbeans.PermissionFacade;
 
 @Named("permissionController")
 @SessionScoped
@@ -33,18 +33,18 @@ public class PermissionController extends BasicCrudPermissionVerifier<Permission
 	private Permission current;
     @SuppressWarnings("rawtypes")
 	private DataModel items = null;
-    @EJB
-    private br.dev.amvs.jasked.sessionbeans.PermissionFacade ejbFacade;
+    @Inject
+    private br.dev.amvs.jasked.dbfacade.PermissionFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
     
     
-    @EJB
-    private br.dev.amvs.jasked.sessionbeans.UserFacade ejbUserFacade;
-    @EJB
-    private br.dev.amvs.jasked.sessionbeans.FaqSiteFacade ejbFaqSiteFacade;
-    @EJB
-    private br.dev.amvs.jasked.sessionbeans.RoleFacade ejbRoleFacade;
+    @Inject
+    private br.dev.amvs.jasked.dbfacade.UserFacade ejbUserFacade;
+    @Inject
+    private br.dev.amvs.jasked.dbfacade.FaqSiteFacade ejbFaqSiteFacade;
+    @Inject
+    private br.dev.amvs.jasked.dbfacade.RoleFacade ejbRoleFacade;
     
     @Inject
     private SessionInfoController sessionInfoController;
@@ -117,6 +117,7 @@ public class PermissionController extends BasicCrudPermissionVerifier<Permission
         return "Create";
     }
 
+    @Transactional
     public String create() {
         try { 
             getFacade().create(current);
@@ -134,6 +135,7 @@ public class PermissionController extends BasicCrudPermissionVerifier<Permission
         return "Edit";
     }
 
+    @Transactional
     public String update() {
         try {
             getFacade().edit(current);
@@ -145,6 +147,7 @@ public class PermissionController extends BasicCrudPermissionVerifier<Permission
         }
     }
 
+    @Transactional
     public String destroy() {
         current = (Permission) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
@@ -154,6 +157,7 @@ public class PermissionController extends BasicCrudPermissionVerifier<Permission
         return "List";
     }
 
+    @Transactional
     public String destroyAndView() {
         performDestroy();
         recreateModel();
@@ -277,15 +281,15 @@ public class PermissionController extends BasicCrudPermissionVerifier<Permission
     
     
     
-    public br.dev.amvs.jasked.sessionbeans.UserFacade getUserFacade() {
+    public br.dev.amvs.jasked.dbfacade.UserFacade getUserFacade() {
 		return ejbUserFacade;
 	}
 
-	public br.dev.amvs.jasked.sessionbeans.FaqSiteFacade getFaqSiteFacade() {
+	public br.dev.amvs.jasked.dbfacade.FaqSiteFacade getFaqSiteFacade() {
 		return ejbFaqSiteFacade;
 	}
 
-	public br.dev.amvs.jasked.sessionbeans.RoleFacade getRoleFacade() {
+	public br.dev.amvs.jasked.dbfacade.RoleFacade getRoleFacade() {
 		return ejbRoleFacade;
 	}
 

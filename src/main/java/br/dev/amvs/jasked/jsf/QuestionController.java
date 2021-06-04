@@ -3,7 +3,6 @@ package br.dev.amvs.jasked.jsf;
 import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -15,12 +14,13 @@ import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.dev.amvs.jasked.dbfacade.QuestionFacade;
+import br.dev.amvs.jasked.dbfacade.RoleFacade;
 import br.dev.amvs.jasked.jpa.domain.Question;
 import br.dev.amvs.jasked.jpa.domain.User;
+import br.dev.amvs.jasked.jpa.util.Transactional;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 import br.dev.amvs.jasked.jsf.util.PaginationHelper;
-import br.dev.amvs.jasked.sessionbeans.QuestionFacade;
-import br.dev.amvs.jasked.sessionbeans.RoleFacade;
 
 @SuppressWarnings("serial")
 @Named("questionController")
@@ -30,14 +30,14 @@ public class QuestionController extends BelongingToFaqSiteCrudPermissionVerifier
     private Question current;
     @SuppressWarnings("rawtypes")
 	private DataModel items = null;
-    @EJB
-    private br.dev.amvs.jasked.sessionbeans.QuestionFacade ejbFacade;
+    @Inject
+    private br.dev.amvs.jasked.dbfacade.QuestionFacade ejbFacade;
     @Inject
     private SessionInfoController sessionInfoController;
     private PaginationHelper pagination;
     private int selectedItemIndex;
     
-    @EJB
+    @Inject
     private RoleFacade roleFacade; 
 
     public QuestionController() {
@@ -107,6 +107,7 @@ public class QuestionController extends BelongingToFaqSiteCrudPermissionVerifier
         return "Create";
     }
 
+    @Transactional
     public String create() {
         try {
             getFacade().create(current);
@@ -124,6 +125,7 @@ public class QuestionController extends BelongingToFaqSiteCrudPermissionVerifier
         return "Edit";
     }
 
+    @Transactional
     public String update() {
         try {
             getFacade().edit(current);
@@ -135,6 +137,7 @@ public class QuestionController extends BelongingToFaqSiteCrudPermissionVerifier
         }
     }
 
+    @Transactional
     public String destroy() {
         current = (Question) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
@@ -144,6 +147,7 @@ public class QuestionController extends BelongingToFaqSiteCrudPermissionVerifier
         return "List";
     }
 
+    @Transactional
     public String destroyAndView() {
         performDestroy();
         recreateModel();
