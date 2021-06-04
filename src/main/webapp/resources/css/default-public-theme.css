@@ -3,9 +3,12 @@
 	width: 100%;
 	border: 1px solid; 
 	background-color: #161e22;
-	
-	font-size: 1.3em;
+}
+
+.public-page-header__title-bar{
+	background-color: #161e22;
 	color: #FFFFFF;
+	font-size: 1.3em;
 }
 
 /* ************************  */
@@ -66,3 +69,4 @@
 }
 
 /* ************************  */
+

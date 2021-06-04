@@ -17,6 +17,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.dev.amvs.jasked.jpa.domain.FaqSite;
+import br.dev.amvs.jasked.jpa.domain.FaqSiteOrBelongingToIt;
+import br.dev.amvs.jasked.jpa.domain.Permission;
+import br.dev.amvs.jasked.jpa.domain.Role;
 import br.dev.amvs.jasked.jpa.domain.User;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 import br.dev.amvs.jasked.jsf.util.PaginationHelper;
@@ -308,6 +311,41 @@ public class FaqSiteController extends BelongingToFaqSiteCrudPermissionVerifier<
 	protected String getDeleteRoleName() {
 		return "DELETE_FAQ_SITE";
 	}
+	
+	protected String getExportRoleName() {
+		return "EXPORT_FAQ_SITE";
+	}
+	
+	
+	public boolean canExport(FaqSite f) {
+		User u = getUser();
+    	if(u.isSuperUser()) {
+    		return true;
+    	}
+		Role role = getRoleFacade().findByExactName(getExportRoleName()); 
+		for(Permission p: u.getPermissions()) {
+			 if( role.equals(p.getRole()) && p.getFaqSite().equals(f)  ) {
+				 return true;
+			 }
+		 }
+		return false;
+		
+	}
+	public boolean canExportByPath(String faqPath) {
+		User u = getUser();
+    	if(u.isSuperUser()) {
+    		return true;
+    	}
+    	FaqSite f = ejbFacade.findByFaqPath(faqPath, false);
+		Role role = getRoleFacade().findByExactName(getExportRoleName()); 
+		for(Permission p: u.getPermissions()) {
+			 if( role.equals(p.getRole()) && p.getFaqSite().equals(f)  ) {
+				 return true;
+			 }
+		 }
+		return false;
+		
+	}
 
 	@Override
 	public RoleFacade getRoleFacade() {
@@ -320,6 +358,12 @@ public class FaqSiteController extends BelongingToFaqSiteCrudPermissionVerifier<
 		
 		return "/admin/denied";
 	}
+	
+	
+	
+	
+	
+	
 
 	
     

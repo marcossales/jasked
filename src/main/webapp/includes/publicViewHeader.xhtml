@@ -7,10 +7,19 @@
 
 <ui:composition>
 	<div class="public-page-header">
-	     <h1>
+	     <h:panelGroup rendered="#{publicViewingController.canShowTaskBar}">
+	     <div class="public-page-header__task-bar">
+		        <a href="javascript:window.history.back();">Voltar</a>
+		        <h:link rendered="#{faqSiteController.canExportByPath(publicViewingController.currentFaqPath)}" onclick="alert('TODO:implementar');return false;">Exportar</h:link>
+		        <h:outputText rendered="#{faqSiteController.canExportByPath(publicViewingController.currentFaqPath)==false}" value="#{messages.ExportDisabled}" ></h:outputText>
+		 </div>
+		 </h:panelGroup>
+		 <div>
+	     <h1 class="public-page-header__title-bar">
 	         <h:outputText value="#{publicViewingController.indexPageAllPublishedFaqMessage}" rendered="#{publicViewingController.currentFaqPathEmpty}"/>
 	         <h:outputText value="#{publicViewingController.currentFaqPath}" rendered="#{!publicViewingController.currentFaqPathEmpty}"/>
 	     </h1>
+	     </div>
 	</div>
 </ui:composition>
 

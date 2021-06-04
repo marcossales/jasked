@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import javax.enterprise.context.RequestScoped;
@@ -43,6 +44,9 @@ public class PublicViewingController {
     private br.dev.amvs.jasked.sessionbeans.QuestionFacade ejbQuestionFacade;
 
 	private List<FaqSite> publishedFaqs;
+	
+	@Inject
+	private SessionInfoController sessionInfoController;
     /**
      * Creates a new instance of PublicViewingController
      */
@@ -166,7 +170,13 @@ public class PublicViewingController {
 		}
 	}
 
-
+   public boolean isCanShowTaskBar() {
+	  String userNameInSession =  sessionInfoController.getUsernameInSession();
+	  if(userNameInSession!=null && !userNameInSession.isEmpty() && !this.isCurrentFaqPathEmpty() ) {
+		  return true;
+	  }
+	  return false;
+   }
 	
     
 }

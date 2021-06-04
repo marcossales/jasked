@@ -20,7 +20,7 @@
 			
 		
 		<h:outputText escape="false" value="#{publicViewingController.style}"  />
-		
+		<h:outputStylesheet  library="css"  name="taskbar.css" rendered="#{publicViewingController.canShowTaskBar}"></h:outputStylesheet>
 	</h:head>
 
 	<h:body>
