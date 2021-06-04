@@ -148,6 +148,8 @@ public class PublicViewingController {
     	return getContentFromDefautStyle();
     	
     }
+    
+   
 
 
 	private String getContentFromDefautStyle() {

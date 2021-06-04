@@ -8,10 +8,15 @@
 <ui:composition>
 	<div class="public-page-header">
 	     <h:panelGroup rendered="#{publicViewingController.canShowTaskBar}">
-	     <div class="public-page-header__task-bar">
+	     <div class="public-page-header__task-bar" id="taskbar">
 		        <a href="javascript:window.history.back();">Voltar</a>
-		        <h:link rendered="#{faqSiteController.canExportByPath(publicViewingController.currentFaqPath)}" onclick="alert('TODO:implementar');return false;">Exportar</h:link>
-		        <h:outputText rendered="#{faqSiteController.canExportByPath(publicViewingController.currentFaqPath)==false}" value="#{messages.ExportDisabled}" ></h:outputText>
+		        
+		        <h:panelGroup rendered="#{faqSiteController.canExportByPath(publicViewingController.currentFaqPath)}">
+		        
+		             <h:link  id="exportLink" onclick="return false;">Exportar</h:link>
+		        </h:panelGroup>
+		        <h:outputText rendered="#{faqSiteController.canExportByPath(publicViewingController.currentFaqPath)==false}" value="[#{messages.ExportDisabled}]" ></h:outputText>
+		        
 		 </div>
 		 </h:panelGroup>
 		 <div>
