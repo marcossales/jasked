@@ -1,0 +1,10 @@
+.public-page-header__task-bar{
+	border: 1px solid; 
+	border-color: #000000;
+	background-color: #cfdbe0;
+	color: #3e3eff;
+	font-size: 1em;
+}
+.public-page-header__task-bar a{
+	margin: 5px;
+}

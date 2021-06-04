@@ -64,7 +64,11 @@
                             <h:commandLink action="#{faqSiteController.destroy}" 
                             value="#{messages.ListFaqSiteDestroyLink}"
                              rendered="#{faqSiteController.canDelete(item)}"/>
-                        </h:column>
+                             <h:outputText value=" "/>
+							<h:link  value="#{messages.ListFaqSitePreviewAndExportLink}" outcome="/index" rendered = "#{faqSiteController.canExport(item)}" >
+								<f:param name="f" value="#{item.path}" />
+							</h:link>
+					</h:column>
                     </h:dataTable>
                 </h:panelGroup>
                 <br />
@@ -76,7 +80,13 @@
                 <h:link outcome="/admin/index" value="#{messages.ListFaqSiteIndexLink}"/>
                
             </h:form>
-        </ui:define>
+
+		<script language="javascript" type="text/javascript">
+			function newExportPopup(pageUrl) {
+				varWindow = window.open(pageUrl, 'popup')
+			}
+		</script>
+	</ui:define>
     </ui:composition>
 
 </html>

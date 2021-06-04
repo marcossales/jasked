@@ -15,6 +15,7 @@ import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.dev.amvs.jasked.exception.UnexpectedBehaivorException;
 import br.dev.amvs.jasked.jpa.domain.User;
 import br.dev.amvs.jasked.jsf.util.JsfUtil;
 import br.dev.amvs.jasked.jsf.util.PaginationHelper;
@@ -146,7 +147,11 @@ public class UserController extends BasicCrudPermissionVerifier<User> {
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Messages").getString("UserUpdated"));
             return "View";
-        } catch (Exception e) {
+        }catch (UnexpectedBehaivorException e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Messages").getString("UnexpectedBehaivor"));
+            return null;
+        } 
+        catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Messages").getString("PersistenceErrorOccured"));
             return null;
         }

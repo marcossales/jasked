@@ -40,7 +40,7 @@ public class FaqSiteFacade extends PublishableObjectFacade<FaqSite>{
 	public List<FaqSite> findAllPublished() {
 		String publishedStatusName =  ResourceBundle.getBundle("/DomainStrings").getString("ObjectStatus_publishedStatusName");
 		TypedQuery<FaqSite> query =
-				em.createQuery("SELECT f FROM FaqSite f INNER JOIN f.objectStatus s WHERE UPPER(s.name) = UPPER(:publishedStatusName)", FaqSite.class);
+				em.createQuery("SELECT DISTINCT f FROM FaqSite f INNER JOIN f.objectStatus s WHERE UPPER(s.name) = UPPER(:publishedStatusName)", FaqSite.class);
 		query.setParameter("publishedStatusName", publishedStatusName);
 	    List<FaqSite> results = query.getResultList();
 		return results;
@@ -48,9 +48,9 @@ public class FaqSiteFacade extends PublishableObjectFacade<FaqSite>{
 	
 	@SuppressWarnings("unchecked")
 	public List<FaqSite> findRange(int[] range,User user) {
-		String queryString = " SELECT f.* FROM jasked.faq_site f ";
+		String queryString = " SELECT DISTINCT f.* FROM jasked.faq_site f ";
 		if(!user.isSuperUser()) {
-			queryString = " SELECT f.* FROM jasked.faq_site f INNER JOIN jasked.permission perm on (perm.faq_site_id = f.id) WHERE perm.user_id = ?1 ";
+			queryString = " SELECT DISTINCT f.* FROM jasked.faq_site f INNER JOIN jasked.permission perm on (perm.faq_site_id = f.id) WHERE perm.user_id = ?1 ";
 		}
         javax.persistence.Query q = getEntityManager().createNativeQuery(queryString,FaqSite.class);
         if(!user.isSuperUser()) {

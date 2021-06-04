@@ -21,6 +21,12 @@
 		
 		<h:outputText escape="false" value="#{publicViewingController.style}"  />
 		
+		<h:outputStylesheet  library="css"  name="taskbar.css" rendered="#{publicViewingController.canShowTaskBar}" id="taskbar-style" ></h:outputStylesheet>
+		
+		<h:outputScript library="javascripts" name="taskbar.js" rendered="#{publicViewingController.canShowTaskBar}" />
+		
+		
+		
 	</h:head>
 
 	<h:body>

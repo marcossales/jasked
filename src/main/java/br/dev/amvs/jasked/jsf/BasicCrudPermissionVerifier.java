@@ -31,6 +31,7 @@ public abstract class BasicCrudPermissionVerifier<T> implements CrudPermissionVe
 	protected abstract String getUpdateRoleName();
 	protected abstract String getDeleteRoleName();
 	protected abstract String getAccessDeniedPageOutcome();
+	
 	 
 	@Override
     public void checkPreRenderCreate(ComponentSystemEvent event) {
@@ -124,6 +125,7 @@ public abstract class BasicCrudPermissionVerifier<T> implements CrudPermissionVe
 	public abstract boolean canRead(T selected);
 	public abstract boolean canUpdate(T selected);
 	public abstract boolean canDelete(T selected);
+	
 	
 
 	
