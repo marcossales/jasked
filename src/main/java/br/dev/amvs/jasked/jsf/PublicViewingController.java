@@ -146,6 +146,29 @@ public class PublicViewingController {
     	return getContentFromDefautStyle();
     	
     }
+    public String getScript() {
+    	if(!isCurrentFaqPathEmpty()) {
+    		FaqSite f = ejbFaqSiteFacade.findByFaqPath(this.currentFaqPath, true);
+    		if(f.getScript()!=null && !f.getScript().isEmpty()) {
+    			StringBuilder sb = new StringBuilder();
+    			String rawScripts = f.getScript();
+    			String eachScript[] = rawScripts.split("//#jasked-script");
+    			for(String s: eachScript) {
+    				sb.append("<script type='text/javascript'>");
+        			sb.append(s);
+        			sb.append("</script>");
+    			}
+    			
+    			
+    			
+    			return sb.toString();
+    		}
+    	}
+    	
+    	
+    	return getContentFromDefautStyle();
+    	
+    }
     
    
 

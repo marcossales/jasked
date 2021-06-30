@@ -30,8 +30,11 @@
                     <h:selectOneMenu id="objectStatus" value="#{faqSiteController.selected.objectStatus}" title="#{messages.EditFaqSiteTitle_objectStatus}" required="true" requiredMessage="#{messages.EditFaqSiteRequiredMessage_objectStatus}">
                         <f:selectItems value="#{objectStatusController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                     <h:outputLabel value="#{messages.CreateFaqSiteLabel_stye}" for="style" /> 
+                     <h:outputLabel value="#{messages.EditFaqSiteLabel_style}" for="style" />    
                     <h:inputTextarea value="#{faqSiteController.selected.style}" cols="50" rows="20" id="style">
+                    </h:inputTextarea>
+                      <h:outputLabel value="#{messages.EditFaqSiteLabel_script}" for="script" /> 
+                     <h:inputTextarea value="#{faqSiteController.selected.script}" cols="60" rows="20" id="script">
                     </h:inputTextarea>
                 </h:panelGrid>
                 <h:commandLink action="#{faqSiteController.update}" 

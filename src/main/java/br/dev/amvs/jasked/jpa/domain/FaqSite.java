@@ -18,11 +18,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import br.dev.amvs.jasked.jsf.SessionInfoController;
 
 
 /**
@@ -65,6 +62,8 @@ public class FaqSite implements Identifiable<Integer>,FaqSiteOrBelongingToIt {
    
 
 	private String style;
+	
+	private String script;
 	
 	
     
@@ -130,6 +129,15 @@ public class FaqSite implements Identifiable<Integer>,FaqSiteOrBelongingToIt {
 
 	public void setStyle(String style) {
 		this.style = style;
+	}
+	
+
+	public String getScript() {
+		return script;
+	}
+
+	public void setScript(String script) {
+		this.script = script;
 	}
 
 	@Override

@@ -23,9 +23,9 @@
                     <h:outputLabel value="#{messages.CreateQuestionLabel_id}" for="id" />
                     <h:inputText id="id" value="#{questionController.selected.id}" title="#{messages.CreateQuestionTitle_id}" disabled="true"/>
                     <h:outputLabel value="#{messages.CreateQuestionLabel_wording}" for="wording" />
-                    <h:inputTextarea id="wording" value="#{questionController.selected.wording}" title="#{messages.CreateQuestionTitle_wording}" />
+                    <h:inputTextarea id="wording" value="#{questionController.selected.wording}" title="#{messages.CreateQuestionTitle_wording}"   rows="4" cols="60"/>
                     <h:outputLabel value="#{messages.CreateQuestionLabel_answer}" for="answer" />
-                    <h:inputTextarea id="answer" value="#{questionController.selected.answer}" title="#{messages.CreateQuestionTitle_answer}" />
+                    <h:inputTextarea id="answer" value="#{questionController.selected.answer}" title="#{messages.CreateQuestionTitle_answer}"   rows="10" cols="60"/>
                     <h:outputLabel value="#{messages.CreateQuestionLabel_objectStatus}" for="objectStatus" />
                     <h:selectOneMenu id="objectStatus" value="#{questionController.selected.objectStatus}" title="#{messages.CreateQuestionTitle_objectStatus}" required="true" requiredMessage="#{messages.CreateQuestionRequiredMessage_objectStatus}">
                         <f:selectItems value="#{objectStatusController.itemsAvailableSelectOne}"/>
